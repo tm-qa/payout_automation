@@ -8,7 +8,6 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,9 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class PayoutSplitRulesPage extends TestBase {
-
-    @FindBy(xpath = "//span[text()='Create an account/ Sign in']")
-    WebElement CreateAccount;
 
     @FindBy(xpath = "//span[text()='Configure Rules']")
     WebElement configureRulesModule;
@@ -33,20 +29,8 @@ public class PayoutSplitRulesPage extends TestBase {
     @FindBy(xpath = "//div[text()='Production History']")
     WebElement ruleHistoryBtn;
 
-    @FindBy(xpath = "//h3[text()='Test and Upload']")
-    WebElement uploadRulePageTitle;
-
     @FindBy(xpath = "//span[text()='Current Rule File']")
     WebElement crntRuleFileBtn;
-
-    @FindBy(xpath = "//span[text()='Current Master Test Data']")
-    WebElement masterDataBtn;
-
-    @FindBy(xpath = "(//span[text()='Upload'])[1]")
-    WebElement ruleUploadBtn;
-
-    @FindBy(xpath = "(//span[text()='Upload'])[2]")
-    WebElement masterDataUploadBtn;
 
     @FindBy(xpath = "//textarea[@name='comment']")
     WebElement commentTxtBox;
@@ -63,17 +47,8 @@ public class PayoutSplitRulesPage extends TestBase {
     @FindBy(xpath = "//span[text()='Start Simulation']")
     WebElement startSimulationBtn;
 
-    @FindBy(xpath = "//h3[text()='Last Test Report']")
-    WebElement reportTitle;
-
     @FindBy(xpath = "//span[text()='Rule File']")
     WebElement ruleFileButton;
-
-    @FindBy(xpath = "//span[contains(text(),'Comparison')]//parent::div//following-sibling::div//a//span")
-    WebElement comparisonReportButtn;
-
-    @FindBy(xpath = "//span[contains(text(),'Data Impact')]//parent::div//following-sibling::div//a//span[text()='See Report']")
-    WebElement masterDataButtn;
 
     @FindBy(xpath = "//span[text()='Close']")
     WebElement closeButtn;
@@ -83,9 +58,6 @@ public class PayoutSplitRulesPage extends TestBase {
 
     @FindBy(xpath = "//span[text()='Push to Production']")
     WebElement pushToProdButton;
-
-    @FindBy(xpath = "//span[text()='Process without Re-processing']//parent::label//child::span//input")
-    WebElement without_ReProcessingCTA;
 
     @FindBy(xpath = "//h3[text()='Split Rules Production History']")
     WebElement ruleFileHistryTitle;
@@ -108,9 +80,6 @@ public class PayoutSplitRulesPage extends TestBase {
     @FindBy(xpath = "(//td[text()='No. of Records']//following-sibling::td)[5]")
     WebElement newRuleNumbers;
 
-    @FindBy(xpath = "//span[text()='Duplicate rule ids found: [50705]']")
-    WebElement dupplicateRuleIdError;
-
     @FindBy(xpath = "//h3[text()='Test Report']")
     WebElement splitRuleSimulationPageTitle;
 
@@ -132,7 +101,6 @@ public class PayoutSplitRulesPage extends TestBase {
     public void toUploadLatestSPlitRuleFile(String fileName){
         String strUrl = driver.getCurrentUrl();
         LogUtils.info("Opened Website: " + strUrl);
-        //       TestUtil.click(CreateAccount, "Create an account/Sign in Button Clicked");
         TestUtil.click(configureRulesModule, "Clicked On Configure Rules Module");
         TestUtil.click(payoutSplitRule, "Clicked On Payout Rule Tab");
         TestUtil.click(testAndUploadBtn, "Clicked On Test And Upload Tab");
@@ -177,53 +145,24 @@ public class PayoutSplitRulesPage extends TestBase {
         TestUtil.click(pushToProductionUploadBtn, "Clicked on Final Upload button");
     }
 
-//    public void toUploadRuleFileWithMasterDataFile(String fileName, String MDfileName){
-//        String strUrl = driver.getCurrentUrl();
-//        LogUtils.info("Opened Website: " + strUrl);
-//        TestUtil.click(configureRulesModule, "Clicked On Configure Rules Module");
-//        TestUtil.click(payoutsRule, "Clicked On Payout Rule Tab");
-//        TestUtil.click(testAndUploadBtn, "Clicked On Test And Upload Tab");
-//        Assert.assertEquals(uploadRulePageTitle.getText(),"Test and Upload");
-//        WebCommands.staticSleep(2000);
-//        TestUtil.click(crntRuleFileBtn, "Current Rule File Downloaded");
-//        WebCommands.staticSleep(2000);
-//        TestUtil.click(masterDataBtn, "Current Master Data File Downloaded");
-//        WebCommands.staticSleep(2000);
-//        driver.findElement(By.xpath("(//span[text()='Upload'])[1]//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//TestRuleFiles//" + fileName + "");
-//        WebCommands.staticSleep(1000);
-//        TestUtil.click(commentTxtBox, "Clicked on comment Text Box");
-//        TestUtil.sendKeys(commentTxtBox,"Automation Test", "Comment Entered");
-//        TestUtil.click(mainUploadBtn, "Clicked on upload button");
-//        WebCommands.staticSleep(4000);
-//        driver.findElement(By.xpath("//span[text()='Test Data (Optional): ']//following-sibling::span//following-sibling::span//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//TestRuleFiles//" + MDfileName + "");
-//        WebCommands.staticSleep(1000);
-//        TestUtil.click(startSimulationBtn, "Clicked on Start Test Button");
-//        WebCommands.staticSleep(1000);
-//        driver.findElement(By.xpath("//html")).sendKeys(Keys.PAGE_DOWN);
-//        TestUtil.click(reviewReportCheckBox, "Review Report Checkbox clicked");
-//        TestUtil.click(pushToProdButton, "Push To Production button clicked");
-//        TestUtil.click(pushToProductionComment, "Clicked on comment Text Box");
-//        TestUtil.sendKeys(pushToProductionComment,"Automation Test", "Comment Entered");
-//        TestUtil.click(pushToProductionUploadBtn, "Clicked on Upload button");
-//    }
-
     public void uploadDuplicateIdRuleFile(String fileName) {
         String strUrl = driver.getCurrentUrl();
         LogUtils.info("Opened Website: " + strUrl);
         TestUtil.click(configureRulesModule, "Clicked On Configure Rules Module");
         TestUtil.click(payoutSplitRule, "Clicked On Payout Rule Tab");
         TestUtil.click(testAndUploadBtn, "Clicked On Test And Upload Tab");
+        TestUtil.click(crntRuleFileBtn, "Downloaded Current Split Rule File");
         WebCommands.staticSleep(2000);
-        driver.findElement(By.xpath("(//span[text()='Upload'])[1]//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//TestRuleFiles//" + fileName + "");
+        driver.findElement(By.xpath("(//span[text()='Upload'])[1]//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//SplitRuleFile//" + fileName + "");
         WebCommands.staticSleep(2000);
         TestUtil.click(commentTxtBox, "Clicked on comment Text Box");
         TestUtil.sendKeys(commentTxtBox,"Automation Test", "Comment Entered");
         TestUtil.click(mainUploadBtn, "Clicked on upload button");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement errorMsg = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Duplicate rule ids found: [50705]']"))
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Duplicate rule ids found: [2]']"))
         );
-        Assert.assertEquals(errorMsg.getText(), "Duplicate rule ids found: [50705]");
+        Assert.assertEquals(errorMsg.getText(), "Duplicate rule ids found: [2]");
     }
 
     public void downloadReportFrmHistory() {
@@ -232,7 +171,6 @@ public class PayoutSplitRulesPage extends TestBase {
         Assert.assertEquals(ruleFileHistryTitle.getText(),"Split Rules Production History");
         TestUtil.click(openbtn, "Open File button Clicked");
         TestUtil.click(ruleFileButton, "Rule File downloaded from report");
-        TestUtil.click(masterDataButtn, "Master Data report downloaded");
         TestUtil.click(closeButtn, "Clicked on Close Button");
     }
 

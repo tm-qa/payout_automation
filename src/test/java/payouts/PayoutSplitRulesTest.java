@@ -4,8 +4,6 @@ package payouts;
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.DB_Assertions.ValidatePayoutRules;
 import com.qa.turtlemint.pages.Ninja.ninja;
-import com.qa.turtlemint.pages.payouts.PayoutRulesPage;
-
 import com.qa.turtlemint.pages.payouts.PayoutSplitRulesPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterTest;
@@ -39,40 +37,29 @@ public class PayoutSplitRulesTest extends TestBase {
     @Test(priority = 1)//, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyUpload_SplitRuleFile() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("SplitRuleFileMain.csv");
-//        db.ValidatePayoutRules();
+        db.ValidatePayoutSplitRules();
     }
 
-//    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
-//    public void verifyUploadRuleWithMasterDataFile() {
-//        payoutSplitRulesPage.toUploadRuleFileWithMasterDataFile("UniqueIdRuleFile.csv","materTestDataFile.csv");
-//        payoutSplitRulesPage.downloadReportFrmHistory();
-//    }
-    //
-    @Test(priority = 3)//, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyUpload_SplitRuleWithDeleteRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("DeleteSplitRules.csv");
     }
 
-    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyUpload_SplitRuleWithNewRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("AddNewSplitRules.csv");
     }
 
-    @Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyUpload_SplitRuleWithChangeInRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("ChangeInSplitRules.csv");
         payoutSplitRulesPage.downloadReportFrmHistory();
     }
 
-    @Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyUpload_SplitRuleWithDuplicateID() {
         payoutSplitRulesPage.uploadDuplicateIdRuleFile("DuplicateIdSplitRules.csv");
     }
-
-//    @Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyser.class)
-//    public void UploadeLatestRuleFile() throws InterruptedException {
-//        payoutSplitRulesPage.toUploadLatestRuleFile("SanityRuleFileMain.csv");
-//    }
 
 //    @AfterTest()
 //    public void close() throws Exception {
