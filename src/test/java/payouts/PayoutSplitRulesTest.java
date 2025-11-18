@@ -1,6 +1,5 @@
 package payouts;
 
-
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.DB_Assertions.ValidatePayoutRules;
 import com.qa.turtlemint.pages.Ninja.ninja;
@@ -11,7 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
-@Test(groups = {"payout"})
+@Test(groups = {"payout split rule upload"})
 public class PayoutSplitRulesTest extends TestBase {
 
     ninja ninj;
@@ -61,9 +60,9 @@ public class PayoutSplitRulesTest extends TestBase {
         payoutSplitRulesPage.uploadDuplicateIdRuleFile("DuplicateIdSplitRules.csv");
     }
 
-//    @AfterTest()
-//    public void close() throws Exception {
-//        driver.close();
-//    }
+    @AfterTest()
+    public void close() throws Exception {
+        driver.close();
+    }
 
 }
