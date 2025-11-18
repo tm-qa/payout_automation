@@ -1,16 +1,12 @@
 package com.qa.turtlemint.pages.DB_Assertions;
 
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.qa.turtlemint.commands.WebCommands;
 import junit.framework.Assert;
 import org.bson.Document;
-import org.testng.annotations.BeforeClass;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
