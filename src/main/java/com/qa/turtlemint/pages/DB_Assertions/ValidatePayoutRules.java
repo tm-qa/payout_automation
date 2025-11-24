@@ -93,12 +93,21 @@ public class ValidatePayoutRules {
             Document dealerID = andList.get(0).get("EQ", Document.class);
             String dealerId = dealerID.getString("value");
             Assert.assertEquals("dealerId value mismatch!", "63b54bb9ee10470001250bb6", dealerId);
+
+            System.out.println("Actual dealerId : "+dealerId+" , "+"Expected dealerId : 63b54bb9ee10470001250bb6");
+
             Document subAgentID = andList.get(1).get("EQ", Document.class);
             String subAgentId = subAgentID.getString("value");
             Assert.assertEquals("subAgentId value mismatch!", "6398575471c5dc16af014253", subAgentId);
+
+            System.out.println("Actual subAgentId : "+subAgentId+" , "+"Expected subAgentId : 6398575471c5dc16af014253");
+
             Document productCat = andList.get(4).get("EQ", Document.class);
             String productCategory = productCat.getString("value");
             Assert.assertEquals("subAgentId value mismatch!", "HEALTH", productCategory);
+
+            System.out.println("Actual productCategory : "+productCategory+" , "+"Expected productCategory : HEALTH");
+
             mongoClient.close();
         } catch (Exception e) {
             e.printStackTrace();
