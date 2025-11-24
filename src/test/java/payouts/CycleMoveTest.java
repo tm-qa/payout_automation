@@ -16,6 +16,7 @@ public class CycleMoveTest extends TestBase {
     CycleMovePage cycleMovePage;
 
     public CycleMoveTest() {
+
         super();
     }
 

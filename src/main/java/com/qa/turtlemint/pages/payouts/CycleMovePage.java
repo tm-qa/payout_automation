@@ -439,6 +439,7 @@ public class CycleMovePage extends TestBase {
                             csvAssert.assertCell(data, 9, 24, "destination payment cycle mismatch expected 20251125");
                         }
                 }
+
             }
 
         } catch (Exception e) {
