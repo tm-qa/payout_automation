@@ -1,15 +1,12 @@
 package com.qa.turtlemint.pages.DB_Assertions;
 
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.qa.turtlemint.commands.WebCommands;
 import junit.framework.Assert;
 import org.bson.Document;
-import org.testng.annotations.BeforeClass;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,5 +60,58 @@ public class ValidatePayoutRules {
         }
     }
 
+    public void ValidatePayoutSplitRules() {
+        WebCommands.staticSleep(5000);
+        try {
+            MongoClient mongoClient = new MongoClient("localhost", 27118);
+            System.out.println("****************** Database DemoDB connected successfully ******************");
+            MongoDatabase db = mongoClient.getDatabase("payouts");
+
+// Validate Payouts Split Rules
+            MongoCollection<Document> payoutSplitRules = db.getCollection("DealerPayoutSplitRules");
+            long PRCount = payoutSplitRules.countDocuments();
+            System.out.println("Payouts Split Rule Count : " + PRCount);
+            Assert.assertEquals(PRCount, 7);
+
+            List<Integer> expectedSplitPayoutsRules = Arrays.asList(2, 3, 4, 5, 6, 7, 8);
+
+            MongoCursor<Document> cursorPayouts = payoutSplitRules.find().iterator();
+            List<Integer> actualSplitPayoutsRules = new ArrayList<>();
+            while (cursorPayouts.hasNext()) {
+                Document d = cursorPayouts.next();
+                Document meta = d.get("metaInfo", Document.class);
+                actualSplitPayoutsRules.add(meta.getInteger("ruleId"));
+            }
+            System.out.println("Payouts Split Rule Presents : " + actualSplitPayoutsRules);
+            Assert.assertEquals("ruleId list does not match!", expectedSplitPayoutsRules, actualSplitPayoutsRules);
+
+//  Assert on Rule ID No 5
+            Document doc = payoutSplitRules.find(eq("metaInfo.ruleId", 5)).first();
+            Assert.assertNotNull("No record found for metaInfo.ruleId = 5",doc);
+            Document condition = doc.get("condition", Document.class);
+            List<Document> andList = condition.getList("AND", Document.class);
+            Document dealerID = andList.get(0).get("EQ", Document.class);
+            String dealerId = dealerID.getString("value");
+            Assert.assertEquals("dealerId value mismatch!", "63b54bb9ee10470001250bb6", dealerId);
+
+            System.out.println("Actual dealerId : "+dealerId+" , "+"Expected dealerId : 63b54bb9ee10470001250bb6");
+
+            Document subAgentID = andList.get(1).get("EQ", Document.class);
+            String subAgentId = subAgentID.getString("value");
+            Assert.assertEquals("subAgentId value mismatch!", "6398575471c5dc16af014253", subAgentId);
+
+            System.out.println("Actual subAgentId : "+subAgentId+" , "+"Expected subAgentId : 6398575471c5dc16af014253");
+
+            Document productCat = andList.get(4).get("EQ", Document.class);
+            String productCategory = productCat.getString("value");
+            Assert.assertEquals("subAgentId value mismatch!", "HEALTH", productCategory);
+
+            System.out.println("Actual productCategory : "+productCategory+" , "+"Expected productCategory : HEALTH");
+
+            mongoClient.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -8,7 +8,6 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,9 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class PayoutRulesPage extends TestBase {
-
-    @FindBy(xpath = "//span[text()='Create an account/ Sign in']")
-    WebElement CreateAccount;
 
     @FindBy(xpath = "//span[text()='Configure Rules']")
     WebElement configureRulesModule;
@@ -42,12 +38,6 @@ public class PayoutRulesPage extends TestBase {
     @FindBy(xpath = "//span[text()='Current Master Test Data']")
     WebElement masterDataBtn;
 
-    @FindBy(xpath = "(//span[text()='Upload'])[1]")
-    WebElement ruleUploadBtn;
-
-    @FindBy(xpath = "(//span[text()='Upload'])[2]")
-    WebElement masterDataUploadBtn;
-
     @FindBy(xpath = "//textarea[@name='comment']")
     WebElement commentTxtBox;
 
@@ -63,14 +53,8 @@ public class PayoutRulesPage extends TestBase {
     @FindBy(xpath = "//span[text()='Start Simulation']")
     WebElement startSimulationBtn;
 
-    @FindBy(xpath = "//h3[text()='Last Test Report']")
-    WebElement reportTitle;
-
     @FindBy(xpath = "//span[text()='Rule File']")
     WebElement ruleFileButton;
-
-    @FindBy(xpath = "//span[contains(text(),'Comparison')]//parent::div//following-sibling::div//a//span")
-    WebElement comparisonReportButtn;
 
     @FindBy(xpath = "//span[contains(text(),'Data Impact')]//parent::div//following-sibling::div//a//span[text()='See Report']")
     WebElement masterDataButtn;
@@ -83,9 +67,6 @@ public class PayoutRulesPage extends TestBase {
 
     @FindBy(xpath = "//span[text()='Push to Production']")
     WebElement pushToProdButton;
-
-    @FindBy(xpath = "//span[text()='Process without Re-processing']//parent::label//child::span//input")
-    WebElement without_ReProcessingCTA;
 
     @FindBy(xpath = "//h3[text()='Split Rules Production History']")
     WebElement ruleFileHistryTitle;
@@ -108,9 +89,6 @@ public class PayoutRulesPage extends TestBase {
     @FindBy(xpath = "(//td[text()='No. of Records']//following-sibling::td)[5]")
     WebElement newRuleNumbers;
 
-    @FindBy(xpath = "//span[text()='Duplicate rule ids found: [50705]']")
-    WebElement dupplicateRuleIdError;
-
     @FindBy(xpath = "//h3[text()='Test Report']")
     WebElement ruleSimulationPageTitle;
 
@@ -131,7 +109,6 @@ public class PayoutRulesPage extends TestBase {
     public void toUploadLatestRuleFile(String fileName){
         String strUrl = driver.getCurrentUrl();
         LogUtils.info("Opened Website: " + strUrl);
-        //       TestUtil.click(CreateAccount, "Create an account/Sign in Button Clicked");
         TestUtil.click(configureRulesModule, "Clicked On Configure Rules Module");
         TestUtil.click(payoutsRule, "Clicked On Payout Rule Tab");
         TestUtil.click(testAndUploadBtn, "Clicked On Test And Upload Tab");
@@ -149,7 +126,6 @@ public class PayoutRulesPage extends TestBase {
             Assert.assertTrue(uploadedByUserName.isDisplayed());
             Assert.assertTrue(rulesCompareTitle.isDisplayed());
             TestUtil.click(rulesFileDownloadCTA, "Clicked on Download CTA");
-
             Assert.assertEquals(currentRuleNumbers.getText(),"20");
             Assert.assertEquals(addRuleNumbers.getText(),"0");
             Assert.assertEquals(changeRuleNumbers.getText(),"0");
