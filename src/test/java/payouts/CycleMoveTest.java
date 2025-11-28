@@ -29,31 +29,31 @@ public class CycleMoveTest extends TestBase {
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
 
-    @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)//retryAnalyzer = RetryAnalyser.class
+    @Test(priority = 1, enabled = true)
     public void verifyEarlyCycleMove() throws Exception {
-        cycleMovePage.move_CyclePayments("EarlyCycleMove.csv", "202511C2", "202511C1");
-        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("EarlyCycleMove.csv");
+        cycleMovePage.move_CyclePayments("EarlyCycleMove_C2_C1.csv", "202511C2", "202511C1");
+        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("EarlyCycleMove_C2_C1.csv");
     }
 
-    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)//retryAnalyzer = RetryAnalyser.class
+    @Test(priority = 2, enabled = true)
     public void verifyLaterCycleMove() throws Exception {
-        cycleMovePage.move_CyclePayments("LaterCycleMove.csv", "202511C1", "202511C2");
-        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("LaterCycleMove.csv");
+        cycleMovePage.move_CyclePayments("LaterCycleMove_C1_C2.csv", "202511C1", "202511C2");
+        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("LaterCycleMove_C1_C2.csv");
     }
 
-    @Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyser.class)//retryAnalyzer = RetryAnalyser.class
+    @Test(priority = 3, enabled = true)
     public void verifyQuickPayCycleMove() throws Exception {
-        cycleMovePage.move_CyclePayments("QuickPayCycleMove.csv", "202511C2", "20251125");
-        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("QuickPayCycleMove.csv");
+        cycleMovePage.move_CyclePayments("QuickPayCycleMove_C2_QP.csv", "202511C2", "20251125");
+        cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("QuickPayCycleMove_C2_QP.csv");
     }
 
-    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)//retryAnalyzer = RetryAnalyser.class
-    public void moveBackInEarlyCycle() throws Exception {
-        cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle.csv", "20251125", "202511C2");
+    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    public void moveBackInEarlyCycle() throws InterruptedException {
+        cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251125", "202511C2");
     }
 
     @AfterTest()
-    public void close() throws Exception {
+    public void close() {
         driver.close();
     }
 }

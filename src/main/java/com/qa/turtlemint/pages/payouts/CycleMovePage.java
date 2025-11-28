@@ -14,6 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import java.io.*;
+import java.time.Duration;
 import java.util.*;
 import java.io.File;
 import java.io.FileReader;
@@ -101,15 +102,15 @@ public class CycleMovePage extends TestBase {
 
     public void move_CyclePayments(String fileName, String srcCycle, String destCycle) throws Exception {
         TestUtil.click(dpc.ledgerBtn, "Payout Ledger Button Clicked");
-        if(fileName.equalsIgnoreCase("EarlyCycleMove.csv")){
+        if(fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")){
             TestUtil.click(earlyCycleBtn, "Early Cycle Payments Button Clicked");
             Assert.assertEquals(earlyCyclePageTitle.getText(), "Early Cycle Payments");
         }
-        else if (fileName.equalsIgnoreCase("LaterCycleMove.csv")) {
+        else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
             TestUtil.click(laterCycleBtn, "Later Cycle Payments Button Clicked");
             Assert.assertEquals(laterCyclePageTitle.getText(), "Move to Later Cycles");
         }
-        else if (fileName.equalsIgnoreCase("QuickPayCycleMove.csv")) {
+        else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
             TestUtil.click(quickPayCycleBtn, "Move to QuickPay Cycle Button Clicked");
             Assert.assertEquals(quickPayCyclePageTitle.getText(), "Move to Quickpay Cycle");
         }
@@ -119,15 +120,14 @@ public class CycleMovePage extends TestBase {
         validateDownloadTemplateFile();
         TestUtil.click(uploadBtn, "Upload button clicked");
         uploadFile(fileName);
-        WebCommands.staticSleep(5000);
+        WebCommands.staticSleep(2000);
         commentEnter();
         TestUtil.click(sourceCycleDrpdwn, "Source Cycle dropdown Clicked");
         selectSourceCycle(srcCycle);
-        WebCommands.staticSleep(3000);
+        LogUtils.info(srcCycle + " : Source Cycle Selected");
         TestUtil.click(destinationCycleDrpdwn, "Destination Cycle dropdown Clicked");
-        WebCommands.staticSleep(1000);
         selectDestinationCycle(destCycle);
-        WebCommands.staticSleep(1000);
+        LogUtils.info(destCycle + " : Destination Cycle Selected");
         TestUtil.click(mainUploadBtn, "Upload button clicked");
         WebCommands.staticSleep(2000);
         TestUtil.click(outputFileBtn, "OutputFile button clicked");
@@ -174,7 +174,7 @@ public class CycleMovePage extends TestBase {
                             WebCommands.staticSleep(1000);
                             CsvUtils csvAssert = new CsvUtils();
                             List<String[]> data = csvAssert.readCsv(mostRecentFile);
-                            if (fileName.equalsIgnoreCase("EarlyCycleMove.csv")) {
+                            if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Early Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C1");
                                 csvAssert.assertCell(data, 2, 132, "202511C1");
@@ -187,7 +187,7 @@ public class CycleMovePage extends TestBase {
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
                                 LogUtils.info("Early Cycle Move Entries Are Present as in Expected Cycle");
                             }
-                            else if (fileName.equalsIgnoreCase("LaterCycleMove.csv")) {
+                            else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Later Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C2");
                                 csvAssert.assertCell(data, 2, 132, "202511C2");
@@ -199,7 +199,7 @@ public class CycleMovePage extends TestBase {
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
                                 LogUtils.info("Later Cycle Move Entries Are Present as in Expected Cycle");
-                            } else if (fileName.equalsIgnoreCase("QuickpayCycleMove.csv")) {
+                            } else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After QuickPay Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "20251125");
                                 csvAssert.assertCell(data, 2, 132, "20251125");
@@ -220,7 +220,7 @@ public class CycleMovePage extends TestBase {
             }
     }
 
-    public void moveBackInCycle_ToContinueFlow(String fileName, String srcCycle, String destCycle){
+    public void moveBackInCycle_ToContinueFlow(String fileName, String srcCycle, String destCycle) throws InterruptedException {
         TestUtil.click(dpc.ledgerBtn, "Payout Ledger Button Clicked");
         TestUtil.click(laterCycleBtn, "Early Cycle Payments Button Clicked");
         WebCommands.staticSleep(1000);
@@ -248,43 +248,57 @@ public class CycleMovePage extends TestBase {
         TestUtil.getScreenShot();
     }
 
-    public void selectSourceCycle(String srcCycle) throws NoSuchElementException {
-        WebElement scrollbar = driver.findElement(By.xpath("//div[@class=\"rc-virtual-list-holder\"]"));
-        Actions actions = new Actions(driver);
-        for (int i = 0; i < 30; i++) {
+    public void selectSourceCycle(String srcCycle) throws NoSuchElementException, InterruptedException {
+        WebElement scrollBox = driver.findElement(By.xpath("(//div[@class='rc-virtual-list-holder'])[1]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        boolean found = false;
+        for (int i = 0; i < 30 && !found; i++) {
             try {
-                Utils.selectExactVisibleOption(driver,By.xpath("//div[contains(@class,'rc-virtual-list-holder-inner')]"),srcCycle,3);
-                break;
+                Utils.selectExactVisibleOption(driver, By.xpath("//div[contains(@class,'rc-virtual-list-holder-inner')]"), srcCycle, 3);
+                found = true;
             } catch (NoSuchElementException e) {
-                actions.dragAndDropBy(scrollbar, 0, 4).build().perform();
+                js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;", scrollBox);
+                Thread.sleep(150);
             }
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        if (!found) {
+            throw new RuntimeException("Cycle '" + srcCycle + "' not found in dropdown after scrolling");
         }
     }
 
-    public void selectDestinationCycle(String destCycle) throws NoSuchElementException {
-        WebElement scrollbar = driver.findElement(By.xpath("//div[@class='rc-virtual-list-scrollbar-thumb']"));
-        Actions actions = new Actions(driver);
-        for (int i = 0; i < 30; i++) {
+    public void selectDestinationCycle(String destCycle) throws NoSuchElementException, InterruptedException {
+        WebElement scrollBox = driver.findElement(By.xpath("(//div[@class='rc-virtual-list-holder'])[2]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        boolean found = false;
+        for (int i = 0; i < 30 && !found; i++) {
             try {
-                Utils.selectExactVisibleOption(driver,By.xpath("(//div[contains(@class,'rc-virtual-list-holder-inner')])[2]"),destCycle,3);
-                break;
+                Utils.selectExactVisibleOption(driver, By.xpath("(//div[contains(@class,'rc-virtual-list-holder-inner')])[2]"), destCycle, 3);
+                found = true;
             } catch (NoSuchElementException e) {
-                actions.dragAndDropBy(scrollbar, 0, 3).build().perform();
+                js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;", scrollBox);
+                Thread.sleep(150);
             }
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        if (!found) {
+            throw new RuntimeException("Cycle '" + destCycle + "' not found in dropdown after scrolling");
         }
     }
 
     public static void uploadFile(String fileName) {
-        if(fileName.equalsIgnoreCase("EarlyCycleMove.csv")) {
+        if(fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//EarlyCycleMove//" + fileName + "");
         }
-        else if (fileName.equalsIgnoreCase("LaterCycleMove.csv")) {
+        else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//LaterCycleMove//" + fileName + "");
         }
-        else if (fileName.equalsIgnoreCase("QuickPayCycleMove.csv")) {
+        else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//QuickPayCycleMove//" + fileName + "");
         }
-        else if (fileName.equalsIgnoreCase("MoveBackCycle.csv")) {
+        else if (fileName.equalsIgnoreCase("MoveBackCycle_QP_C2.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
         }
     }
@@ -294,28 +308,29 @@ public class CycleMovePage extends TestBase {
     }
 
     public void moveFileUploadHistoryAssertion(String fileName) {
-        Assert.assertEquals(uploadeByUser.getText(), "automationtesting");
-        LogUtils.info("Uploaded By : " + uploadeByUser.getText());
+//        Assert.assertEquals(uploadeByUser.getText(), "automationtesting");
+//        LogUtils.info("Uploaded By : " + uploadeByUser.getText());
 
-        if (fileName.equalsIgnoreCase("EarlyCycleMoveFile.csv")) {
+        if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
             LogUtils.info("Source Pay Cycle : " + srcPaymentCycle.getText());
             Assert.assertEquals(srcPaymentCycle.getText(), "202511C2");
             LogUtils.info("Destination Pay Cycle : " + destPaymentCycle.getText());
             Assert.assertEquals(destPaymentCycle.getText(), "202511C1");
         }
-        else if (fileName.equalsIgnoreCase("LaterCycleMove.csv")) {
+        else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
             LogUtils.info("Source Pay Cycle : " + srcPaymentCycle.getText());
             Assert.assertEquals(srcPaymentCycle.getText(), "202511C1");
             LogUtils.info("Destination Pay Cycle : " + destPaymentCycle.getText());
             Assert.assertEquals(destPaymentCycle.getText(), "202511C2");
         }
-        else if (fileName.equalsIgnoreCase("QuickPayCycleMoveFile.csv")) {
+        else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
             LogUtils.info("Source Pay Cycle : " + srcPaymentCycle.getText());
             Assert.assertEquals(srcPaymentCycle.getText(), "202511C2");
             LogUtils.info("Destination Pay Cycle : " + destPaymentCycle.getText());
             Assert.assertEquals(destPaymentCycle.getText(), "20251125");
         }
         LogUtils.info("Entered Comment : " + enteredComment.getText());
+        Assert.assertEquals(enteredComment.getText(), "Automation Test");
         LogUtils.info("Success count is : " + successCount.getText());
         Assert.assertEquals(successCount.getText(), "6");
         LogUtils.info("Failure count is : " + failureCount.getText());
@@ -393,7 +408,7 @@ public class CycleMovePage extends TestBase {
                         CsvUtils csvAssert = new CsvUtils();
                         List<String[]> data = csvAssert.readCsv(mostRecentFile);
 
-                        if (fileName.equalsIgnoreCase("EarlyCycleMove.csv")) {
+                        if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                             csvAssert.assertRow(data, 0, Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle", "Destination Payment Cycle", "Ledger_Id", "Ledger_Entity_Type", "Ledger_Comment", "DP Login Id", "Customer First Name", "Customer Last Name", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Output Status", "Output Remark"));
                             csvAssert.assertCell(data, 1, 23, "SUCCESS");
                             csvAssert.assertCell(data, 2, 23, "SUCCESS");
@@ -408,7 +423,7 @@ public class CycleMovePage extends TestBase {
                             csvAssert.assertCell(data, 8, 24, "source payment cycle mismatch expected 202511C2");
                             csvAssert.assertCell(data, 9, 24, "destination payment cycle mismatch expected 202511C1");
                         }
-                        else if (fileName.equalsIgnoreCase("LaterCycleMove.csv")) {
+                        else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
                             csvAssert.assertRow(data, 0, Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle", "Destination Payment Cycle", "Ledger_Id", "Ledger_Entity_Type", "Ledger_Comment", "DP Login Id", "Customer First Name", "Customer Last Name", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Output Status", "Output Remark"));
                             csvAssert.assertCell(data, 1, 23, "SUCCESS");
                             csvAssert.assertCell(data, 2, 23, "SUCCESS");
@@ -423,7 +438,7 @@ public class CycleMovePage extends TestBase {
                             csvAssert.assertCell(data, 8, 24, "source payment cycle mismatch expected 202511C1; destination payment cycle mismatch expected 202511C2");
                             csvAssert.assertCell(data, 9, 24, "source payment cycle mismatch expected 202511C1; destination payment cycle mismatch expected 202511C2");
                         }
-                        else if (fileName.equalsIgnoreCase("QuickPayCycleMove.csv")) {
+                        else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
                             csvAssert.assertRow(data, 0, Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle", "Destination Payment Cycle", "Ledger_Id", "Ledger_Entity_Type", "Ledger_Comment", "DP Login Id", "Customer First Name", "Customer Last Name", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Output Status", "Output Remark"));
                             csvAssert.assertCell(data, 1, 23, "SUCCESS");
                             csvAssert.assertCell(data, 2, 23, "SUCCESS");

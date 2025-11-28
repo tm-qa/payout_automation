@@ -1,12 +1,13 @@
 package com.qa.turtlemint.base;
 
+
 import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,12 +40,11 @@ public class TestBase {
         LogUtils.info("Browser name: " + browserName);
         if (browserName.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
-            options.setBrowserVersion("117");
+            options.setBrowserVersion("119");
+//            options.addArguments("--headless=new");
+            driver = new ChromeDriver(options);
             options.addArguments("start-maximized"); // open Browser in maximized mode
-           // options.addArguments("--incognito");
-           // options.addArguments("--disable-application-cache");
-          //driver = new ChromeDriver(options);
+            //    options.addArguments("--incognito");
             String osName = System.getProperty("os.name");
             LogUtils.info("osName: " + osName);
             if (osName.toLowerCase().contains("linux")) {
@@ -63,7 +63,7 @@ public class TestBase {
 //				WebDriver driver = new ChromeDriver(options);
 
             }
-               driver = new ChromeDriver(options);
+            // driver = new ChromeDriver(options);
 
             Dimension newDimension = new Dimension(1200, 800);
             driver.manage().window().setSize(newDimension);
@@ -78,9 +78,14 @@ public class TestBase {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TestUtil.implicit_wait));
 
 
-            driver.get(System.getProperty("url")); // Only for Jenkins Uncomment this line
-           // driver.get(prop.getProperty("localurl"));
+//            driver.get(System.getProperty("url")); // Only for Jenkins Uncomment this line
+//            driver.get(prop.getProperty("localurl"));
+//            System.out.println(driver.getCurrentUrl());
+//            WebCommands.staticSleep(5000);
+            driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
         }
+
 
     }
 }
