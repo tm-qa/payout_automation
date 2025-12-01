@@ -149,7 +149,7 @@ public class QuickSearchPage extends TestBase {
 
     public void searchByValid_From_To_Cycles(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
+        TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         selectFromPaymentCycle(fromPaymentCycle);
         LogUtils.info(fromPaymentCycle + " :From Payment Cycle Selected");
@@ -167,15 +167,16 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void searchByValid_From_To_InvalidCycleRange(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
+        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         selectFromPaymentCycle(fromPaymentCycle);
         LogUtils.info(fromPaymentCycle + " :From Payment Cycle Selected");
         selectToPaymentCycle(toPaymentCycle);
         LogUtils.info(toPaymentCycle + " :To Payment Cycle Selected");
-        selectFromPaymentCycle("Dec 2025 C2");
-        LogUtils.info("Dec 2025 C2 :From Payment Cycle Selected");
+        TestUtil.click(frmPymntCycleDrpdwn,"From payment Cycle Dropdown Click Again To Check Invalid Cycle Range");
+        driver.findElement(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='Nov 2025 C2']]")).click();
+        LogUtils.info("Nov 2025 C2 :From Payment Cycle Selected");
         TestUtil.click(searchButton, "Search Button Clicked");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement errorMsg = wait.until(
@@ -183,8 +184,7 @@ public class QuickSearchPage extends TestBase {
         );
         Assert.assertEquals(errorMsg.getText(), "Invalid fromPaymentCycle or toPaymentCycle");
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
+        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     public void searchByValid_From_To_Cycles_But_DataNotPresent(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
@@ -206,21 +206,28 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(frmPymntCycleDrpdwn,"From payment Cycle Dropdown Click");
         WebElement scrollBox = driver.findElement(By.xpath("(//div[@class='rc-virtual-list-holder'])[1]"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String fromCycle = fromPaymentCycle;   // the value you want to select
+        String fromCycle = fromPaymentCycle;
         boolean found = false;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         for (int i = 0; i < 30 && !found; i++) {
-            List<WebElement> options = scrollBox.findElements(
-                    By.xpath(".//div[text()='" + fromCycle + "']"));
-            if (!options.isEmpty()) {
-                WebElement cycle = options.get(0);
-                cycle.click();
+            List<WebElement> options = scrollBox.findElements(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='" + fromCycle + "']]"));
+            WebElement optionToClick = options.stream()
+                    .filter(WebElement::isDisplayed)
+                    .findFirst()
+                    .orElse(null);
+            if (optionToClick != null) {
+                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", optionToClick);
+                try {
+                    optionToClick.click();
+                } catch (org.openqa.selenium.ElementNotInteractableException ex) {
+                    js.executeScript("arguments[0].click();", optionToClick);
+                }
                 found = true;
                 System.out.println("Cycle found and clicked");
                 break;
             }
             js.executeScript(
-                    "arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;",scrollBox);
+                    "arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;", scrollBox);
             Thread.sleep(150);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -233,34 +240,63 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(toPymntCycleDrpdwn,"To payment Cycle Dropdown Click");
         WebElement scrollBox = driver.findElement(By.xpath("(//div[@class='rc-virtual-list-holder'])[2]"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String toCycle = toPaymentCycle;   // the value you want to select
+        String toCycle = toPaymentCycle;
         boolean found = false;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        //////////
+//        for (int i = 0; i < 30 && !found; i++) {
+//            List<WebElement> options = scrollBox.findElements(
+//                    By.xpath(".//div[text()='" + toCycle + "']"));
+//            if (!options.isEmpty()) {
+//                WebElement cycle = options.get(0);
+//                cycle.click();
+//                found = true;
+//                System.out.println("Cycle found and clicked");
+//                break;
+//            }
+//            js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;",scrollBox);
+//            Thread.sleep(150);
+//        }
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        if (!found) {
+//            throw new RuntimeException("Cycle '" + toCycle + "' not found in dropdown after scrolling");
+//        }
+
+        ////////
         for (int i = 0; i < 30 && !found; i++) {
-            List<WebElement> options = scrollBox.findElements(
-                    By.xpath(".//div[text()='" + toCycle + "']"));
-            if (!options.isEmpty()) {
-                WebElement cycle = options.get(0);
-                cycle.click();
+            List<WebElement> options = scrollBox.findElements(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='" + toCycle + "']]"));
+            WebElement optionToClick = options.stream()
+                    .filter(WebElement::isDisplayed)
+                    .findFirst()
+                    .orElse(null);
+            if (optionToClick != null) {
+                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", optionToClick);
+                try {
+                    optionToClick.click();
+                } catch (org.openqa.selenium.ElementNotInteractableException ex) {
+                    js.executeScript("arguments[0].click();", optionToClick);
+                }
                 found = true;
                 System.out.println("Cycle found and clicked");
                 break;
             }
-            js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;",scrollBox);
+            js.executeScript(
+                    "arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;", scrollBox);
             Thread.sleep(150);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         if (!found) {
             throw new RuntimeException("Cycle '" + toCycle + "' not found in dropdown after scrolling");
         }
+
     }
 
     public void quickSearchPageAssertion(){
         Assert.assertEquals(quickSearchPageTitle.getText(), "Quick Search");
         Assert.assertTrue("Partner ID text box is not enabled", partnerIdTxtbox.isEnabled());
         Assert.assertTrue("MIS ID text box is not enabled", misIdTxtbox.isEnabled());
-        Assert.assertFalse("From Payment Cycle Dropdown is enabled",frmPymntCycleDrpdwn.isEnabled());
-        Assert.assertFalse("To Payment Cycle Dropdown is enabled",toPymntCycleDrpdwn.isEnabled());
+        Assert.assertFalse("From Payment Cycle Dropdown is enabled",isButtonDisabled(driver,frmPymntCycleDrpdwn));
+        Assert.assertFalse("To Payment Cycle Dropdown is enabled",isButtonDisabled(driver,toPymntCycleDrpdwn));
         Assert.assertFalse("Search button is enabled",isButtonDisabled(driver,searchButton));
         Assert.assertFalse("Reset button is enabled",isButtonDisabled(driver,resetButton));
     }
