@@ -403,7 +403,5 @@ public class TestUtil extends TestBase {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click()",ele);
     }
-
-
 }
 
