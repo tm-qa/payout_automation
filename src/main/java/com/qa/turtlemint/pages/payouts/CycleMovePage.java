@@ -291,15 +291,31 @@ public class CycleMovePage extends TestBase {
     public static void uploadFile(String fileName) {
         if(fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//EarlyCycleMove//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//LaterCycleMove//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//QuickPayCycleMove//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("MoveBackCycle_QP_C2.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
+        else if (fileName.equalsIgnoreCase("Valid_MIS_BulkSearch.csv")) {
+            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//BulkSearchFiles//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
+        else if (fileName.equalsIgnoreCase("Valid_Invalid_MIS_BulkSearch.csv")) {
+            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//BulkSearchFiles//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
+        else if (fileName.equalsIgnoreCase("Invalid_MIS_BulkSearch.csv")) {
+            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//BulkSearchFiles//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
         }
     }
 

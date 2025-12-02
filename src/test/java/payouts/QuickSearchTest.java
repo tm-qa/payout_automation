@@ -48,6 +48,15 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.searchByValid_From_To_InvalidCycleRange("63b54bb9ee10470001250bb6","MIS_AHSBF7UN56P","Nov 2025 C1","Nov 2025 C1");
     }
 
+    @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    public void verifyValidMIS_BulkSearch() throws InterruptedException {
+        quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
+        quickSearchPage.bulkSearchByMIS_ID("Valid_Invalid_MIS_BulkSearch.csv");
+        quickSearchPage.bulkSearchBy_Invalid_MIS_ID("Invalid_MIS_BulkSearch.csv");
+        quickSearchPage.bulkSearchByMIS_ID_Cycle("Valid_MIS_BulkSearch.csv","Oct 2025 C2","Nov 2025 C2");
+        quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
+    }
+
     @AfterTest()
     public void close() {
         driver.close();
