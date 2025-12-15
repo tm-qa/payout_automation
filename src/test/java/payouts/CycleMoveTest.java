@@ -29,6 +29,7 @@ public class CycleMoveTest extends TestBase {
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
 
+
     @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)//retryAnalyzer = RetryAnalyser.class
     public void verifyEarlyCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("EarlyCycleMove.csv", "202511C2", "202511C1");
