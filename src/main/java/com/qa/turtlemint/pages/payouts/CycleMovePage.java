@@ -268,6 +268,7 @@ public class CycleMovePage extends TestBase {
         }
     }
 
+
     public void selectDestinationCycle(String destCycle) throws NoSuchElementException, InterruptedException {
         WebElement scrollBox = driver.findElement(By.xpath("(//div[@class='rc-virtual-list-holder'])[2]"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -288,9 +289,17 @@ public class CycleMovePage extends TestBase {
         }
     }
 
+
+    public static void uploadFiles(String relativePath, String fileName) {
+        String filePath = System.getProperty("user.dir") + File.separator + relativePath+fileName;
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(filePath);
+    }
+
     public static void uploadFile(String fileName) {
+
         if(fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
-            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//EarlyCycleMove//" + fileName + "");
+            uploadFiles("src/main/resources/data/",fileName);
+          //  driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//EarlyCycleMove//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
