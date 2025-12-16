@@ -53,6 +53,7 @@ public class CycleMoveTest extends TestBase {
         cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251125", "202511C2");
     }
 
+
     @AfterTest()
     public void close() {
         driver.close();
