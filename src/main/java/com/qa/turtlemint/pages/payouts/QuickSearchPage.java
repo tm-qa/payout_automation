@@ -446,15 +446,15 @@ public class QuickSearchPage extends TestBase {
                             "UTR_FBS", "UTR_TMF", "Payment_Date_IRDA_C", "Payment_Date_IRDA_R", "Payment_Date_FBS", "Payment_Date_TMF", "IRDA_C_Payment_Status", "IRDA_R_Payment_Status", "FBS_Payment_Status", "TMF_Payment_Status",
                             "Payment_Status", "Payment_Remarks"));
 
-                    if (partnerID.equalsIgnoreCase("63b54bb9ee10470001250bb6")&&misID.equalsIgnoreCase("MIS_AHSBF7UN56P")) {
+                    if (partnerID.equalsIgnoreCase("6290f07ed35ae3058a14b495")&&misID.equalsIgnoreCase("MIS_MHQS4PFOT1K")) {
                         LogUtils.info("Validating CSV Result For Valid PartnerID & MIS_ID");
-                        csvAssert.assertRow(data, 1, Arrays.asList("69258d93e855424104e09fa0", "MIS_AHSBF7UN56P" ,"", "SYSTEM_GENERATED", "", "", "2", "'dfhngngnjjdkks", "", "", "rahul.patil1@turtlemint.com", "", "25-Nov-2025", "Nov",
-                                "Two Wheeler", "", "TW", "Bike", "", "rahul patil", "DP - 1586333", "63b54bb9ee10470001250bb6", "","city head", "circle head mix1", "", "","", "", "partner_level_1", "", "", "", "", "", "Mira Road","NEW", "mr",
-                                "Sanity", "Test", "MH-01-WW-2164", "MH01", "Hero Honda", "Splendor Pro", "","100", "Petrol", "2023", "", "2", "false", "", "Issued", "", "Bajaj Allianz", "", "", "", "Comprehensive", "", "", "", "","1", "",
-                                "25-Nov-2025", "25-Nov-2026", "25-Nov-2025", "25-Nov-2026", "25-Nov-2025", "25-Nov-2026", "false", "10000", "", "", "", "", "Mumbai", "Maharashtra", "", "opsmanual", "25-Nov-2025", "", "1003", "2000", "3000", "4000", "6000",
-                                "", "0.0", "25", "PENDING", "Present", "Partner", "DONE", "0", "128061", "", "true", "SYSTEM", "DONE", "25-Nov-2025", "25-Nov-2025", "", "", "", "Insurer", "1.95xN", "", "", "", "1170.0", "fs_motor_bharat", "Star",
-                                "slab 3", "true", "false", "", "0.2xN", "", "", "", "", "1.75xN", "", "1.75xN", "", "", "", "", "69258d93e855424104e09fa1", "", "20251125", "63b54bb9ee10470001250bb6", "63b54bb9ee10470001250bb6", "POLICY_COMMISSION",
-                                "", "Regular", "", "25-Nov-2025", "25-Nov-2025", "COMP_BJ", "Sanity Test", "MH/2164", "jdkks", "", "", "", "", "1050.0", "0.0", "1050.0", "PENDING", "25-Nov-2025", "25-Nov-2025", "25-Nov-2025", "PENDING", "0.0", "0.0", "0.0",
+                        csvAssert.assertRow(data, 1, Arrays.asList("68e4f94960ee703059cebdd4", "MIS_MHQS4PFOT1K" ,"", "SYSTEM_GENERATED", "", "", "1", "'D700520941", "", "", "SYSTEM", "", "07-Oct-2025", "Oct",
+                                "CPA", "", "TW", "Scooter", "", "automation testing", "DP - 1585924", "6290f07ed35ae3058a14b495", "sanity rm","city head sales pro", "saurabh kumar singh", "puneet kumar srivastav", "","", "", "partner_level_1", "", "", "", "", "", "Varanasi","NEW", "mr",
+                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
+                                "07-Oct-2025", "06-Oct-2026", "", "", "", "", "", "", "", "", "", "", "Mumbai", "MAHARASHTRA", "", "onlineissuance", "07-Oct-2025", "", "", "", "", "", "390",
+                                "", "0.0", "", "PENDING", "", "Partner", "NOT_DONE", "0", "172655", "", "", "", "PENDING", "", "", "", "", "", "Insurer", "3.0xN", "", "", "", "117.0", "", "",
+                                "slab 1", "", "true", "", "", "", "", "", "", "3.0xN", "", "3.0xN", "", "", "", "", "68e4f94960ee703059cebdd5", "", "202510C1", "6290f07ed35ae3058a14b495", "6290f07ed35ae3058a14b495", "POLICY_COMMISSION",
+                                "", "Regular", "", "07-Oct-2025", "07-Oct-2025", "DI", "UTKARSH VIKAS CHANDEL", "", "20941", "", "", "", "", "117.0", "0.0", "117.0", "PENDING", "07-Oct-2025", "07-Oct-2025", "07-Oct-2025", "PENDING", "0.0", "0.0", "0.0",
                                 "0.0", "0.0", "0.0", "0.0", "0.0", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
                         LogUtils.info("Validated CSV Result For Valid PartnerID & MIS_ID");
                         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -462,16 +462,16 @@ public class QuickSearchPage extends TestBase {
                     else if (partnerID.equalsIgnoreCase("6290f07ed35ae3058a14b495")) {
                         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     }
-                    else if (misID.equalsIgnoreCase("MIS_AHSBF7UN56P")) {
+                    else if (misID.equalsIgnoreCase("MIS_MHQS4PFOT1K")) {
                         LogUtils.info("Validating CSV Result For Valid MIS ID");
-                        csvAssert.assertRow(data, 1, Arrays.asList("69258d93e855424104e09fa0", "MIS_AHSBF7UN56P" ,"", "SYSTEM_GENERATED", "", "", "2", "'dfhngngnjjdkks", "", "", "rahul.patil1@turtlemint.com", "", "25-Nov-2025", "Nov",
-                                  "Two Wheeler", "", "TW", "Bike", "", "rahul patil", "DP - 1586333", "63b54bb9ee10470001250bb6", "","city head", "circle head mix1", "", "","", "", "partner_level_1", "", "", "", "", "", "Mira Road","NEW", "mr",
-                                  "Sanity", "Test", "MH-01-WW-2164", "MH01", "Hero Honda", "Splendor Pro", "","100", "Petrol", "2023", "", "2", "false", "", "Issued", "", "Bajaj Allianz", "", "", "", "Comprehensive", "", "", "", "","1", "",
-                                  "25-Nov-2025", "25-Nov-2026", "25-Nov-2025", "25-Nov-2026", "25-Nov-2025", "25-Nov-2026", "false", "10000", "", "", "", "", "Mumbai", "Maharashtra", "", "opsmanual", "25-Nov-2025", "", "1003", "2000", "3000", "4000", "6000",
-                                  "", "0.0", "25", "PENDING", "Present", "Partner", "DONE", "0", "128061", "", "true", "SYSTEM", "DONE", "25-Nov-2025", "25-Nov-2025", "", "", "", "Insurer", "1.95xN", "", "", "", "1170.0", "fs_motor_bharat", "Star",
-                                  "slab 3", "true", "false", "", "0.2xN", "", "", "", "", "1.75xN", "", "1.75xN", "", "", "", "", "69258d93e855424104e09fa1", "", "20251125", "63b54bb9ee10470001250bb6", "63b54bb9ee10470001250bb6", "POLICY_COMMISSION",
-                                  "", "Regular", "", "25-Nov-2025", "25-Nov-2025", "COMP_BJ", "Sanity Test", "MH/2164", "jdkks", "", "", "", "", "1050.0", "0.0", "1050.0", "PENDING", "25-Nov-2025", "25-Nov-2025", "25-Nov-2025", "PENDING", "0.0", "0.0", "0.0",
-                                  "0.0", "0.0", "0.0", "0.0", "0.0", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+                        csvAssert.assertRow(data, 1, Arrays.asList("68e4f94960ee703059cebdd4", "MIS_MHQS4PFOT1K" ,"", "SYSTEM_GENERATED", "", "", "1", "'D700520941", "", "", "SYSTEM", "", "07-Oct-2025", "Oct",
+                                "CPA", "", "TW", "Scooter", "", "automation testing", "DP - 1585924", "6290f07ed35ae3058a14b495", "sanity rm","city head sales pro", "saurabh kumar singh", "puneet kumar srivastav", "","", "", "partner_level_1", "", "", "", "", "", "Varanasi","NEW", "mr",
+                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
+                                "07-Oct-2025", "06-Oct-2026", "", "", "", "", "", "", "", "", "", "", "Mumbai", "MAHARASHTRA", "", "onlineissuance", "07-Oct-2025", "", "", "", "", "", "390",
+                                "", "0.0", "", "PENDING", "", "Partner", "NOT_DONE", "0", "172655", "", "", "", "PENDING", "", "", "", "", "", "Insurer", "3.0xN", "", "", "", "117.0", "", "",
+                                "slab 1", "", "true", "", "", "", "", "", "", "3.0xN", "", "3.0xN", "", "", "", "", "68e4f94960ee703059cebdd5", "", "202510C1", "6290f07ed35ae3058a14b495", "6290f07ed35ae3058a14b495", "POLICY_COMMISSION",
+                                "", "Regular", "", "07-Oct-2025", "07-Oct-2025", "DI", "UTKARSH VIKAS CHANDEL", "", "20941", "", "", "", "", "117.0", "0.0", "117.0", "PENDING", "07-Oct-2025", "07-Oct-2025", "07-Oct-2025", "PENDING", "0.0", "0.0", "0.0",
+                                "0.0", "0.0", "0.0", "0.0", "0.0", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
                         LogUtils.info("Validated CSV Result For Valid MIS ID");
                         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     }
@@ -533,7 +533,8 @@ public class QuickSearchPage extends TestBase {
 
     public void validateBulkSearchResult(String fileName){
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+//            String downloadDirectory = "//Users//rahulpatil//Downloads";
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout"; // Jenkins
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -553,7 +554,7 @@ public class QuickSearchPage extends TestBase {
                     WebCommands.staticSleep(1000);
                     CsvUtils csvAssert = new CsvUtils();
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
-
+                    LogUtils.info(String.valueOf(mostRecentFile));
                     csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.",
                             "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name",
                             "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype",
