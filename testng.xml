@@ -22,7 +22,7 @@
         <classes>
 
 
-            <class name="Life.Term_Plan.BAJAJLITermInsurance"/>
+            <class name="payouts.CycleMoveTest"/>
 
 
 

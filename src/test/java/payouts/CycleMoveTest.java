@@ -25,6 +25,8 @@ public class CycleMoveTest extends TestBase {
         initialization();
         cycleMovePage = new CycleMovePage();
         ninj = new ninja();
+         driver.get(System.getProperty("ninjaurl"));
+     //   driver.get(prop.getProperty("sanityurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
