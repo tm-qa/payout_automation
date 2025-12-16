@@ -21,10 +21,8 @@
         </groups>
         <classes>
 
-
             <class name="payouts.CycleMoveTest"/>
-
-
+            <class name="payouts.QuickSearchTest"/>
 
         </classes>
     </test>
