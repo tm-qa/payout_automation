@@ -460,7 +460,7 @@ public class CycleMovePage extends TestBase {
 
     public void AssertionOn_OutputFile(String fileName){
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout";
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -481,18 +481,27 @@ public class CycleMovePage extends TestBase {
                         WebCommands.staticSleep(2000);
                         CsvUtils csvAssert = new CsvUtils();
                         List<String[]> data = csvAssert.readCsv(mostRecentFile);
-
+                        LogUtils.info(String.valueOf(mostRecentFile));
                         if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                             csvAssert.assertRow(data, 0, Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle", "Destination Payment Cycle", "Ledger_Id", "Ledger_Entity_Type", "Ledger_Comment", "DP Login Id", "Customer First Name", "Customer Last Name", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Output Status", "Output Remark"));
                             csvAssert.assertCell(data, 1, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry1 : SUCCESS");
                             csvAssert.assertCell(data, 2, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry2 : SUCCESS");
                             csvAssert.assertCell(data, 3, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry3 : SUCCESS");
                             csvAssert.assertCell(data, 4, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry4 : SUCCESS");
                             csvAssert.assertCell(data, 5, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry5 : SUCCESS");
                             csvAssert.assertCell(data, 6, 23, "SUCCESS");
+                            LogUtils.info("Early Cycle Move Entry6 : SUCCESS");
                             csvAssert.assertCell(data, 7, 23, "FAILURE");
+                            LogUtils.info("Early Cycle Move Entry7 : FAILURE");
                             csvAssert.assertCell(data, 8, 23, "FAILURE");
+                            LogUtils.info("Early Cycle Move Entry8 : FAILURE");
                             csvAssert.assertCell(data, 9, 23, "FAILURE");
+                            LogUtils.info("Early Cycle Move Entry9 : FAILURE");
                             csvAssert.assertCell(data, 7, 24, "source payment cycle mismatch expected 202511C2");
                             csvAssert.assertCell(data, 8, 24, "source payment cycle mismatch expected 202511C2");
                             csvAssert.assertCell(data, 9, 24, "destination payment cycle mismatch expected 202511C1");
