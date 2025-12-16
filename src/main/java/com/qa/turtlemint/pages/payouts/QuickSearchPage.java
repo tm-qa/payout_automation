@@ -131,6 +131,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         LogUtils.info("Result Not Search Cause of INVALID MIS ID");
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -145,7 +146,8 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
-        validateQuickSearchResult("63b54bb9ee10470001250bb6", "MIS_AHSBF7UN56P");
+        TestUtil.getScreenShot();
+        validateQuickSearchResult("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K");
     }
 
     public void searchByInvalid_PartnerID_MIS_ID(String partnerID, String misID){
@@ -154,6 +156,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.sendKeys(misIdTxtbox, misID, misID + " :Invalid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -164,6 +167,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Invalid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Invalid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -174,6 +178,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid PartnerID & Valid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -194,7 +199,8 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
-        validateQuickSearchResult("63b54bb9ee10470001250bb6", "MIS_AHSBF7UN56P");
+        TestUtil.getScreenShot();
+        validateQuickSearchResult("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     }
@@ -219,6 +225,7 @@ public class QuickSearchPage extends TestBase {
                 ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Invalid fromPaymentCycle or toPaymentCycle']"))
         );
         Assert.assertEquals(errorMsg.getText(), "Invalid fromPaymentCycle or toPaymentCycle");
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -235,6 +242,7 @@ public class QuickSearchPage extends TestBase {
         LogUtils.info(toPaymentCycle + " :To Payment Cycle Selected");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
@@ -332,6 +340,8 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void bulkSearchClick() {
+        LogUtils.info("Click on Bulk Search Module.........");
+        System.out.println(cmp.bulkSearchBtn);
         if(cmp.bulkSearchBtn.isDisplayed()) {
             TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
         } else {
@@ -355,6 +365,7 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
+        TestUtil.getScreenShot();
         validateBulkSearchResult(fileName);
     }
 
