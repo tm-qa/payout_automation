@@ -157,7 +157,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         LogUtils.info("20251121 QuickPay Cycle Present in Dump");
                         csvAssert.assertCell(data, 18, 132, "202511C1");
                         LogUtils.info("202511C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 210, 132, "202511C1");
+                        csvAssert.assertCell(data, 210, 132, "202511C2");
                         LogUtils.info("202511C2 Regular Cycle Present in Dump");
                     }
                 }
