@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
+@Test(groups = {"Download_Payouts_Cycle_Test"})
 public class DownloadPayoutsCycleTest extends TestBase {
 
     DownloadPayoutsCyclePage downloadPayoutsCyclePage;
@@ -22,11 +23,13 @@ public class DownloadPayoutsCycleTest extends TestBase {
         initialization();
         downloadPayoutsCyclePage = new DownloadPayoutsCyclePage();
         ninj = new ninja();
+        driver.get(System.getProperty("ninjaurl"));
+//        driver.get(prop.getProperty("sanityurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
 
-    @Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 1, enabled = true)
     public void verify_Regular_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Nov 2025 C1","202511C1");
@@ -34,10 +37,11 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1","202510C1");
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C2","202510C2");
         downloadPayoutsCyclePage.downloadClick();
+        downloadPayoutsCyclePage.validateDownloadedCycle("regularCycle");
         downloadPayoutsCyclePage.clearDropdown();
     }
 
-    @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 2, enabled = true)
     public void verify_QuickPay_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("20th Nov 2025","20251120");
@@ -45,10 +49,11 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.selectPaymentCycle("22nd Nov 2025","20251122");
         downloadPayoutsCyclePage.selectPaymentCycle("23rd Nov 2025","20251123");
         downloadPayoutsCyclePage.downloadClick();
+        downloadPayoutsCyclePage.validateDownloadedCycle("quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
     }
 
-    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 3, enabled = true)
     public void verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Nov 2025 C1","202511C1");
@@ -56,6 +61,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.selectPaymentCycle("20th Nov 2025","20251120");
         downloadPayoutsCyclePage.selectPaymentCycle("21st Nov 2025","20251121");
         downloadPayoutsCyclePage.downloadClick();
+        downloadPayoutsCyclePage.validateDownloadedCycle("regular_quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
     }
 }

@@ -2,6 +2,7 @@ package com.qa.turtlemint.pages.payouts;
 
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.commands.WebCommands;
+import com.qa.turtlemint.pages.CSV_Validatator.CsvUtils;
 import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
 import junit.framework.Assert;
@@ -11,6 +12,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.List;
 
 public class DownloadPayoutsCyclePage extends TestBase {
 
@@ -97,8 +103,69 @@ public class DownloadPayoutsCyclePage extends TestBase {
         act.click(clearDrpdwn).build().perform();
     }
 
-    @AfterTest()
-    public void close() throws Exception {
-        driver.close();
+    public void validateDownloadedCycle(String cycleType){
+        try {
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout";
+            File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".csv");
+                }
+            });
+            if (files != null && files.length > 0) {
+                File mostRecentFile = null;
+                long lastModified = 0;
+                for (File file : files) {
+                    if (file.lastModified() > lastModified) {
+                        lastModified = file.lastModified();
+                        mostRecentFile = file;
+                    }
+                }
+                if (mostRecentFile != null) {
+                    System.out.println("Downloaded file path: " + mostRecentFile.getAbsolutePath());
+                    WebCommands.staticSleep(2000);
+                    CsvUtils csvAssert = new CsvUtils();
+                    List<String[]> data = csvAssert.readCsv(mostRecentFile);
+                    LogUtils.info(String.valueOf(mostRecentFile));
+                    if (cycleType.equalsIgnoreCase("regularCycle")) {
+                        csvAssert.assertCell(data, 1, 132, "202510C1");
+                        LogUtils.info("202510C1 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 101, 132, "202510C2");
+                        LogUtils.info("202510C2 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 186, 132, "202511C1");
+                        LogUtils.info("202511C1 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 377, 132, "202511C2");
+                        LogUtils.info("202511C2 Cycle Present in Dump");
+                    }
+                    else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
+                        csvAssert.assertCell(data, 1, 132, "20251120");
+                        LogUtils.info("20251120 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 9, 132, "20251121");
+                        LogUtils.info("20251121 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 18, 132, "20251122");
+                        LogUtils.info("20251122 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 21, 132, "20251123");
+                        LogUtils.info("20251123 Cycle Present in Dump");
+                    }
+                    else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
+                        csvAssert.assertCell(data, 1, 132, "20251120");
+                        LogUtils.info("20251120 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 10, 132, "20251121");
+                        LogUtils.info("20251121 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 18, 132, "202511C1");
+                        LogUtils.info("202511C1 Cycle Present in Dump");
+                        csvAssert.assertCell(data, 210, 132, "202511C2");
+                        LogUtils.info("202511C2 Cycle Present in Dump");
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("An error occurred during the CSV file validation.", e);
+        }
+
     }
+
 }

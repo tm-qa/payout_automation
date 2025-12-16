@@ -346,7 +346,6 @@ public class QuickSearchPage extends TestBase {
         Actions act = new Actions(driver);
         act.sendKeys(Keys.PAGE_UP).perform();
         LogUtils.info("Click on Bulk Search Module.........");
-        TestUtil.getScreenShot();
         TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
     }
 
@@ -374,6 +373,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(bulkSearchCTA, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.click(bulkResetCTA,"Reset button clicked");
+        TestUtil.getScreenShot();
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid MIS ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
@@ -390,6 +390,7 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
+        TestUtil.getScreenShot();
         validateBulkSearchResult(fileName);
     }
 
@@ -412,6 +413,7 @@ public class QuickSearchPage extends TestBase {
                 ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Invalid fromPaymentCycle or toPaymentCycle']"))
         );
         Assert.assertEquals(errorMsg.getText(), "Invalid fromPaymentCycle or toPaymentCycle");
+        TestUtil.getScreenShot();
         TestUtil.click(bulkResetCTA,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -471,10 +473,10 @@ public class QuickSearchPage extends TestBase {
                                 "", "Regular", "", "07-Oct-2025", "07-Oct-2025", "DI", "UTKARSH VIKAS CHANDEL", "", "20941", "", "", "", "", "117.0", "0.0", "117.0", "PENDING", "07-Oct-2025", "07-Oct-2025", "07-Oct-2025", "PENDING", "0.0", "0.0", "0.0",
                                 "0.0", "0.0", "0.0", "0.0", "0.0", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
                         LogUtils.info("Validated CSV Result For Valid PartnerID & MIS_ID");
-                        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        LogUtils.info("~~~Validated Valid PartnerID & MIS_ID Search~~~");
                     }
                     else if (partnerID.equalsIgnoreCase("6290f07ed35ae3058a14b495")) {
-                        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        LogUtils.info("~~~Validated Valid Partner ID Search~~~");
                     }
                     else if (misID.equalsIgnoreCase("MIS_MHQS4PFOT1K")) {
                         LogUtils.info("Validating CSV Result For Valid MIS ID");
@@ -487,7 +489,7 @@ public class QuickSearchPage extends TestBase {
                                 "", "Regular", "", "07-Oct-2025", "07-Oct-2025", "DI", "UTKARSH VIKAS CHANDEL", "", "20941", "", "", "", "", "117.0", "0.0", "117.0", "PENDING", "07-Oct-2025", "07-Oct-2025", "07-Oct-2025", "PENDING", "0.0", "0.0", "0.0",
                                 "0.0", "0.0", "0.0", "0.0", "0.0", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
                         LogUtils.info("Validated CSV Result For Valid MIS ID");
-                        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        LogUtils.info("~~~Validated Valid MIS ID Search~~~");
                     }
                     TestUtil.click(resetButton, "");
                 }
@@ -601,7 +603,7 @@ public class QuickSearchPage extends TestBase {
                         csvAssert.assertCell(data, 9, 1, "MIS_MHR22NFHZB6");
                         csvAssert.assertCell(data, 10, 1, "MIS_MHR21P59HXC");
                         LogUtils.info("Validated CSV Result For_BulkSearch_Valid MIS_ID");
-                        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid MIS_ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        LogUtils.info("~~~Validated Valid MIS_ID Bulk Search~~~");
                     }
                     else if (fileName.equalsIgnoreCase("Valid_Invalid_MIS_BulkSearch.csv")) {
                         LogUtils.info("Validating CSV Result For BulkSearch_Valid/Invalid MIS_ID");
@@ -611,7 +613,7 @@ public class QuickSearchPage extends TestBase {
                         csvAssert.assertCell(data, 4, 1, "MIS_MHR22NFHZB6");
                         csvAssert.assertCell(data, 5, 1, "MIS_MHR21P59HXC");
                         LogUtils.info("Validated CSV Result For_BulkSearch_Valid/Invalid MIS_ID");
-                        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid/Invalid MIS_ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                        LogUtils.info("~~~Validated Valid/Invalid MIS_ID Bulk Search~~~");
                     }
                     TestUtil.click(bulkResetCTA, "Result Reset");
                 }

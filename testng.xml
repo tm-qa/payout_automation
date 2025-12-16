@@ -23,6 +23,7 @@
 
             <class name="payouts.CycleMoveTest"/>
             <class name="payouts.QuickSearchTest"/>
+            <class name="payouts.DownloadPayoutsCycleTest"/>
 
         </classes>
     </test>
