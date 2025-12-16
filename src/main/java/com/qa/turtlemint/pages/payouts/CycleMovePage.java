@@ -138,11 +138,12 @@ public class CycleMovePage extends TestBase {
         TestUtil.getScreenShot();
     }
 
-    public void verifyMoveEntryCycle_ViaBulkSearch(String fileName){
+    public void verifyMoveEntryCycle_ViaBulkSearch(String fileName, String fileName1){
         TestUtil.click(quickSearchSectnBtn, "Quick Search Button Clicked");
         TestUtil.click(bulkSearchBtn, "Bulk Search Button Clicked");
         TestUtil.click(uploadBtn, "Upload Button Clicked");
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveCycleAssert//MoveCycleAssert.csv");
+        uploadFile(fileName1);
+//        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveCycleAssert//MoveCycleAssert.csv");
         WebCommands.staticSleep(1000);
         TestUtil.click(searchBtn, "Search Button Clicked");
         TestUtil.click(downloadBtn, "Download Button Clicked");
@@ -201,12 +202,12 @@ public class CycleMovePage extends TestBase {
                                 LogUtils.info("Later Cycle Move Entries Are Present as in Expected Cycle");
                             } else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After QuickPay Cycle Move");
-                                csvAssert.assertCell(data, 1, 132, "20251125");
-                                csvAssert.assertCell(data, 2, 132, "20251125");
-                                csvAssert.assertCell(data, 3, 132, "20251125");
-                                csvAssert.assertCell(data, 4, 132, "20251125");
-                                csvAssert.assertCell(data, 5, 132, "20251125");
-                                csvAssert.assertCell(data, 6, 132, "20251125");
+                                csvAssert.assertCell(data, 1, 132, "20251126");
+                                csvAssert.assertCell(data, 2, 132, "20251126");
+                                csvAssert.assertCell(data, 3, 132, "20251126");
+                                csvAssert.assertCell(data, 4, 132, "20251126");
+                                csvAssert.assertCell(data, 5, 132, "20251126");
+                                csvAssert.assertCell(data, 6, 132, "20251126");
                                 csvAssert.assertCell(data, 7, 132, "202510C2");
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
@@ -238,7 +239,7 @@ public class CycleMovePage extends TestBase {
         TestUtil.click(mainUploadBtn, "Upload button clicked");
         WebCommands.staticSleep(5000);
         LogUtils.info("Source Pay Cycle : " + srcPaymentCycle.getText());
-        Assert.assertEquals("20251125", srcPaymentCycle.getText());
+        Assert.assertEquals("20251126", srcPaymentCycle.getText());
         LogUtils.info("Destination Pay Cycle : " + destPaymentCycle.getText());
         Assert.assertEquals("202511C2", destPaymentCycle.getText());
         LogUtils.info("Success count is : " + successCount.getText());
@@ -317,6 +318,13 @@ public class CycleMovePage extends TestBase {
 //            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
         }
+
+
+        else if (fileName.equalsIgnoreCase("MoveCycleAssert.csv")) {
+            uploadFiles("src/main/resources/data/",fileName);
+//            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
         else if (fileName.equalsIgnoreCase("Valid_MIS_BulkSearch.csv")) {
             driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//BulkSearchFiles//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
@@ -355,7 +363,7 @@ public class CycleMovePage extends TestBase {
             LogUtils.info("Source Pay Cycle : " + srcPaymentCycle.getText());
             Assert.assertEquals(srcPaymentCycle.getText(), "202511C2");
             LogUtils.info("Destination Pay Cycle : " + destPaymentCycle.getText());
-            Assert.assertEquals(destPaymentCycle.getText(), "20251125");
+            Assert.assertEquals(destPaymentCycle.getText(), "20251126");
         }
         LogUtils.info("Entered Comment : " + enteredComment.getText());
         Assert.assertEquals(enteredComment.getText(), "Automation Test");
