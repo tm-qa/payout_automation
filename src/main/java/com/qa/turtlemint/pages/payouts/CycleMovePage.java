@@ -162,7 +162,7 @@ public class CycleMovePage extends TestBase {
     public void bulkSearchFileAssert(String fileName){
             try {
                 String downloadDirectory = "/var/lib/jenkins/workspace/payout";
-                LogUtils.info(downloadDirectory);
+
                 File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
@@ -182,6 +182,7 @@ public class CycleMovePage extends TestBase {
                             WebCommands.staticSleep(1000);
                             CsvUtils csvAssert = new CsvUtils();
                             List<String[]> data = csvAssert.readCsv(mostRecentFile);
+                        LogUtils.info(String.valueOf(mostRecentFile));
                             if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Early Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C1");
