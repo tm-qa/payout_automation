@@ -217,7 +217,8 @@ public class QuickSearchPage extends TestBase {
         selectToPaymentCycle(toPaymentCycle);
         LogUtils.info(toPaymentCycle + " :To Payment Cycle Selected");
         TestUtil.click(frmPymntCycleDrpdwn,"From payment Cycle Dropdown Click Again To Check Invalid Cycle Range");
-        driver.findElement(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='Oct 2025 C2']]")).click();
+        WebElement invalidCycle = driver.findElement(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='Oct 2025 C2']]"));
+        TestUtil.click(invalidCycle,"Click to test Invalid Cycle Range");
         LogUtils.info("Oct 2025 C2 :From Payment Cycle Selected");
         TestUtil.click(searchButton, "Search Button Clicked");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -341,7 +342,8 @@ public class QuickSearchPage extends TestBase {
 
     public void bulkSearchClick() {
         LogUtils.info("Click on Bulk Search Module.........");
-        System.out.println(cmp.bulkSearchBtn);
+        TestUtil.getScreenShot();
+        cmp.bulkSearchBtn.isDisplayed();
         if(cmp.bulkSearchBtn.isDisplayed()) {
             TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
         } else {
@@ -465,7 +467,7 @@ public class QuickSearchPage extends TestBase {
                         LogUtils.info("Validating CSV Result For Valid PartnerID & MIS_ID");
                         csvAssert.assertRow(data, 1, Arrays.asList("68e4f94960ee703059cebdd4", "MIS_MHQS4PFOT1K" ,"", "SYSTEM_GENERATED", "", "", "1", "'D700520941", "", "", "SYSTEM", "", "07-Oct-2025", "Oct",
                                 "CPA", "", "TW", "Scooter", "", "automation testing", "DP - 1585924", "6290f07ed35ae3058a14b495", "sanity rm","city head sales pro", "saurabh kumar singh", "puneet kumar srivastav", "","", "", "partner_level_1", "", "", "", "", "", "Varanasi","NEW", "mr",
-                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
+                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60.0", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
                                 "07-Oct-2025", "06-Oct-2026", "", "", "", "", "", "", "", "", "", "", "Mumbai", "MAHARASHTRA", "", "onlineissuance", "07-Oct-2025", "", "", "", "", "", "390",
                                 "", "0.0", "", "PENDING", "", "Partner", "NOT_DONE", "0", "172655", "", "", "", "PENDING", "", "", "", "", "", "Insurer", "3.0xN", "", "", "", "117.0", "", "",
                                 "slab 1", "", "true", "", "", "", "", "", "", "3.0xN", "", "3.0xN", "", "", "", "", "68e4f94960ee703059cebdd5", "", "202510C1", "6290f07ed35ae3058a14b495", "6290f07ed35ae3058a14b495", "POLICY_COMMISSION",
@@ -481,7 +483,7 @@ public class QuickSearchPage extends TestBase {
                         LogUtils.info("Validating CSV Result For Valid MIS ID");
                         csvAssert.assertRow(data, 1, Arrays.asList("68e4f94960ee703059cebdd4", "MIS_MHQS4PFOT1K" ,"", "SYSTEM_GENERATED", "", "", "1", "'D700520941", "", "", "SYSTEM", "", "07-Oct-2025", "Oct",
                                 "CPA", "", "TW", "Scooter", "", "automation testing", "DP - 1585924", "6290f07ed35ae3058a14b495", "sanity rm","city head sales pro", "saurabh kumar singh", "puneet kumar srivastav", "","", "", "partner_level_1", "", "", "", "", "", "Varanasi","NEW", "mr",
-                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
+                                "UTKARSH VIKAS", "CHANDEL", "NEW", "", "", "", "","", "", "", "", "", "false", "60.0", "Issued", "", "Go Digit", "", "", "", "Comprehensive", "", "", "", "","1", "",
                                 "07-Oct-2025", "06-Oct-2026", "", "", "", "", "", "", "", "", "", "", "Mumbai", "MAHARASHTRA", "", "onlineissuance", "07-Oct-2025", "", "", "", "", "", "390",
                                 "", "0.0", "", "PENDING", "", "Partner", "NOT_DONE", "0", "172655", "", "", "", "PENDING", "", "", "", "", "", "Insurer", "3.0xN", "", "", "", "117.0", "", "",
                                 "slab 1", "", "true", "", "", "", "", "", "", "3.0xN", "", "3.0xN", "", "", "", "", "68e4f94960ee703059cebdd5", "", "202510C1", "6290f07ed35ae3058a14b495", "6290f07ed35ae3058a14b495", "POLICY_COMMISSION",
