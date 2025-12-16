@@ -40,9 +40,9 @@ public class TestBase {
         LogUtils.info("Browser name: " + browserName);
         if (browserName.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
-            options.setBrowserVersion("119");
+   //         options.setBrowserVersion("119");
 //            options.addArguments("--headless=new");
-            driver = new ChromeDriver(options);
+ //           driver = new ChromeDriver(options);
             options.addArguments("start-maximized"); // open Browser in maximized mode
             //    options.addArguments("--incognito");
             String osName = System.getProperty("os.name");
@@ -63,7 +63,7 @@ public class TestBase {
 //				WebDriver driver = new ChromeDriver(options);
 
             }
-            // driver = new ChromeDriver(options);
+             driver = new ChromeDriver(options);
 
             Dimension newDimension = new Dimension(1200, 800);
             driver.manage().window().setSize(newDimension);
