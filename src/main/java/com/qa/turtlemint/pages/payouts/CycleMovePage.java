@@ -184,14 +184,23 @@ public class CycleMovePage extends TestBase {
                             if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Early Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 2, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 3, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 4, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 5, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 6, 132, "202511C1");
+                                LogUtils.info("Validating Entry : 202511C1");
                                 csvAssert.assertCell(data, 7, 132, "202510C2");
+                                LogUtils.info("Validating Entry : 202510C2");
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
+                                LogUtils.info("Validating Entry : 202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
+                                LogUtils.info("Validating Entry : 202510C2");
                                 LogUtils.info("Early Cycle Move Entries Are Present as in Expected Cycle");
                             }
                             else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
