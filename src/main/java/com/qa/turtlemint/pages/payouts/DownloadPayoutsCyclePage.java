@@ -7,6 +7,8 @@ import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
 import junit.framework.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -78,9 +80,12 @@ public class DownloadPayoutsCyclePage extends TestBase {
 
     public void selectPaymentCycle(String paymentCycle, String code){
         Actions act=new Actions(driver);
-        if(clearDrpdwn.isDisplayed()) {
-            act.moveToElement(clearDrpdwn).build().perform();
-            act.click(clearDrpdwn).build().perform();
+        try {
+            if (clearDrpdwn.isDisplayed()) {
+                act.moveToElement(clearDrpdwn).click().perform();
+            }
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            System.out.println("Clear dropdown cta not present");
         }
         TestUtil.click(paymentCycleDrpdwn, "Clicked on Dropdown");
         paymentCycleDrpdwn.sendKeys(code);
