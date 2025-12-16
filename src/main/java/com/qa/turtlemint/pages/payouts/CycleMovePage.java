@@ -478,9 +478,9 @@ public class CycleMovePage extends TestBase {
                             csvAssert.assertCell(data, 7, 23, "FAILURE");
                             csvAssert.assertCell(data, 8, 23, "FAILURE");
                             csvAssert.assertCell(data, 9, 23, "FAILURE");
-                            csvAssert.assertCell(data, 7, 24, "source payment cycle mismatch expected 202511C2; destination payment cycle mismatch expected 20251125");
-                            csvAssert.assertCell(data, 8, 24, "source payment cycle mismatch expected 202511C2; destination payment cycle mismatch expected 20251125");
-                            csvAssert.assertCell(data, 9, 24, "destination payment cycle mismatch expected 20251125");
+                            csvAssert.assertCell(data, 7, 24, "source payment cycle mismatch expected 202511C2; destination payment cycle mismatch expected 20251126");
+                            csvAssert.assertCell(data, 8, 24, "source payment cycle mismatch expected 202511C2; destination payment cycle mismatch expected 20251126");
+                            csvAssert.assertCell(data, 9, 24, "destination payment cycle mismatch expected 20251126");
                         }
                 }
 

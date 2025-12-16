@@ -47,13 +47,13 @@ public class CycleMoveTest extends TestBase {
 
     @Test(priority = 3, enabled = true)
     public void verifyQuickPayCycleMove() throws Exception {
-        cycleMovePage.move_CyclePayments("QuickPayCycleMove_C2_QP.csv", "202511C2", "20251125");
+        cycleMovePage.move_CyclePayments("QuickPayCycleMove_C2_QP.csv", "202511C2", "20251126");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("QuickPayCycleMove_C2_QP.csv");
     }
 
     @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void moveBackInEarlyCycle() throws InterruptedException {
-        cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251125", "202511C2");
+        cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251126", "202511C2");
     }
 
 
