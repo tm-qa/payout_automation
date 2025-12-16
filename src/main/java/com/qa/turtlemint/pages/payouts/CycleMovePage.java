@@ -139,7 +139,13 @@ public class CycleMovePage extends TestBase {
     }
 
     public void verifyMoveEntryCycle_ViaBulkSearch(String fileName, String fileName1){
-        TestUtil.click(quickSearchSectnBtn, "Quick Search Button Clicked");
+        if(quickSearchSectnBtn.isDisplayed()){
+            TestUtil.clickByJS(quickSearchSectnBtn);
+        } else {
+            TestUtil.click(dpc.ledgerBtn,"");
+            TestUtil.clickByJS(quickSearchSectnBtn);
+        }
+//        TestUtil.clickByJS(quickSearchSectnBtn);
         TestUtil.click(bulkSearchBtn, "Bulk Search Button Clicked");
         TestUtil.click(uploadBtn, "Upload Button Clicked");
         uploadFile(fileName1);
