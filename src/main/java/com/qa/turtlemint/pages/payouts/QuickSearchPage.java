@@ -341,6 +341,7 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void bulkSearchClick() {
+        driver.navigate().refresh();
         LogUtils.info("Click on Bulk Search Module.........");
         TestUtil.getScreenShot();
         cmp.bulkSearchBtn.isDisplayed();
