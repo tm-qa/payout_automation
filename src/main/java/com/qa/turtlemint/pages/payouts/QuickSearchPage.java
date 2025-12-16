@@ -8,6 +8,7 @@ import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
 import junit.framework.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -342,16 +343,11 @@ public class QuickSearchPage extends TestBase {
 
     public void bulkSearchClick() {
         driver.navigate().refresh();
+        Actions act = new Actions(driver);
+        act.sendKeys(Keys.PAGE_UP).perform();
         LogUtils.info("Click on Bulk Search Module.........");
         TestUtil.getScreenShot();
-        cmp.bulkSearchBtn.isDisplayed();
-        if(cmp.bulkSearchBtn.isDisplayed()) {
-            TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
-        } else {
-            TestUtil.click(dpc.ledgerBtn,"Ledger Clicked");
-            TestUtil.click(cmp.quickSearchSectnBtn,"Quick search Module Clicked");
-            TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
-        }
+        TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
     }
 
     public void bulkSearchByMIS_ID(String fileName) {
