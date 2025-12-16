@@ -308,7 +308,8 @@ public class CycleMovePage extends TestBase {
             LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
-            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//QuickPayCycleMove//" + fileName + "");
+            uploadFiles("src/main/resources/data/",fileName);
+//            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//QuickPayCycleMove//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("MoveBackCycle_QP_C2.csv")) {
