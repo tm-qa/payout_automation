@@ -207,8 +207,8 @@ public class QuickSearchPage extends TestBase {
         selectToPaymentCycle(toPaymentCycle);
         LogUtils.info(toPaymentCycle + " :To Payment Cycle Selected");
         TestUtil.click(frmPymntCycleDrpdwn,"From payment Cycle Dropdown Click Again To Check Invalid Cycle Range");
-        driver.findElement(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='Nov 2025 C2']]")).click();
-        LogUtils.info("Nov 2025 C2 :From Payment Cycle Selected");
+        driver.findElement(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='Oct 2025 C2']]")).click();
+        LogUtils.info("Oct 2025 C2 :From Payment Cycle Selected");
         TestUtil.click(searchButton, "Search Button Clicked");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement errorMsg = wait.until(
@@ -445,6 +445,7 @@ public class QuickSearchPage extends TestBase {
                             "MIS_Issuance_Date", "Payment_Finalize_Status", "TDS_IRDA_C", "TDS_IRDA_R", "TDS_FBS", "TDS_TMF", "Net_Amount_IRDA_C", "Net_Amount_IRDA_R", "Net_Amount_FBS", "Net_Amount_TMF", "UTR_IRDA_C", "UTR_IRDA_R",
                             "UTR_FBS", "UTR_TMF", "Payment_Date_IRDA_C", "Payment_Date_IRDA_R", "Payment_Date_FBS", "Payment_Date_TMF", "IRDA_C_Payment_Status", "IRDA_R_Payment_Status", "FBS_Payment_Status", "TMF_Payment_Status",
                             "Payment_Status", "Payment_Remarks"));
+                    LogUtils.info("Downloaded Quick Search Result");
 
                     if (partnerID.equalsIgnoreCase("6290f07ed35ae3058a14b495")&&misID.equalsIgnoreCase("MIS_MHQS4PFOT1K")) {
                         LogUtils.info("Validating CSV Result For Valid PartnerID & MIS_ID");
