@@ -34,6 +34,7 @@ public class CycleMoveTest extends TestBase {
     public void verifyEarlyCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("EarlyCycleMove_C2_C1.csv", "202511C2", "202511C1");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("EarlyCycleMove_C2_C1.csv");
+
     }
 
     @Test(priority = 2, enabled = true)
