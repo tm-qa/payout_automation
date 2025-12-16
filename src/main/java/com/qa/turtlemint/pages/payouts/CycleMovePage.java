@@ -162,6 +162,7 @@ public class CycleMovePage extends TestBase {
     public void bulkSearchFileAssert(String fileName){
             try {
                 String downloadDirectory = "/var/lib/jenkins/workspace/payout";
+                LogUtils.info(downloadDirectory);
                 File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
@@ -184,48 +185,66 @@ public class CycleMovePage extends TestBase {
                             if (fileName.equalsIgnoreCase("EarlyCycleMove_C2_C1.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Early Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 2, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 3, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 4, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 5, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 6, 132, "202511C1");
-                                LogUtils.info("Validating Entry : 202511C1");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202511C1");
                                 csvAssert.assertCell(data, 7, 132, "202510C2");
-                                LogUtils.info("Validating Entry : 202510C2");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
-                                LogUtils.info("Validating Entry : 202510C2");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
-                                LogUtils.info("Validating Entry : 202510C2");
+                                LogUtils.info("Validating Early Cycle Move Entry : 202510C2");
                                 LogUtils.info("Early Cycle Move Entries Are Present as in Expected Cycle");
                             }
                             else if (fileName.equalsIgnoreCase("LaterCycleMove_C1_C2.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After Later Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 2, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 3, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 4, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 5, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 6, 132, "202511C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202511C2");
                                 csvAssert.assertCell(data, 7, 132, "202510C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
+                                LogUtils.info("Validating Later Cycle Move Entry : 202510C2");
                                 LogUtils.info("Later Cycle Move Entries Are Present as in Expected Cycle");
                             } else if (fileName.equalsIgnoreCase("QuickPayCycleMove_C2_QP.csv")) {
                                 LogUtils.info("Validating Entries Present in Expected Cycle After QuickPay Cycle Move");
                                 csvAssert.assertCell(data, 1, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 2, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 3, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 4, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 5, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 6, 132, "20251126");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 20251126");
                                 csvAssert.assertCell(data, 7, 132, "202510C2");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 8, 132, "202510C2");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 202510C2");
                                 csvAssert.assertCell(data, 9, 132, "202510C2");
+                                LogUtils.info("Validating QuickPay Cycle Move Entry : 202510C2");
                                 LogUtils.info("Quickpay Cycle Move Entries Are Present as in Expected Cycle");
                             }
                     }
@@ -392,6 +411,7 @@ public class CycleMovePage extends TestBase {
     public void validateDownloadTemplateFile(){
         try {
             String downloadDirectory = "/var/lib/jenkins/workspace/payout";
+            LogUtils.info("File Downloaded : "+downloadDirectory);
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -425,6 +445,7 @@ public class CycleMovePage extends TestBase {
                             LogUtils.info("Validating Columns Present in downloaded Template File");
                             List<String> listExpected = new ArrayList<>(Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle","Destination Payment Cycle","Ledger_Id","Ledger_Entity_Type","Ledger_Comment","DP Login Id","Customer First Name","Customer Last Name","Case Status","Channel Type","Product category","Product subcategory","Vehicle type","Vehicle subtype","Business Type","Plan name","Insurer","product name","Registration no.","Policy No.","Master Policy No."));
                             Assert.assertEquals(listActual,listExpected);
+                            LogUtils.info("Columns Present in Template File : "+listExpected);
                             LogUtils.info("Validating Columns Present in downloaded Template File");
                         }
                     }
