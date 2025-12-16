@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
-@Test(groups = {"Cycle_Move_Test", "Whole_Payouts"})
+@Test(groups = {"Cycle_Move_Test","Whole_Payouts"})
 public class CycleMoveTest extends TestBase {
 
     ninja ninj;
