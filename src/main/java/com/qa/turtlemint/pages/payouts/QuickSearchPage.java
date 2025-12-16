@@ -399,7 +399,8 @@ public class QuickSearchPage extends TestBase {
 
     public void validateQuickSearchResult(String partnerID, String misID){
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+//            String downloadDirectory = "//Users//rahulpatil//Downloads"; // Local
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout"; // Jenkins
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -419,7 +420,7 @@ public class QuickSearchPage extends TestBase {
                     WebCommands.staticSleep(1000);
                     CsvUtils csvAssert = new CsvUtils();
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
-
+                    LogUtils.info(String.valueOf(mostRecentFile));
                     csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.",
                             "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name",
                             "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype",

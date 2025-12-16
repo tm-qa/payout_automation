@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
+@Test(groups = {"Quick_Search_Test"})
 public class QuickSearchTest extends TestBase {
 
     QuickSearchPage quickSearchPage;
@@ -24,6 +25,8 @@ public class QuickSearchTest extends TestBase {
         initialization();
         quickSearchPage = new QuickSearchPage();
         ninj = new ninja();
+        driver.get(System.getProperty("ninjaurl"));
+//        driver.get(prop.getProperty("sanityurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         quickSearchPage.quickSearchClick();
@@ -48,7 +51,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.searchByValid_From_To_InvalidCycleRange("63b54bb9ee10470001250bb6","MIS_AHSBF7UN56P","Nov 2025 C1","Nov 2025 C1");
     }
 
-    @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void verifyValidMIS_BulkSearch() throws InterruptedException {
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchByMIS_ID("Valid_Invalid_MIS_BulkSearch.csv");
