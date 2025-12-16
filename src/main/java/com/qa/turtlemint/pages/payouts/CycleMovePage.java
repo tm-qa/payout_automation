@@ -313,7 +313,8 @@ public class CycleMovePage extends TestBase {
             LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("MoveBackCycle_QP_C2.csv")) {
-            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
+            uploadFiles("src/main/resources/data/",fileName);
+//            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//MoveBackCycle//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
         }
         else if (fileName.equalsIgnoreCase("Valid_MIS_BulkSearch.csv")) {
@@ -398,9 +399,10 @@ public class CycleMovePage extends TestBase {
                             {
                                 listActual.add(str[i]);
                             }
-                            System.out.println(listActual);
+                            System.out.println("Validating Columns Present in downloaded Template File");
                             List<String> listExpected = new ArrayList<>(Arrays.asList("policyDetailsId", "Booking/Issued Date", "Source Payment Cycle","Destination Payment Cycle","Ledger_Id","Ledger_Entity_Type","Ledger_Comment","DP Login Id","Customer First Name","Customer Last Name","Case Status","Channel Type","Product category","Product subcategory","Vehicle type","Vehicle subtype","Business Type","Plan name","Insurer","product name","Registration no.","Policy No.","Master Policy No."));
                             Assert.assertEquals(listActual,listExpected);
+                            System.out.println("Validated Columns Present in downloaded Template File as expected");
                         }
                     }
                 }
