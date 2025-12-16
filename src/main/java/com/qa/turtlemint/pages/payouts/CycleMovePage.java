@@ -161,7 +161,7 @@ public class CycleMovePage extends TestBase {
 
     public void bulkSearchFileAssert(String fileName){
             try {
-                String downloadDirectory = "//Users//rahulpatil//Downloads";
+                String downloadDirectory = "/var/lib/jenkins/workspace/payout";
                 File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
@@ -382,7 +382,7 @@ public class CycleMovePage extends TestBase {
 
     public void validateDownloadTemplateFile(){
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout";
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
