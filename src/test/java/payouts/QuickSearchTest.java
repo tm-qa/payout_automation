@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
-@Test(groups = {"Quick_Search_Test"})
+@Test(groups = {"Quick_Search_Test", "Whole_Payouts"})
 public class QuickSearchTest extends TestBase {
 
     QuickSearchPage quickSearchPage;

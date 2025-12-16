@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
-@Test(groups = {"Download_Payouts_Cycle_Test"})
+@Test(groups = {"Download_Payouts_Cycle_Test", "Whole_Payouts"})
 public class DownloadPayoutsCycleTest extends TestBase {
 
     DownloadPayoutsCyclePage downloadPayoutsCyclePage;
