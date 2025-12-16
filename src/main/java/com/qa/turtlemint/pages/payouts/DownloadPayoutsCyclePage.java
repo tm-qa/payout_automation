@@ -91,6 +91,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
         Assert.assertEquals(dowloadedBy.getText(),"automationtesting");
         Assert.assertEquals(commentText.getText(),"Automation Test");
         TestUtil.getScreenShot();
+        WebCommands.staticSleep(5000);
     }
 
     public void commentEnter(){
