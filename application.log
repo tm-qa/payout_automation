@@ -5450,3 +5450,70 @@ Caused by: java.net.ConnectException: Connection refused
 2023-01-19 16:31:45,674  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Save successfully for inspection
 2023-01-19 16:31:48,510  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> close button clicked
 2023-01-19 16:31:50,515  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Checkout flow Completed
+2025-12-15 19:13:45,432  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:14:26,091  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:14:30,321  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:14:30,456  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:14:33,765  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:14:33,829  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:15:39,869  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:15:42,455  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:15:47,322  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:15:47,431  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:16:28,168  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:16:30,589  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:16:35,736  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:16:35,841  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:16:40,772  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:16:40,832  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:17:16,365  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:17:18,847  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:17:23,715  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:17:23,826  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:17:27,177  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:17:27,250  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:17:51,482  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Sign in button clicked
+2025-12-15 19:18:02,354  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Payout Ledger Button Clicked
+2025-12-15 19:18:02,988  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Early Cycle Payments Button Clicked
+2025-12-15 19:18:03,472  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Download Early Cycle File Template
+2025-12-15 19:18:05,457  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Upload button clicked
+2025-12-15 19:18:05,461  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> EarlyCycleMove_C2_C1.csv :File Uploaded
+2025-12-15 19:18:48,167  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:18:51,022  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:18:55,868  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:18:55,981  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:18:59,846  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:18:59,905  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:19:10,097  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Sign in button clicked
+2025-12-15 19:19:21,024  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Payout Ledger Button Clicked
+2025-12-15 19:19:21,653  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Early Cycle Payments Button Clicked
+2025-12-15 19:19:22,013  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Download Early Cycle File Template
+2025-12-15 19:19:23,090  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Upload button clicked
+2025-12-15 19:19:23,092  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> EarlyCycleMove_C2_C1.csv :File Uploaded
+2025-12-15 19:23:57,982  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Browser name: chrome
+2025-12-15 19:24:00,967  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> osName: Mac OS X
+2025-12-15 19:24:05,888  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:24:06,010  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> email Id entered
+2025-12-15 19:24:10,902  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:24:10,976  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Password entered
+2025-12-15 19:24:20,529  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Sign in button clicked
+2025-12-15 19:24:31,369  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Payout Ledger Button Clicked
+2025-12-15 19:24:31,998  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Early Cycle Payments Button Clicked
+2025-12-15 19:24:32,258  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Download Early Cycle File Template
+2025-12-15 19:24:33,348  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Upload button clicked
+2025-12-15 19:24:34,303  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> EarlyCycleMove_C2_C1.csv :File Uploaded
+2025-12-15 19:24:36,695  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Comment Entered
+2025-12-15 19:24:36,755  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Source Cycle dropdown Clicked
+2025-12-15 19:24:37,945  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> 202511C2 : Source Cycle Selected
+2025-12-15 19:24:37,994  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Destination Cycle dropdown Clicked
+2025-12-15 19:24:38,672  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> 202511C1 : Destination Cycle Selected
+2025-12-15 19:24:38,733  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Upload button clicked
+2025-12-15 19:24:41,401  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> OutputFile button clicked
+2025-12-15 19:24:48,458  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Source Pay Cycle : 202511C2
+2025-12-15 19:24:48,516  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Destination Pay Cycle : 202511C1
+2025-12-15 19:24:48,564  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Entered Comment : Automation Test
+2025-12-15 19:24:48,610  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Success count is : 6
+2025-12-15 19:24:48,663  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Failure count is : 3
+2025-12-15 19:24:49,292  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Quick Search Button Clicked
+2025-12-15 19:24:49,345  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Bulk Search Button Clicked
+2025-12-15 19:24:49,883  INFO [main] LogUtils:26 -  AUTOMATION_LOG: ==> Upload Button Clicked

@@ -411,7 +411,7 @@ public class ninja extends TestBase {
 
         TestUtil.sendKeys(emailgoogle, "automationtesting@turtlemint.com", "email Id entered");
         TestUtil.sendKeys(emailgoogle, String.valueOf(Keys.RETURN), "email Id entered");
-        TestUtil.sendKeys(passworgoogle, "Turtle@2025", "Password entered");
+        TestUtil.sendKeys(passworgoogle, "Turtle@202626", "Password entered");
         TestUtil.sendKeys(passworgoogle, String.valueOf(Keys.RETURN), "Password entered");
 
 //        try {
@@ -433,7 +433,7 @@ public class ninja extends TestBase {
         driver.getWindowHandles().forEach(tab -> driver.switchTo().window(tab));
 
         // driver.get(System.getProperty("ninjaurl"));
-        driver.get(prop.getProperty("sanityurl"));
+       // driver.get(prop.getProperty("sanityurl"));
 //          driver.get(prop.getProperty("limelighturl"));
 
         TestUtil.click(SignInbtn, "Sign in button clicked");
