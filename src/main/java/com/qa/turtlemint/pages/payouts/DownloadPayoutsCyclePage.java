@@ -77,6 +77,11 @@ public class DownloadPayoutsCyclePage extends TestBase {
     }
 
     public void selectPaymentCycle(String paymentCycle, String code){
+        Actions act=new Actions(driver);
+        if(clearDrpdwn.isDisplayed()) {
+            act.moveToElement(clearDrpdwn).build().perform();
+            act.click(clearDrpdwn).build().perform();
+        }
         TestUtil.click(paymentCycleDrpdwn, "Clicked on Dropdown");
         paymentCycleDrpdwn.sendKeys(code);
         driver.findElement(By.xpath("//*[text()='"+ paymentCycle + "']")).click();
