@@ -96,6 +96,7 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(5000);
+        TestUtil.getScreenShot();
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 //        validateQuickSearchResult("6290f07ed35ae3058a14b495", "");
     }
@@ -109,6 +110,7 @@ public class QuickSearchPage extends TestBase {
         cmp.commentEnter();
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
+        TestUtil.getScreenShot();
         validateQuickSearchResult("", "MIS_AHSBF7UN56P");
     }
 
@@ -118,6 +120,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         LogUtils.info("Result Not Search Cause of INVALID PARTNER ID");
+        TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
@@ -198,6 +201,7 @@ public class QuickSearchPage extends TestBase {
 
     public void searchByValid_From_To_InvalidCycleRange(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
         LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        driver.navigate().refresh();
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         TestUtil.click(frmPymntCycleDrpdwn, "From Payment Cycle Dropdown Clicked");
@@ -242,7 +246,7 @@ public class QuickSearchPage extends TestBase {
         String fromCycle = fromPaymentCycle;
         boolean found = false;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-        for (int i = 0; i < 30 && !found; i++) {
+        for (int i = 0; i < 100 && !found; i++) {
             List<WebElement> options = scrollBox.findElements(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='" + fromCycle + "']]"));
             WebElement optionToClick = options.stream()
                     .filter(WebElement::isDisplayed)
@@ -275,7 +279,7 @@ public class QuickSearchPage extends TestBase {
         String toCycle = toPaymentCycle;
         boolean found = false;
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-        for (int i = 0; i < 30 && !found; i++) {
+        for (int i = 0; i < 100 && !found; i++) {
             List<WebElement> options = scrollBox.findElements(By.xpath(".//div[contains(@class,'ant-select-item-option')][.//div[normalize-space(text())='" + toCycle + "']]"));
             WebElement optionToClick = options.stream()
                     .filter(WebElement::isDisplayed)
@@ -318,8 +322,6 @@ public class QuickSearchPage extends TestBase {
         return false;
     }
 
-
-
     public void bulkSearchPageAssertion(){
         Assert.assertEquals("Bulk Search", bulkSearchPageTitle.getText());
         Assert.assertTrue("Seach By Dropdown is not enabled", searchByDropdown.isEnabled());
@@ -333,6 +335,7 @@ public class QuickSearchPage extends TestBase {
         if(cmp.bulkSearchBtn.isDisplayed()) {
             TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
         } else {
+            TestUtil.click(dpc.ledgerBtn,"Ledger Clicked");
             TestUtil.click(cmp.quickSearchSectnBtn,"Quick search Module Clicked");
             TestUtil.click(cmp.bulkSearchBtn, "Bulk search Module Clicked");
         }
