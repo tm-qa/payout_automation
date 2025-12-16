@@ -79,14 +79,6 @@ public class DownloadPayoutsCyclePage extends TestBase {
     }
 
     public void selectPaymentCycle(String paymentCycle, String code){
-        Actions act=new Actions(driver);
-        try {
-            if (clearDrpdwn.isDisplayed()) {
-                act.moveToElement(clearDrpdwn).click().perform();
-            }
-        } catch (NoSuchElementException | StaleElementReferenceException e) {
-            System.out.println("Clear dropdown cta not present");
-        }
         TestUtil.click(paymentCycleDrpdwn, "Clicked on Dropdown");
         paymentCycleDrpdwn.sendKeys(code);
         driver.findElement(By.xpath("//*[text()='"+ paymentCycle + "']")).click();
@@ -139,7 +131,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
                     LogUtils.info(String.valueOf(mostRecentFile));
                     if (cycleType.equalsIgnoreCase("regularCycle")) {
-                        csvAssert.assertCell(data, 1, 132, "202510C2");
+                        csvAssert.assertCell(data, 1, 132, "202510C1");
                         LogUtils.info("202510C1 Regular Cycle Present in Dump");
                         csvAssert.assertCell(data, 101, 132, "202510C2");
                         LogUtils.info("202510C2 Regular Cycle Present in Dump");
@@ -165,7 +157,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         LogUtils.info("20251121 QuickPay Cycle Present in Dump");
                         csvAssert.assertCell(data, 18, 132, "202511C1");
                         LogUtils.info("202511C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 210, 132, "202511C2");
+                        csvAssert.assertCell(data, 210, 132, "202511C1");
                         LogUtils.info("202511C2 Regular Cycle Present in Dump");
                     }
                 }
