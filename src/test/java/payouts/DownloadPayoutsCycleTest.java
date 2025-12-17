@@ -35,12 +35,12 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @BeforeMethod()
-    public void loginLess() throws Exception {
+    public void loginLess(){
         driver.get(cu);
     }
 
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1)
     public void verify_Regular_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Nov 2025 C1", "202511C1");
@@ -52,7 +52,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.clearDropdown();
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2)
     public void verify_QuickPay_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("20th Nov 2025", "20251120");
@@ -64,7 +64,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.clearDropdown();
     }
 
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3)
     public void verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Nov 2025 C1", "202511C1");
