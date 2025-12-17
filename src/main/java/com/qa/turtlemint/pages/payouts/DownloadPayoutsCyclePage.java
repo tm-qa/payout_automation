@@ -58,8 +58,6 @@ public class DownloadPayoutsCyclePage extends TestBase {
     @FindBy(xpath = "//td[text()='Automation Test']")
     WebElement commentText;
 
-
-
     @FindBy(xpath = "//span[@aria-label='close-circle']")
     WebElement clearDrpdwn;
 
