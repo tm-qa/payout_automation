@@ -6,7 +6,9 @@ import com.qa.turtlemint.pages.payouts.QuickSearchPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.*;
 import util.RetryAnalyser;
+import util.iTestListener;
 
+@Listeners(iTestListener.class)
 @Test(groups = {"Quick_Search_Test","Whole_Payouts"})
 public class QuickSearchTest extends TestBase {
 
@@ -38,7 +40,7 @@ public class QuickSearchTest extends TestBase {
         driver.get(cu);
     }
 
-    @Test(priority = 0, enabled = true)
+    @Test(priority = 0)
     public void verifyValid_QuickSearch() throws InterruptedException {
         quickSearchPage.searchByValid_Partner_ID("6290f07ed35ae3058a14b495");
         quickSearchPage.searchByValid_MIS_ID("MIS_MHQS4PFOT1K");
@@ -47,7 +49,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.searchByValid_From_To_Cycles_But_DataNotPresent("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Aug 2025 C1","Sep 2025 C2");
     }
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1)
     public void verifyInvalid_QuickSearch() throws InterruptedException {
         quickSearchPage.searchByInvalid_Partner_ID("6290f07ed35ae3058a14b");
         quickSearchPage.searchByInvalid_MIS_ID("MIS_AHSBF7U1234");
@@ -57,7 +59,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.searchByValid_From_To_InvalidCycleRange("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Oct 2025 C1","Oct 2025 C1");
     }
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2)
     public void verifyValidMIS_BulkSearch() throws InterruptedException {
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchByMIS_ID("Valid_Invalid_MIS_BulkSearch.csv");
