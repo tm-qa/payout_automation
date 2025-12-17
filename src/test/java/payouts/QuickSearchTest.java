@@ -3,6 +3,7 @@ package payouts;
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.QuickSearchPage;
+import com.qa.turtlemint.util.LogUtils;
 import org.openqa.selenium.By;
 import org.testng.annotations.*;
 import util.RetryAnalyser;
@@ -33,6 +34,7 @@ public class QuickSearchTest extends TestBase {
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         quickSearchPage.quickSearchClick();
         cu = driver.getCurrentUrl();
+        LogUtils.info(cu);
     }
 
     @BeforeMethod()
