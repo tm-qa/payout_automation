@@ -236,40 +236,12 @@ public class UploadPayoutsPage extends TestBase {
         TestUtil.click(qsp.searchButton,"");
         WebCommands.staticSleep(3000);
         org.testng.Assert.assertEquals(policyDetailID.getText(),mID);
-
         TestUtil.getFullPageScreenShot();
-
-//      Validate entry in DB Before Uploading Deviation in LedgerEntity collection
+        //      Validate entry in DB Before Uploading Deviation in LedgerEntity collection
 //        dbAssertion.deviation_LE_DB_Validation(mID);
 //        CommissionId = dbAssertion.policyComisionId;
         String pcid = CommissionId;
         this.pcid=pcid;
-//        System.out.println(pcid);
-//        return pcid;
-//      Upload Deviation on Punch Policy
-
-
-//        if(deviationType.equalsIgnoreCase("INCORRECT_RULES.csv")){
-//            System.out.println("INCORRECT_RULES BLOCK");
-//            deviations("INCORRECT_RULES.csv",pcid);
-//        } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST.csv")) {
-//            System.out.println("SPECIAL_REQUEST BLOCK");
-//            deviations("SPECIAL_REQUEST.csv",pcid);
-//        } else {
-//            System.out.println("NOMINAL_DEVIATION BLOCK");
-//            deviations("NOMINAL_DEVIATION.csv",pcid);
-//        }
-
-
-//      Validate entry in DB After Uploading Deviation in LedgerEntity collection
-
-//        if(deviationType.equals("INCORRECT_RULES")){
-//            dbAssertion.deviation_LE_DB_After_DeviationUpload(mID, "INCORRECT_RULES");
-//        } else if (deviationType.equals("SPECIAL_REQUEST")) {
-//            dbAssertion.deviation_LE_DB_After_DeviationUpload(mID, "SPECIAL_REQUEST");
-//        } else if (deviationType.equals("NOMINAL_DEVIATION")) {
-//            dbAssertion.deviation_LE_DB_After_DeviationUpload(mID, "NOMINAL_DEVIATION");
-//        }
     }
 
     public String getPcid(){

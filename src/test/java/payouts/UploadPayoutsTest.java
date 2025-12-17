@@ -49,7 +49,7 @@ public class UploadPayoutsTest extends TestBase {
     }
     @Test(priority = 1, enabled = true)
     public void verifyDeviations() throws Exception {
-//        ninj.punch_TW_Policy();
+        ninj.punch_TW_Policy();
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
         uploadPayoutsPage.uploadDeviation("INCORRECT_RULES.csv");
         uploadPayoutsPage.downloadDeviationQuickSearchResult();
