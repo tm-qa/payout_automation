@@ -129,34 +129,34 @@ public class DownloadPayoutsCyclePage extends TestBase {
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
                     LogUtils.info(String.valueOf(mostRecentFile));
                     if (cycleType.equalsIgnoreCase("regularCycle")) {
-                        csvAssert.assertCell(data, 1, 132, "202510C1");
+                        csvAssert.assertCell(data, 1, 132, "202509C1");
+                        LogUtils.info("202509C1 Regular Cycle Present in Dump");
+                        csvAssert.assertCell(data, 12, 132, "202509C2");
+                        LogUtils.info("202509C2 Regular Cycle Present in Dump");
+                        csvAssert.assertCell(data, 195, 132, "202510C1");
                         LogUtils.info("202510C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 101, 132, "202510C2");
+                        csvAssert.assertCell(data, 294, 132, "202510C2");
                         LogUtils.info("202510C2 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 186, 132, "202511C1");
-                        LogUtils.info("202511C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 377, 132, "202511C2");
-                        LogUtils.info("202511C2 Regular Cycle Present in Dump");
                     }
                     else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
-                        csvAssert.assertCell(data, 1, 132, "20251120");
-                        LogUtils.info("20251120 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 9, 132, "20251121");
-                        LogUtils.info("20251121 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 18, 132, "20251122");
-                        LogUtils.info("20251122 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 21, 132, "20251123");
-                        LogUtils.info("20251123 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 1, 132, "20251027");
+                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 11, 132, "20251028");
+                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 26, 132, "20251029");
+                        LogUtils.info("20251029 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 32, 132, "20251030");
+                        LogUtils.info("20251030 QuickPay Cycle Present in Dump");
                     }
                     else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
-                        csvAssert.assertCell(data, 1, 132, "20251120");
-                        LogUtils.info("20251120 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 10, 132, "20251121");
-                        LogUtils.info("20251121 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 18, 132, "202511C1");
-                        LogUtils.info("202511C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 210, 132, "202511C2");
-                        LogUtils.info("202511C2 Regular Cycle Present in Dump");
+                        csvAssert.assertCell(data, 1, 132, "20251027");
+                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 10, 132, "20251028");
+                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
+                        csvAssert.assertCell(data, 28, 132, "202510C1");
+                        LogUtils.info("202510C1 Regular Cycle Present in Dump");
+                        csvAssert.assertCell(data, 132, 132, "202510C2");
+                        LogUtils.info("202510C2 Regular Cycle Present in Dump");
                     }
                 }
 
