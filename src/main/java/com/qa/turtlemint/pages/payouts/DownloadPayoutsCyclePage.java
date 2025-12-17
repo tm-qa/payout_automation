@@ -129,6 +129,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
                     LogUtils.info(String.valueOf(mostRecentFile));
                     if (cycleType.equalsIgnoreCase("regularCycle")) {
+                        LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Regular Cycle ~~~");
                         csvAssert.assertCell(data, 1, 132, "202509C1");
                         LogUtils.info("202509C1 Regular Cycle Present in Dump");
                         csvAssert.assertCell(data, 12, 132, "202509C2");
@@ -137,8 +138,10 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         LogUtils.info("202510C1 Regular Cycle Present in Dump");
                         csvAssert.assertCell(data, 294, 132, "202510C2");
                         LogUtils.info("202510C2 Regular Cycle Present in Dump");
+                        LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Regular Cycle ~~~");
                     }
                     else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
+                        LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
                         csvAssert.assertCell(data, 1, 132, "20251027");
                         LogUtils.info("20251027 QuickPay Cycle Present in Dump");
                         csvAssert.assertCell(data, 11, 132, "20251028");
@@ -147,8 +150,10 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         LogUtils.info("20251029 QuickPay Cycle Present in Dump");
                         csvAssert.assertCell(data, 32, 132, "20251030");
                         LogUtils.info("20251030 QuickPay Cycle Present in Dump");
+                        LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
                     }
                     else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
+                        LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Regular/Quickpay Cycle ~~~");
                         csvAssert.assertCell(data, 1, 132, "20251027");
                         LogUtils.info("20251027 QuickPay Cycle Present in Dump");
                         csvAssert.assertCell(data, 10, 132, "20251028");
@@ -157,6 +162,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         LogUtils.info("202510C1 Regular Cycle Present in Dump");
                         csvAssert.assertCell(data, 132, 132, "202510C2");
                         LogUtils.info("202510C2 Regular Cycle Present in Dump");
+                        LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Regular/Quickpay Cycle ~~~");
                     }
                 }
 

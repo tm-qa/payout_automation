@@ -88,7 +88,7 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void searchByValid_Partner_ID(String partnerID) {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid Partner ID Search~~~");
         quickSearchPageAssertion();
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
@@ -98,12 +98,12 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(5000);
         TestUtil.getScreenShot();
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Valid Partner ID Search~~");
 //        validateQuickSearchResult("6290f07ed35ae3058a14b495", "");
     }
 
     public void searchByValid_MIS_ID(String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid MIS ID Search~~~");
         TestUtil.sendKeys(misIdTxtbox, misID, "Valid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Search Result Displayed", "Search Result", resultTitleText.getText());
@@ -116,29 +116,29 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void searchByInvalid_Partner_ID(String partnerID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid Partner ID Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         LogUtils.info("Result Not Search Cause of INVALID PARTNER ID");
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid Partner ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid Partner ID Search~~~");
     }
 
     public void searchByInvalid_MIS_ID(String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid MIS ID Search~~~");
         TestUtil.sendKeys(misIdTxtbox, misID, misID+" :Invalid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         LogUtils.info("Result Not Search Cause of INVALID MIS ID");
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid MIS ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid MIS ID Search~~~");
     }
 
     public void searchByValid_Partner_MIS_ID(String partnerID,String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid PartnerID & MIS_ID Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID + " :Valid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
@@ -148,44 +148,44 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
         TestUtil.getScreenShot();
-        validateQuickSearchResult("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K");
+        validateQuickSearchResult(partnerID, misID);
     }
 
     public void searchByInvalid_PartnerID_MIS_ID(String partnerID, String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid PartnerID & MIS_ID Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID + " :Invalid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid PartnerID & MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid PartnerID & MIS_ID Search~~~");
     }
 
     public void searchByValid_PartnerID_Invalid_MIS_ID(String partnerID, String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Invalid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid PartnerID & Invalid MIS_ID Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Invalid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Invalid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Valid PartnerID & Invalid MIS_ID Search~~~");
     }
 
     public void searchByInvalid_PartnerID_Valid_MIS_ID(String partnerID, String misID){
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid PartnerID & Valid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid PartnerID & Valid MIS_ID Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         TestUtil.click(searchButton, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid PartnerID & Valid MIS_ID Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid PartnerID & Valid MIS_ID Search~~~");
     }
 
     public void searchByValid_From_To_Cycles(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         TestUtil.click(frmPymntCycleDrpdwn, "From Payment Cycle Dropdown Clicked");
@@ -202,12 +202,12 @@ public class QuickSearchPage extends TestBase {
         WebCommands.staticSleep(1000);
         TestUtil.getScreenShot();
         validateQuickSearchResult("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~");
 
     }
 
     public void searchByValid_From_To_InvalidCycleRange(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~");
         driver.navigate().refresh();
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Valid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
@@ -229,11 +229,11 @@ public class QuickSearchPage extends TestBase {
         Assert.assertEquals(errorMsg.getText(), "Invalid fromPaymentCycle or toPaymentCycle");
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Valid PartnerID & Valid MIS_ID By Invalid Cycle Range Search~~~");
     }
 
     public void searchByValid_From_To_Cycles_But_DataNotPresent(String partnerID, String misID, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid PartnerID & Valid MIS_ID By Cycle Search~~~");
         TestUtil.sendKeys(partnerIdTxtbox, partnerID, partnerID +" :Invalid Partner ID Entered");
         TestUtil.sendKeys(misIdTxtbox, misID, misID +" :Valid MIS ID Entered");
         TestUtil.click(frmPymntCycleDrpdwn,"From payment Cycle Dropdown Click");
@@ -246,7 +246,7 @@ public class QuickSearchPage extends TestBase {
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.getScreenShot();
         TestUtil.click(resetButton,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Valid PartnerID & Valid MIS_ID By Cycle Search~~~");
 
     }
 
@@ -350,7 +350,7 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void bulkSearchByMIS_ID(String fileName) {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying MIS ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying MIS ID Bulk Search~~~");
         bulkSearchClick();
         bulkSearchPageAssertion();
         TestUtil.click(cmp.templateDownloadBtn, "Bulk Search Template Download CTA Clicked");
@@ -368,17 +368,17 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void bulkSearchBy_Invalid_MIS_ID(String fileName) {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid MIS ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid MIS ID Bulk Search~~~");
         cmp.uploadFile(fileName);
         TestUtil.click(bulkSearchCTA, "Search Button Clicked");
         Assert.assertEquals("Case Failed Result is found!","No items",noResultText.getText());
         TestUtil.click(bulkResetCTA,"Reset button clicked");
         TestUtil.getScreenShot();
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid MIS ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid MIS ID Bulk Search~~~");
     }
 
     public void bulkSearchByMIS_ID_Cycle(String fileName, String frmCycle, String toCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Valid MIS ID Bulk Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Valid MIS ID Bulk Search~~~");
         cmp.uploadFile(fileName);
         TestUtil.click(bulkSearchFrmPymntCycleDrpdwn,"From payment Cycle Dropdown Click");
         selectFromPaymentCycle(frmCycle);
@@ -395,7 +395,7 @@ public class QuickSearchPage extends TestBase {
     }
 
     public void bulkSearchInvalidCycleRange(String fileName, String fromPaymentCycle, String toPaymentCycle) throws InterruptedException {
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Verifying Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Verifying Invalid Cycle Range Search~~~");
         cmp.uploadFile(fileName);
         TestUtil.click(bulkSearchFrmPymntCycleDrpdwn,"From payment Cycle Dropdown Click");
         selectFromPaymentCycle(fromPaymentCycle);
@@ -415,7 +415,7 @@ public class QuickSearchPage extends TestBase {
         Assert.assertEquals(errorMsg.getText(), "Invalid fromPaymentCycle or toPaymentCycle");
         TestUtil.getScreenShot();
         TestUtil.click(bulkResetCTA,"Reset button clicked");
-        LogUtils.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Validated Invalid Cycle Range Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        LogUtils.info("~~~Validated Invalid Cycle Range Search~~~");
     }
 
     public void validateQuickSearchResult(String partnerID, String misID){

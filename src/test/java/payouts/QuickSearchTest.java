@@ -46,30 +46,36 @@ public class QuickSearchTest extends TestBase {
 
     @Test(priority = 1)
     public void verifyValid_QuickSearch() throws InterruptedException {
+        LogUtils.info("***- Test Case Started : verifyValid_QuickSearch -***");
         quickSearchPage.searchByValid_Partner_ID("6290f07ed35ae3058a14b495");
         quickSearchPage.searchByValid_MIS_ID("MIS_MHQS4PFOT1K");
         quickSearchPage.searchByValid_Partner_MIS_ID("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K");
         quickSearchPage.searchByValid_From_To_Cycles("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Oct 2025 C1","Nov 2025 C2");
         quickSearchPage.searchByValid_From_To_Cycles_But_DataNotPresent("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Aug 2025 C1","Sep 2025 C2");
+        LogUtils.info("***- Test Case Completed : verifyValid_QuickSearch -***");
     }
 
     @Test(priority = 2)
     public void verifyInvalid_QuickSearch() throws InterruptedException {
+        LogUtils.info("***- Test Case Started : verifyInvalid_QuickSearch -***");
         quickSearchPage.searchByInvalid_Partner_ID("6290f07ed35ae3058a14b");
         quickSearchPage.searchByInvalid_MIS_ID("MIS_AHSBF7U1234");
         quickSearchPage.searchByInvalid_PartnerID_MIS_ID("6290f07ed35ae3058a14b", "MIS_AHSBF7U1234");
         quickSearchPage.searchByValid_PartnerID_Invalid_MIS_ID("63b54bb9ee10470001250bb6", "MIS_AHSBF7U1234");
         quickSearchPage.searchByInvalid_PartnerID_Valid_MIS_ID("6290f07ed35ae3058a14b", "MIS_MHQS4PFOT1K");
         quickSearchPage.searchByValid_From_To_InvalidCycleRange("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Oct 2025 C1","Oct 2025 C1");
+        LogUtils.info("***- Test Case Completed : verifyInvalid_QuickSearch -***");
     }
 
     @Test(priority = 3)
     public void verifyValidMIS_BulkSearch() throws InterruptedException {
+        LogUtils.info("***- Test Case Started : verifyValidMIS_BulkSearch -***");
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchByMIS_ID("Valid_Invalid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchBy_Invalid_MIS_ID("Invalid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchByMIS_ID_Cycle("Valid_MIS_BulkSearch.csv","Oct 2025 C2","Nov 2025 C2");
         quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
+        LogUtils.info("***- Test Case Completed : verifyValidMIS_BulkSearch -***");
     }
 
     @AfterClass()

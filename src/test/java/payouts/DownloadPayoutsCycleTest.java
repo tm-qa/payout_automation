@@ -3,6 +3,7 @@ package payouts;
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.DownloadPayoutsCyclePage;
+import com.qa.turtlemint.util.LogUtils;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -42,6 +43,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
 
     @Test(priority = 1)
     public void verify_Regular_CyclePayoutsDumpDownload() {
+        LogUtils.info("***- Test Case Started : verify_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202510C1");
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C2", "202510C2");
@@ -50,10 +52,12 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.downloadClick();
         downloadPayoutsCyclePage.validateDownloadedCycle("regularCycle");
         downloadPayoutsCyclePage.clearDropdown();
+        LogUtils.info("***- Test Case Completed : verify_Regular_CyclePayoutsDumpDownload -***");
     }
 
     @Test(priority = 2)
     public void verify_QuickPay_CyclePayoutsDumpDownload() {
+        LogUtils.info("***- Test Case Started : verify_QuickPay_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("27th Oct 2025", "20251027");
         downloadPayoutsCyclePage.selectPaymentCycle("28th Oct 2025", "20251028");
@@ -62,10 +66,12 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.downloadClick();
         downloadPayoutsCyclePage.validateDownloadedCycle("quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
+        LogUtils.info("***- Test Case Completed : verify_QuickPay_CyclePayoutsDumpDownload -***");
     }
 
     @Test(priority = 3)
     public void verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
+        LogUtils.info("***- Test Case Started : verify_QuickPay_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202510C1");
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C2", "202510C2");
@@ -74,6 +80,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.downloadClick();
         downloadPayoutsCyclePage.validateDownloadedCycle("regular_quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
+        LogUtils.info("***- Test Case Completed : verify_QuickPay_Regular_CyclePayoutsDumpDownload -***");
     }
 
     @AfterClass()
