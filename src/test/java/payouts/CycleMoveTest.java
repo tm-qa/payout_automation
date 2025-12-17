@@ -13,7 +13,7 @@ public class CycleMoveTest extends TestBase {
     ninja ninj;
 
     CycleMovePage cycleMovePage;
-    String cu;
+  public   String cu;
 
 //    public CycleMoveTest() {
 //
@@ -33,7 +33,7 @@ public class CycleMoveTest extends TestBase {
     }
 
     @BeforeMethod()
-    public void loginless() throws Exception {
+    public void loginless() {
        driver.get(cu);
     }
 

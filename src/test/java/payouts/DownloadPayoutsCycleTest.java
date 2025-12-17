@@ -15,11 +15,11 @@ public class DownloadPayoutsCycleTest extends TestBase {
 
     DownloadPayoutsCyclePage downloadPayoutsCyclePage;
     ninja ninj;
-    String cu;
+   public String cu;
 
-//    public DownloadPayoutsCycleTest() {
-//        super();
-//    }
+    public DownloadPayoutsCycleTest() {
+        super();
+    }
 
     @BeforeClass()
     public void start() throws Exception {

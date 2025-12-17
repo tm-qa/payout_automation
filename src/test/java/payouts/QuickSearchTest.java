@@ -17,11 +17,11 @@ public class QuickSearchTest extends TestBase {
 
     ninja ninj;
 
-    String cu;
+  public   String cu;
 
-//    public QuickSearchTest() {
-//        super();
-//    }
+    public QuickSearchTest() {
+        super();
+    }
 
     @BeforeMethod()
     public void start() throws Exception {
