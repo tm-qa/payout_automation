@@ -62,7 +62,7 @@ public class QuickSearchTest extends TestBase {
     }
 
     @AfterClass()
-    public void close() {
+    public void close(){
         driver.close();
     }
 }
