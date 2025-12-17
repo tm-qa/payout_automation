@@ -81,10 +81,19 @@ public class UploadPayoutsTest extends TestBase {
     }
     @Test(priority = 3)
     public void verifyDeviations() throws Exception {
-        ninj.punch_TW_Policy();
+//        ninj.punch_TW_Policy();
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
-        uploadPayoutsPage.uploadDeviation("INCORRECT_RULES.csv");
+
+        uploadPayoutsPage.uploadDeviation("INCORRECT_RULES");
         uploadPayoutsPage.downloadDeviationQuickSearchResult();
         uploadPayoutsPage.validateDeviationQuickSearchResult("INCORRECT_RULES");
+
+        uploadPayoutsPage.uploadDeviation("SPECIAL_REQUEST");
+        uploadPayoutsPage.downloadDeviationQuickSearchResult();
+        uploadPayoutsPage.validateDeviationQuickSearchResult("SPECIAL_REQUEST");
+
+        uploadPayoutsPage.uploadDeviation("NOMINAL_DEVIATION");
+        uploadPayoutsPage.downloadDeviationQuickSearchResult();
+        uploadPayoutsPage.validateDeviationQuickSearchResult("NOMINAL_DEVIATION");
     }
 }

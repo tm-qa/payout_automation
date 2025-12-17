@@ -66,7 +66,7 @@ public class TestUtil extends TestBase {
         int digit2 = (int) (Math.random() * 10);
         int digit3 = (int) (Math.random() * 10);
         int digit4 = (int) (Math.random() * 10);
-        RegNo = ("MH39" + (char) (alpha1) + ((char) (alpha2)) +
+        RegNo = ("MH01" + (char) (alpha1) + ((char) (alpha2)) +
                 +digit1 + digit2 + digit3 + digit4);
         System.out.println(RegNo + "IN test UTIL");
 

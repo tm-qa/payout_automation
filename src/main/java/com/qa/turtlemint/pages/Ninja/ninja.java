@@ -112,7 +112,10 @@ public class ninja extends TestBase {
     @FindBy(xpath = "//a[text()='Today']")
     WebElement SaleCloseDate;
 
-    @FindBy(xpath = "//input[@id='rc_select_29']")
+    @FindBy(xpath = "(//td[@class=\"ant-picker-cell ant-picker-cell-in-view ant-picker-cell-today\"])[4]")
+    WebElement salesCloseDate;
+
+    @FindBy(xpath = "//span[text()='Search an Intermediary']/parent::span//input")
     WebElement enterDpNumber;
 
     @FindBy(xpath = "//div[text()='automation testing - [DP-1585924]']")
@@ -302,6 +305,9 @@ public class ninja extends TestBase {
     @FindBy(xpath = "//div[text()='Done']")
     WebElement doneButton;
 
+//    @FindBy(xpath = "//button[text()='Yes']")
+//    WebElement yesButton;
+
     @FindBy(xpath = "//md-select[@id='preExistingDisease']")
     WebElement diseaseDD;
 
@@ -394,9 +400,11 @@ public class ninja extends TestBase {
     @FindBy(xpath = "//md-option[@data-auto='paymentMode-ONLINE-select']//div[text()='Online']")
     WebElement lifePaymentModeSelect;
 
+    @FindBy(xpath = "//input[@id='Motor_insurerRecordStatus']")
+    WebElement insurerRecordStatusDropdown;
 
-
-
+    @FindBy(xpath = "//div[text()='Present']")
+    WebElement insurerRecordStatus_Present;
 
 
     public ninja() {
@@ -591,12 +599,12 @@ public class ninja extends TestBase {
         Thread.sleep(1000);
         driver.findElement(By.xpath("//div[@title='TW']")).click();
 
-//        driver.navigate().refresh();
-//        TestUtil.click(NewSaleButton, "New Sale Button");
-//        TestUtil.click(VerticlDropdown, "");
-//        driver.findElement(By.xpath("//div[@title='TW']")).click();
+        driver.navigate().refresh();
+        TestUtil.click(NewSaleButton, "New Sale Button");
+        TestUtil.click(VerticlDropdown, "");
+        driver.findElement(By.xpath("//div[@title='TW']")).click();
 
-//        Thread.sleep(500);
+        Thread.sleep(500);
         LogUtils.info("Vertical selected");
         TestUtil.click(PolicyStatusDropdown,"");
         WebCommands.staticSleep(1000);
@@ -670,12 +678,13 @@ public class ninja extends TestBase {
         TestUtil.click(dataqc, "Data QC dropdown");
         WebCommands.staticSleep(2000);
         TestUtil.click(doneButton, "Done select");
-        WebCommands.staticSleep(2000);
+//        TestUtil.click(insurerRecordStatusDropdown,"Insurer Record Status Dropdown Clicked");
+//        TestUtil.click(insurerRecordStatus_Present,"Insurer Record Status Present Selected");
+        WebCommands.staticSleep(1000);
+//        TestUtil.click(yesButton, "Yes select");
         driver.findElement(By.xpath("//button[text()='Yes']")).click();
-
-
-//        TestUtil.click(insRecordStatus, "Insurer Record Status dropdown");
-//        TestUtil.click(present_InsRecordStatus, "Present Insurer Record Status Selected");
+        TestUtil.click(insurerRecordStatusDropdown, "Insurer Record Status dropdown");
+        TestUtil.click(insurerRecordStatus_Present, "Present Insurer Record Status Selected");
 
 
         TestUtil.click(channelType, "channel Type dropdown");
@@ -687,7 +696,7 @@ public class ninja extends TestBase {
 //        WebCommands.staticSleep(500);
 
 
-        TestUtil.click(SaleCloseDate, "Selected sales close date");
+        TestUtil.click(salesCloseDate, "Selected sales close date");
         WebCommands.staticSleep(2000);
 
 

@@ -92,7 +92,7 @@ public class UploadPayoutsPage extends TestBase {
     @FindBy(xpath = "(//div[text()='SPECIAL_REQUEST'])[2]")
     WebElement SplReqstDeviationdeviation;
 
-    @FindBy(xpath = "(//div[text()='NOMINAL_DEVIATION'])[2]")
+    @FindBy(xpath = "//div[@title='NOMINAL_DEVIATION']")
     WebElement NominalDeviationdeviation;
 
     @FindBy(xpath = "//label[text()='MIS ID']//..//..//input")
@@ -177,21 +177,16 @@ public class UploadPayoutsPage extends TestBase {
         TestUtil.click(templateDownloadBtn, "Deviations Template download");
         WebCommands.staticSleep(1000);
         validateDownloadTemplateFile(deviationType);
-//        TestUtil.click(cmp.uploadBtn, "Upload Button Clicked");
-//        cmp.uploadFile(deviationType);
         WebCommands.staticSleep(1000);
-//        TestUtil.click(deviationTypeDrpdwn, "Clicked on Deviation Type dropdown");
-        if (deviationType.equalsIgnoreCase("INCORRECT_RULES.csv")) {
-//            TestUtil.click(IncretDeviationdeviation, "Clicked on Incorrect Rules Deviation Type");
-            writeDeviationUploadCSV(pcid,deviationType);
-        } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST.csv")) {
-//            TestUtil.click(SplReqstDeviationdeviation, "Clicked on Special Request Deviation Type");
-            writeDeviationUploadCSV(pcid,deviationType);
-        }
-        else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION.csv")) {
-//            TestUtil.click(NominalDeviationdeviation, "Clicked on Nominal Deviation Type");
-            writeDeviationUploadCSV(pcid,deviationType);
-        }
+            if (deviationType.equalsIgnoreCase("INCORRECT_RULES")) {
+                writeDeviationUploadCSV(pcid,deviationType);
+            }
+            else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
+                writeDeviationUploadCSV(pcid,deviationType);
+            }
+            else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
+                writeDeviationUploadCSV(pcid,deviationType);
+            }
         cmp.commentEnter();
         TestUtil.click(finalUploadBtn, "Clicked on upload button");
         WebCommands.staticSleep(1000);
@@ -204,24 +199,24 @@ public class UploadPayoutsPage extends TestBase {
     public void uploadDeviation(String deviationType) throws Exception {
         String getPcid = getPcid();
         System.out.println("commision ID :"+getPcid);
-        if(deviationType.equalsIgnoreCase("INCORRECT_RULES.csv")){
+        if(deviationType.equalsIgnoreCase("INCORRECT_RULES")){
             System.out.println("INCORRECT_RULES BLOCK");
-            deviations("INCORRECT_RULES.csv",getPcid);
-        } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST.csv")) {
+            deviations("INCORRECT_RULES",getPcid);
+        } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
             System.out.println("SPECIAL_REQUEST BLOCK");
-            deviations("SPECIAL_REQUEST.csv",getPcid);
+            deviations("SPECIAL_REQUEST",getPcid);
         } else {
             System.out.println("NOMINAL_DEVIATION BLOCK");
-            deviations("NOMINAL_DEVIATION.csv",getPcid);
+            deviations("NOMINAL_DEVIATION",getPcid);
         }
     }
 
     public void validate_MIS_EntryAtPayouts() throws Exception{
-        WebCommands.staticSleep(5000); //uncomment me
-        js.executeScript("arguments[0].scrollIntoView(true);", misID); //uncomment me
-        WebCommands.staticSleep(2000); //uncomment me
-        String mID = misID.getAttribute("value"); //uncomment me
-//        String mID = "MIS_AHSUPFGETCV"; // new added
+//        WebCommands.staticSleep(5000); //uncomment me
+//        js.executeScript("arguments[0].scrollIntoView(true);", misID); //uncomment me
+//        WebCommands.staticSleep(2000); //uncomment me
+//        String mID = misID.getAttribute("value"); //uncomment me
+        String mID = "MIS_AHSUPFGETCV"; // new added
         this.mID=mID;
         System.out.println("MIS ID : " + mID);
         WebCommands.staticSleep(5000);
@@ -263,7 +258,6 @@ public class UploadPayoutsPage extends TestBase {
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
         TestUtil.getScreenShot();
-//        qsp.searchByValid_MIS_ID(misID);
     }
 
     public void validateDeviationQuickSearchResult(String deviationType){
@@ -306,10 +300,36 @@ public class UploadPayoutsPage extends TestBase {
                         LogUtils.info("Validated CSV Result For Uploaded INCORRECT_RULES Deviation");
                     }
                     else if(deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
-                        csvAssert.assertCell(data, 1, 2, "");
+                        LogUtils.info("Verifying CSV Result For Uploaded SPECIAL_REQUEST Deviation");
+                        csvAssert.assertCell(data,1,0,this.getPcid()); //policyCommissionId
+                        csvAssert.assertCell(data,1,1,this.getmID()); //policyDetailsId
+                        csvAssert.assertCell(data,1,3,"MANUAL_DEVIATION"); //commissionSource
+                        csvAssert.assertCell(data,1,4,"SPECIAL_REQUEST"); //deviationType
+                        csvAssert.assertCell(data,1,100,"DONE"); //Payout QC
+                        csvAssert.assertCell(data,1,107,"0.8xN"); //Payouts %
+                        csvAssert.assertCell(data,1,109,"3.1xN"); //Payouts Deviation %
+                        csvAssert.assertCell(data,1,111,"1860.0");//Final Payout Total
+                        csvAssert.assertCell(data,1,123,"3.1xN"); //Initial Effective Percentages
+                        csvAssert.assertCell(data,1,125,"3.1xN"); //Effective Percentages
+                        csvAssert.assertCell(data,1,149,"1860.0"); //Points
+                        csvAssert.assertCell(data,1,151,"1860.0"); //NetPoints
+                        LogUtils.info("Validated CSV Result For Uploaded SPECIAL_REQUEST Deviation");
                     }
                     else if(deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
-                        csvAssert.assertCell(data, 1, 2, "");
+                        LogUtils.info("Verifying CSV Result For Uploaded NOMINAL_DEVIATION Deviation");
+                        csvAssert.assertCell(data,1,0,this.getPcid()); //policyCommissionId
+                        csvAssert.assertCell(data,1,1,this.getmID()); //policyDetailsId
+                        csvAssert.assertCell(data,1,3,"MANUAL_DEVIATION"); //commissionSource
+                        csvAssert.assertCell(data,1,4,"NOMINAL_DEVIATION"); //deviationType
+                        csvAssert.assertCell(data,1,100,"DONE"); //Payout QC
+                        csvAssert.assertCell(data,1,107,"0.8xN"); //Payouts %
+                        csvAssert.assertCell(data,1,109,"3.1xN"); //Payouts Deviation %
+                        csvAssert.assertCell(data,1,111,"1860.0");//Final Payout Total
+                        csvAssert.assertCell(data,1,123,"3.1xN"); //Initial Effective Percentages
+                        csvAssert.assertCell(data,1,125,"3.1xN"); //Effective Percentages
+                        csvAssert.assertCell(data,1,149,"1860.0"); //Points
+                        csvAssert.assertCell(data,1,151,"1860.0"); //NetPoints
+                        LogUtils.info("Validated CSV Result For Uploaded NOMINAL_DEVIATION Deviation");
                     }
 
 
@@ -357,14 +377,14 @@ public class UploadPayoutsPage extends TestBase {
                                 System.out.println(" "+str[i]);
                             }
                             CSVWriter writer = new CSVWriter(new FileWriter(mostRecentFile, true)); // true for append mode
-                            if(deviationType.equals("INCORRECT_RULES.csv")) {
+                            if(deviationType.equals("INCORRECT_RULES")) {
                                 System.out.println("INCORRECT_RULES BLOCK 3");
                                 String[] data = {pcid, "INCORRECT_RULES", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
                                 System.out.println("Entered PolicyCommistionID : " + pcid);
                                 writer.writeNext(data);
                                 writer.close();
                                 System.out.println("Data written to CSV successfully!");
-                            } else if(deviationType.equals("SPECIAL_REQUEST.csv")){
+                            } else if(deviationType.equals("SPECIAL_REQUEST")){
                                 System.out.println("SPECIAL_REQUEST BLOCK 3");
                                 String[] data = {pcid, "SPECIAL_REQUEST", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
 
@@ -372,7 +392,7 @@ public class UploadPayoutsPage extends TestBase {
                                 writer.writeNext(data);
                                 writer.close();
                                 System.out.println("Data written to CSV successfully!");
-                            } else if(deviationType.equals("NOMINAL_DEVIATION.csv")) {
+                            } else if(deviationType.equals("NOMINAL_DEVIATION")) {
                                 String[] data = {pcid, "NOMINAL_DEVIATION", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
 
                                 System.out.println("Entered PolicyCommistionID : " + pcid);
@@ -385,12 +405,13 @@ public class UploadPayoutsPage extends TestBase {
                             WebCommands.staticSleep(2000);
                             act.moveToElement(deviationTypeDrpdwn).click().build().perform();
                             WebCommands.staticSleep(2000);
-                            if(deviationType.equals("INCORRECT_RULES.csv")){
+                            if(deviationType.equals("INCORRECT_RULES")){
                                 act.moveToElement(IncretDeviationdeviation).click().build().perform();
-                            } else if (deviationType.equals("SPECIAL_REQUEST.csv")) {
+                            } else if (deviationType.equals("SPECIAL_REQUEST")) {
                                 act.moveToElement(SplReqstDeviationdeviation).click().build().perform();
-                            } else if (deviationType.equals("NOMINAL_DEVIATION.csv")) {
-                                act.moveToElement(NominalDeviationdeviation).click().build().perform();
+                            } else if (deviationType.equals("NOMINAL_DEVIATION")) {
+//                                act.moveToElement(NominalDeviationdeviation).click().build().perform();
+                                TestUtil.clickByJS(NominalDeviationdeviation);
                             }
                         }
                     }
@@ -436,7 +457,8 @@ public class UploadPayoutsPage extends TestBase {
                                 "Insurer Payout ABS", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium",
                                 "Net Premium", "PC_CreatedAt", "Remark"));
                         LogUtils.info("Validated Column Present in Manual Upload Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("ManualCorrection.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("ManualCorrection.csv")) {
                         LogUtils.info("Validating Column Present in Manual Correction Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId",
                                 "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name",
@@ -448,17 +470,20 @@ public class UploadPayoutsPage extends TestBase {
                                 "Insurer Payout ABS", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium",
                                 "Net Premium", "Remark"));
                         LogUtils.info("Validated Column Present in Manual Correction Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("Deviations.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("INCORRECT_RULES")||fileName.equalsIgnoreCase("SPECIAL_REQUEST")||fileName.equalsIgnoreCase("NOMINAL_DEVIATION")) {
                         LogUtils.info("Validating Column Present in Manual Deviations Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions",
                                 "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS",
                                 "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark"));
                         LogUtils.info("Validated Column Present in Manual Deviations Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("SplitDeviations.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("SplitDeviations.csv")) {
                         LogUtils.info("Validating Column Present in SplitDeviations Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark"));
                         LogUtils.info("Validated Column Present in SplitDeviations Template as Expected");
-                    }  else if (fileName.equalsIgnoreCase("Adjustments.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("Adjustments.csv")) {
                         LogUtils.info("Validating Column Present in Adjustments Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId",
                                 "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name",
@@ -466,7 +491,8 @@ public class UploadPayoutsPage extends TestBase {
                                 "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer",
                                 "product name", "Registration no.", "Policy No.", "Master Policy No.", "Points", "Remark"));
                         LogUtils.info("Validated Column Present in Adjustments Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("PayoutQC.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("PayoutQC.csv")) {
                         LogUtils.info("Validating Column Present in PayoutQC Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId",
                                 "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.",
@@ -489,15 +515,18 @@ public class UploadPayoutsPage extends TestBase {
                                 "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages",
                                 "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "Remark"));
                         LogUtils.info("Validated Column Present in PayoutQC Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("InsurerRewards.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("InsurerRewards.csv")) {
                         LogUtils.info("Validating Column Present in InsurerRewards Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Insurer Volume Rewards %", "Insurer Rewards Total", "Insurer Rewards Volume", "Remark"));
                         LogUtils.info("Validated Column Present in InsurerRewards Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("PartnerLevelActivity.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("PartnerLevelActivity.csv")) {
                         LogUtils.info("Validating Column Present in PartnerLevelActivity Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "Partner Id", "Points", "Payment Cycle", "Type", "Remark"));
                         LogUtils.info("Validated Column Present in PartnerLevelActivity Template as Expected");
-                    } else if (fileName.equalsIgnoreCase("PostQC_Review.csv")) {
+                    }
+                    else if (fileName.equalsIgnoreCase("PostQC_Review.csv")) {
                         LogUtils.info("Validating Column Present in PostQC_Review Template");
                         csvAssert.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review"));
                         LogUtils.info("Validated Column Present in PostQC_Review Template as Expected");
@@ -617,7 +646,7 @@ public class UploadPayoutsPage extends TestBase {
                         LogUtils.info("Validated Manual Upload Output File");
                     }
                     else if (fileName.equalsIgnoreCase("ManualCorrection.csv")) {
-                        LogUtils.info("Validating Column Present in Manual Correction Template");
+                        LogUtils.info("Validating Column Present in Manual Correction Output File");
                         csvAssert.assertCell(data,1,1,"MIS_MHA13RIGX7A4V1"); // Validate MIS ID in Output File
                         csvAssert.assertCell(data,2,1,"MIS_MHA13RIGX7A4V2");
                         csvAssert.assertCell(data,3,1,"MIS_MHA13RIGX7A4V3");
@@ -631,23 +660,23 @@ public class UploadPayoutsPage extends TestBase {
                         csvAssert.assertCell(data,5,36,"SUCCESS");
                         csvAssert.assertCell(data,6,36,"FAILURE");
                         csvAssert.assertCell(data,6,37,"Transition from SYSTEM_GENERATED to MANUAL_CORRECTION is not possible;"); // Validate Output Remark in Output File
-                        LogUtils.info("Validated Column Present in Manual Correction Template as Expected");
+                        LogUtils.info("Validated Column Present in Manual Correction Output File as Expected");
                     }
                     else if (fileName.equalsIgnoreCase("")) {
-                        LogUtils.info("Validating Column Present in Manual Deviations Template");
-                        if(deviationType.equalsIgnoreCase("INCORRECT_RULES.csv")){
+                        LogUtils.info("Validating Data Present in Manual Deviations Output File");
+                        if(deviationType.equalsIgnoreCase("INCORRECT_RULES")){
                             csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
                             csvAssert.assertRow(data, 1, Arrays.asList(pcid, "INCORRECT_RULES", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
-//                            csvAssert.assertCell(data,1,1,"INCORRECT_RULES");
-
-
-                        } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST.csv")) {
-                            csvAssert.assertCell(data,1,1,"SPECIAL_REQUEST");
-                        } else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION.csv")) {
-                            csvAssert.assertCell(data, 1, 1, "NOMINAL_DEVIATION");
                         }
-
-                        LogUtils.info("Validated Column Present in Manual Deviations Template as Expected");
+                        else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
+                            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                            csvAssert.assertRow(data, 1, Arrays.asList(pcid, "SPECIAL_REQUEST", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
+                        }
+                        else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
+                            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                            csvAssert.assertRow(data, 1, Arrays.asList(pcid, "NOMINAL_DEVIATION", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
+                        }
+                        LogUtils.info("Validated Data Present in Manual Deviations Output File as Expected");
                     }
                     else if (fileName.equalsIgnoreCase("SplitDeviations.csv")) {
                         LogUtils.info("Validating Column Present in SplitDeviations Template");
