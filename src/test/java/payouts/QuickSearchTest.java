@@ -23,7 +23,7 @@ public class QuickSearchTest extends TestBase {
         super();
     }
 
-    @BeforeClass()
+    @BeforeMethod()
     public void start() throws Exception {
         initialization();
         quickSearchPage = new QuickSearchPage();
@@ -37,10 +37,11 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info(cu);
     }
 
-    @BeforeMethod()
-    public void loginLess() throws Exception {
-        driver.get(cu);
-    }
+//    @BeforeMethod()
+//    public void loginLess() throws Exception {
+//        driver.get(cu);
+//    }
+
 
     @Test(priority = 0)
     public void verifyValid_QuickSearch() throws InterruptedException {
@@ -70,7 +71,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
     }
 
-    @AfterClass()
+    @AfterMethod()
     public void close(){
         driver.close();
     }
