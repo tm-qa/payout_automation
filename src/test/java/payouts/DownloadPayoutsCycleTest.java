@@ -67,10 +67,10 @@ public class DownloadPayoutsCycleTest extends TestBase {
     @Test(priority = 3)
     public void verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
         downloadPayoutsCyclePage.downloadPayouts();
-        downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202511C1");
-        downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C2", "202511C2");
-        downloadPayoutsCyclePage.selectPaymentCycle("27th Oct 2025", "20251120");
-        downloadPayoutsCyclePage.selectPaymentCycle("28th Oct 2025", "20251121");
+        downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202510C1");
+        downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C2", "202510C2");
+        downloadPayoutsCyclePage.selectPaymentCycle("27th Oct 2025", "20251027");
+        downloadPayoutsCyclePage.selectPaymentCycle("28th Oct 2025", "20251028");
         downloadPayoutsCyclePage.downloadClick();
         downloadPayoutsCyclePage.validateDownloadedCycle("regular_quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
