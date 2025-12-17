@@ -20,7 +20,6 @@
 <!--            </run>-->
 <!--        </groups>-->
         <classes>
-
             <class name="payouts.DownloadPayoutsCycleTest"/>
             <class name="payouts.CycleMoveTest"/>
             <class name="payouts.QuickSearchTest"/>
