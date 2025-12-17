@@ -6,6 +6,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.commands.WebCommands;
 import com.qa.turtlemint.pages.CSV_Validatator.CsvUtils;
 //import com.qa.turtlemint.pages.DB_Assertions.DBAssertion;
+import com.qa.turtlemint.pages.DB_Assertions.DBAssertion;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
@@ -112,7 +113,7 @@ public class UploadPayoutsPage extends TestBase {
     CycleMovePage cmp = new CycleMovePage();
     QuickSearchPage qsp = new QuickSearchPage();
     ninja ninj = new ninja();
-//    DBAssertion dbAssertion = new DBAssertion();
+    DBAssertion dbAssertion = new DBAssertion();
 
     public UploadPayoutsPage() {
         PageFactory.initElements(driver, this);
@@ -216,12 +217,11 @@ public class UploadPayoutsPage extends TestBase {
     }
 
     public void validate_MIS_EntryAtPayouts() throws Exception{
-//        WebCommands.staticSleep(5000); //uncomment me
-//        js.executeScript("arguments[0].scrollIntoView(true);", misID); //uncomment me
-//        WebCommands.staticSleep(2000); //uncomment me
-
-//        String mID = misID.getAttribute("value"); //uncomment me
-        String mID = "MIS_AHSUPFGETCV"; // new added
+        WebCommands.staticSleep(5000); //uncomment me
+        js.executeScript("arguments[0].scrollIntoView(true);", misID); //uncomment me
+        WebCommands.staticSleep(2000); //uncomment me
+        String mID = misID.getAttribute("value"); //uncomment me
+//        String mID = "MIS_AHSUPFGETCV"; // new added
         this.mID=mID;
         System.out.println("MIS ID : " + mID);
         WebCommands.staticSleep(5000);
@@ -238,8 +238,8 @@ public class UploadPayoutsPage extends TestBase {
         org.testng.Assert.assertEquals(policyDetailID.getText(),mID);
         TestUtil.getFullPageScreenShot();
         //      Validate entry in DB Before Uploading Deviation in LedgerEntity collection
-//        dbAssertion.deviation_LE_DB_Validation(mID);
-//        CommissionId = dbAssertion.policyComisionId;
+        dbAssertion.deviation_LE_DB_Validation(mID);
+        CommissionId = dbAssertion.policyComisionId;
         String pcid = CommissionId;
         this.pcid=pcid;
     }
@@ -255,7 +255,15 @@ public class UploadPayoutsPage extends TestBase {
     public void downloadDeviationQuickSearchResult(){
         String misID = getmID();
         QuickSearchPage qsp = new QuickSearchPage();
-        qsp.searchByValid_MIS_ID(misID);
+        TestUtil.click(cmp.quickSearchSectnBtn,"Quick Search Selected");
+        TestUtil.sendKeys(qsp.misIdTxtbox, misID, "Valid MIS ID Entered");
+        TestUtil.click(qsp.searchButton, "Search Button Clicked");
+        TestUtil.click(cmp.downloadBtn, "Download button clicked");
+        cmp.commentEnter();
+        TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
+        WebCommands.staticSleep(1000);
+        TestUtil.getScreenShot();
+//        qsp.searchByValid_MIS_ID(misID);
     }
 
     public void validateDeviationQuickSearchResult(String deviationType){
@@ -281,8 +289,28 @@ public class UploadPayoutsPage extends TestBase {
                     CsvUtils csvAssert = new CsvUtils();
                     List<String[]> data = csvAssert.readCsv(mostRecentFile);
 
-                    if(deviationType.equalsIgnoreCase("INCORRECT_RULES"))
-                        csvAssert.assertCell(data,1,2,"");
+                    if (deviationType.equalsIgnoreCase("INCORRECT_RULES")) {
+                        LogUtils.info("Verifying CSV Result For Uploaded INCORRECT_RULES Deviation");
+                        csvAssert.assertCell(data,1,0,this.getPcid()); //policyCommissionId
+                        csvAssert.assertCell(data,1,1,this.getmID()); //policyDetailsId
+                        csvAssert.assertCell(data,1,3,"MANUAL_DEVIATION"); //commissionSource
+                        csvAssert.assertCell(data,1,4,"INCORRECT_RULES"); //deviationType
+                        csvAssert.assertCell(data,1,100,"DONE"); //Payout QC
+                        csvAssert.assertCell(data,1,107,"0.8xN"); //Payouts %
+                        csvAssert.assertCell(data,1,109,"3.1xN"); //Payouts Deviation %
+                        csvAssert.assertCell(data,1,111,"1860.0");//Final Payout Total
+                        csvAssert.assertCell(data,1,123,"3.1xN"); //Initial Effective Percentages
+                        csvAssert.assertCell(data,1,125,"3.1xN"); //Effective Percentages
+                        csvAssert.assertCell(data,1,149,"1860.0"); //Points
+                        csvAssert.assertCell(data,1,151,"1860.0"); //NetPoints
+                        LogUtils.info("Validated CSV Result For Uploaded INCORRECT_RULES Deviation");
+                    }
+                    else if(deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
+                        csvAssert.assertCell(data, 1, 2, "");
+                    }
+                    else if(deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
+                        csvAssert.assertCell(data, 1, 2, "");
+                    }
 
 
                     TestUtil.click(qsp.resetButton, "");

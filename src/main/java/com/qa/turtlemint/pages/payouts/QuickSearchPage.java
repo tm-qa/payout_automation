@@ -112,7 +112,7 @@ public class QuickSearchPage extends TestBase {
         TestUtil.click(cmp.resultDownloadBtn, "Download button clicked to download result file");
         WebCommands.staticSleep(1000);
         TestUtil.getScreenShot();
-        validateQuickSearchResult("", "MIS_AHSBF7UN56P");
+        validateQuickSearchResult("", misID);
     }
 
     public void searchByInvalid_Partner_ID(String partnerID){
