@@ -14,11 +14,11 @@
             </method-selector>
         </method-selectors>
 
-        <groups>
-            <run>
-                <include name="${groupName}"></include>
-            </run>
-        </groups>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="${groupName}"></include>-->
+<!--            </run>-->
+<!--        </groups>-->
         <classes>
 
             <class name="payouts.DownloadPayoutsCycleTest"/>
