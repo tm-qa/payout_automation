@@ -4,10 +4,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.CycleMovePage;
 import org.openqa.selenium.By;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import util.RetryAnalyser;
 
 @Test(groups = {"Cycle_Move_Test","Whole_Payouts"})
@@ -16,6 +13,7 @@ public class CycleMoveTest extends TestBase {
     ninja ninj;
 
     CycleMovePage cycleMovePage;
+    String cu;
 
     public CycleMoveTest() {
 
@@ -31,7 +29,14 @@ public class CycleMoveTest extends TestBase {
 //        driver.get(prop.getProperty("sanityurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
+        cu= driver.getCurrentUrl();
     }
+
+    @BeforeMethod()
+    public void loginless() throws Exception {
+       driver.get(cu);
+    }
+
 
 
     @Test(priority = 1, enabled = true)

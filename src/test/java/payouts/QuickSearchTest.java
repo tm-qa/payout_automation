@@ -4,10 +4,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.QuickSearchPage;
 import org.openqa.selenium.By;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import util.RetryAnalyser;
 
 @Test(groups = {"Quick_Search_Test","Whole_Payouts"})
@@ -16,6 +13,8 @@ public class QuickSearchTest extends TestBase {
     QuickSearchPage quickSearchPage;
 
     ninja ninj;
+
+    String cu;
 
     public QuickSearchTest() {
         super();
@@ -31,6 +30,12 @@ public class QuickSearchTest extends TestBase {
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         quickSearchPage.quickSearchClick();
+        cu = driver.getCurrentUrl();
+    }
+
+    @BeforeMethod()
+    public void loginLess() throws Exception {
+        driver.get(cu);
     }
 
     @Test(priority = 0, enabled = true)
