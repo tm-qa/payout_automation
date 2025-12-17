@@ -15,10 +15,10 @@ public class CycleMoveTest extends TestBase {
     CycleMovePage cycleMovePage;
     String cu;
 
-    public CycleMoveTest() {
-
-        super();
-    }
+//    public CycleMoveTest() {
+//
+//        super();
+//    }
 
     @BeforeClass()
     public void start() throws Exception {
@@ -63,7 +63,7 @@ public class CycleMoveTest extends TestBase {
     }
 
     @AfterClass()
-    public void close(){
-        driver.close();
+    public void closeBrowser(){
+        driver.quit();
     }
 }

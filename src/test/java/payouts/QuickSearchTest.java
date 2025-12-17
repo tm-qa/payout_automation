@@ -19,9 +19,9 @@ public class QuickSearchTest extends TestBase {
 
     String cu;
 
-    public QuickSearchTest() {
-        super();
-    }
+//    public QuickSearchTest() {
+//        super();
+//    }
 
     @BeforeMethod()
     public void start() throws Exception {
@@ -73,7 +73,7 @@ public class QuickSearchTest extends TestBase {
     }
 
     @AfterMethod()
-    public void close(){
-        driver.close();
+    public void closeBrowser(){
+        driver.quit();
     }
 }

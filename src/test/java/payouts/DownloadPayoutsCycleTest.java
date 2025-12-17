@@ -17,9 +17,9 @@ public class DownloadPayoutsCycleTest extends TestBase {
     ninja ninj;
     String cu;
 
-    public DownloadPayoutsCycleTest() {
-        super();
-    }
+//    public DownloadPayoutsCycleTest() {
+//        super();
+//    }
 
     @BeforeClass()
     public void start() throws Exception {
@@ -77,7 +77,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @AfterClass()
-    public void close() {
-        driver.close();
+    public void closeBrowser() {
+        driver.quit();
     }
 }
