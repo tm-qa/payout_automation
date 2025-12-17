@@ -77,7 +77,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @AfterClass()
-    public void closeBrowser() {
+    public void closeBrowser(){
         driver.quit();
     }
 }

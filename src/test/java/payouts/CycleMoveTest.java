@@ -15,10 +15,10 @@ public class CycleMoveTest extends TestBase {
     CycleMovePage cycleMovePage;
   public   String cu;
 
-//    public CycleMoveTest() {
-//
-//        super();
-//    }
+    public CycleMoveTest() {
+
+        super();
+    }
 
     @BeforeClass()
     public void start() throws Exception {
@@ -36,8 +36,6 @@ public class CycleMoveTest extends TestBase {
     public void loginless() {
        driver.get(cu);
     }
-
-
 
     @Test(priority = 1)
     public void verifyEarlyCycleMove() throws Exception {

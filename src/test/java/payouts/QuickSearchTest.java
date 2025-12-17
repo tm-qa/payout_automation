@@ -23,7 +23,7 @@ public class QuickSearchTest extends TestBase {
         super();
     }
 
-    @BeforeMethod()
+    @BeforeClass()
     public void start() throws Exception {
         initialization();
         quickSearchPage = new QuickSearchPage();
@@ -35,13 +35,13 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.quickSearchClick();
         cu = driver.getCurrentUrl();
         LogUtils.info(cu);
-        driver.get(cu);
+//        driver.get(cu);
     }
 
-//    @BeforeMethod()
-//    public void loginLess() throws Exception {
-//        driver.get(cu);
-//    }
+    @BeforeMethod()
+    public void loginLess() throws Exception {
+        driver.get(cu);
+    }
 
 
     @Test(priority = 1)
@@ -72,7 +72,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
     }
 
-    @AfterMethod()
+    @AfterClass()
     public void closeBrowser(){
         driver.quit();
     }
