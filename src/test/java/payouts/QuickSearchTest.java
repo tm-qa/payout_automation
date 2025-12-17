@@ -4,6 +4,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.QuickSearchPage;
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -60,7 +61,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
     }
 
-    @AfterTest()
+    @AfterClass()
     public void close() {
         driver.close();
     }

@@ -4,6 +4,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.DownloadPayoutsCyclePage;
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
@@ -63,5 +64,10 @@ public class DownloadPayoutsCycleTest extends TestBase {
         downloadPayoutsCyclePage.downloadClick();
         downloadPayoutsCyclePage.validateDownloadedCycle("regular_quickpayCycle");
         downloadPayoutsCyclePage.clearDropdown();
+    }
+
+    @AfterClass()
+    public void close() {
+        driver.close();
     }
 }

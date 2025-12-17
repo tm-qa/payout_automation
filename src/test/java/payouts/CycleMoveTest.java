@@ -4,6 +4,7 @@ import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.CycleMovePage;
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -57,7 +58,7 @@ public class CycleMoveTest extends TestBase {
     }
 
 
-    @AfterTest()
+    @AfterClass()
     public void close() {
         driver.close();
     }
