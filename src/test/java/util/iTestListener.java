@@ -1,5 +1,6 @@
 package util;
 
+
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.util.TestUtil;
 import org.testng.ITestContext;
@@ -29,7 +30,7 @@ public class iTestListener extends TestBase implements ITestListener
     public void onTestFailure(ITestResult Result)
     {
 
-        System.out.println("*************--The name of the testcase failed is :"+Result.getName());
+        System.out.println("************  The name of the testcase failed is :"+Result.getName()+"  *************");
         try {
             TestUtil.getFullPageScreenShot();
         } catch (IOException e) {
@@ -39,11 +40,15 @@ public class iTestListener extends TestBase implements ITestListener
         //   AppiumDriver<MobileElement> driver=Base_class.
     }
 
-
     @Override
     public void onTestSkipped(ITestResult Result)
     {
         System.out.println("The name of the testcase Skipped is :"+Result.getName());
+        try {
+            TestUtil.getFullPageScreenShot();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -61,7 +66,12 @@ public class iTestListener extends TestBase implements ITestListener
     @Override
     public void onTestSuccess(ITestResult Result)
     {
-        System.out.println("*********--The name of the testcase passed is :"+Result.getName());
+        System.out.println("************* The name of the testcase passed is :"+Result.getName()+" ***************");
+        try {
+            TestUtil.getFullPageScreenShot();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
