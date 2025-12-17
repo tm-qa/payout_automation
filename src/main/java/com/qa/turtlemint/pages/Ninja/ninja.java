@@ -580,17 +580,29 @@ public class ninja extends TestBase {
         }
     }
 
-    public void MIS_Manual_TW(String vertical, String insurer, String model) throws Exception {
+    public void punch_TW_Policy() throws Exception {
+        driver.get(prop.getProperty("sanityurl"));
+        driver.findElement(By.xpath("(//a[@data-auto='mis-module'])[2]")).click();
         TestUtil.click(NewSaleButton, "New Sale Button");
+//        driver.navigate().refresh();
+//        TestUtil.click(NewSaleButton, "New Sale Button");
         Thread.sleep(1000);
         TestUtil.click(VerticlDropdown, "");
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         driver.findElement(By.xpath("//div[@title='TW']")).click();
-        Thread.sleep(2000);
+
+//        driver.navigate().refresh();
+//        TestUtil.click(NewSaleButton, "New Sale Button");
+//        TestUtil.click(VerticlDropdown, "");
+//        driver.findElement(By.xpath("//div[@title='TW']")).click();
+
+//        Thread.sleep(500);
         LogUtils.info("Vertical selected");
         TestUtil.click(PolicyStatusDropdown,"");
+        WebCommands.staticSleep(1000);
         TestUtil.click(issuedStatus,"");
         TestUtil.click(insurerDropdown,"");
+//        TestUtil.sendKeys(insurerBajaj, "Bajaj", "");
         TestUtil.click(insurerBajaj,"");
         TestUtil.click(vehicleTypeDropdown,"");
         TestUtil.click(vehicleTypeTW,"");
@@ -625,7 +637,7 @@ public class ninja extends TestBase {
         Thread.sleep(1000);
         TestUtil.click(makemodel, "make model clicked");
         makemodel.clear();
-        TestUtil.sendKeys(makemodel, model, "make model clicked");
+        TestUtil.sendKeys(makemodel, "Splendor pro", "make model clicked");
         TestUtil.click(modelselect, "Model Select");
         driver.findElement(By.xpath("//input[@id='cubicCapacity']")).sendKeys("100");
         fuelTypeBox.sendKeys("Petrol");
@@ -637,15 +649,15 @@ public class ninja extends TestBase {
         TestUtil.click(StartDatePicker, "");
         WebCommands.staticSleep(2000);
         TestUtil.click(Today, "Selected for risk start date");
-        WebCommands.staticSleep(3000);
+        WebCommands.staticSleep(1000);
         EndDatePicker.click();
-        WebCommands.staticSleep(5000);
+        WebCommands.staticSleep(1000);
         EndDatePicker.sendKeys(Keys.ESCAPE);
-        WebCommands.staticSleep(2000);
+        WebCommands.staticSleep(1000);
         EndDatePicker.sendKeys(TestUtil.ninjaFutureDate(364));
-        WebCommands.staticSleep(2000);
+        WebCommands.staticSleep(1000);
         EndDatePicker.sendKeys(Keys.RETURN);
-        WebCommands.staticSleep(2000);
+        WebCommands.staticSleep(1000);
         TestUtil.sendKeys(ncb, "20", "NCB 20 enter");
         TestUtil.sendKeys(idv, "10000", "idv 10000 enter");
         TestUtil.sendKeys(odPremium, "1000", "odPremium enter");
@@ -656,21 +668,38 @@ public class ninja extends TestBase {
         TestUtil.sendKeys(serviceTax, "100", "serviceTax ente");
         TestUtil.sendKeys(grossPremium, "6100", "grossPremium enter");
         TestUtil.click(dataqc, "Data QC dropdown");
+        WebCommands.staticSleep(2000);
         TestUtil.click(doneButton, "Done select");
         WebCommands.staticSleep(2000);
         driver.findElement(By.xpath("//button[text()='Yes']")).click();
+
+
+//        TestUtil.click(insRecordStatus, "Insurer Record Status dropdown");
+//        TestUtil.click(present_InsRecordStatus, "Present Insurer Record Status Selected");
+
+
         TestUtil.click(channelType, "channel Type dropdown");
         TestUtil.click(partnerSelect, "Partner select");
         WebCommands.staticSleep(2000);
+        /////
+
         TestUtil.sendKeys(SaleCloseDatePicker, TestUtil.PresentDate(),"sale close date dropdown");
+//        WebCommands.staticSleep(500);
+
+
+//        TestUtil.click(salesCloseDate, "Selected sales close date");
         WebCommands.staticSleep(2000);
+
+
         enterDpNumber.sendKeys("1585924");
         TestUtil.click(selectDpNumber,"");
         WebCommands.staticSleep(5000);
-        FileUpload.sendKeys("/Users/rahulpatil/Documents/BAJAJ_NEW_tp_MIS_PG2OXPWXZZL.pdf");
+        FileUpload.sendKeys("/Users/rahulpatil/Documents/Payouts Files/DocForPolicyPunch/BAJAJ_NEW_tp_MIS_PG2OXPWXZZL.pdf");
         TestUtil.click(PolicyTag, "Policy Tag select");
         TestUtil.click(FileTagDone, "File Tag Done");
         driver.findElement(By.xpath("//button[text()='Save Sale']")).click();
+        WebCommands.staticSleep(2000);
+        TestUtil.waitUntilVisibilityOfElement(driver.findElement(By.xpath("//div[text()='(View Mode)']")));
     }
 
     public void MIS_Manual_FW(String vertical, String insurer, String model) throws Exception {
