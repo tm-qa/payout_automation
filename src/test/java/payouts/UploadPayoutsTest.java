@@ -1,6 +1,7 @@
 package payouts;
 import com.qa.turtlemint.base.TestBase;
-//import com.qa.turtlemint.pages.DB_Assertions.UploadPayoutsDB;
+import com.qa.turtlemint.pages.DB_Assertions.UploadPayoutsDB;
+import com.qa.turtlemint.pages.DB_Assertions.UploadPayoutsDB;
 import com.qa.turtlemint.pages.Ninja.ninja;
 import com.qa.turtlemint.pages.payouts.CycleMovePage;
 import com.qa.turtlemint.pages.payouts.DownloadPayoutsCyclePage;
@@ -15,7 +16,7 @@ public class UploadPayoutsTest extends TestBase {
     CycleMovePage cycleMovePage;
     DownloadPayoutsCyclePage downloadPayoutsCyclePage;
     UploadPayoutsPage uploadPayoutsPage;
-//    UploadPayoutsDB uploadPayoutsDB;
+    UploadPayoutsDB uploadPayoutsDB;
     String pcid;
     public UploadPayoutsTest() {
         super();
@@ -27,7 +28,7 @@ public class UploadPayoutsTest extends TestBase {
         ninj = new ninja();
         downloadPayoutsCyclePage = new DownloadPayoutsCyclePage();
         uploadPayoutsPage = new UploadPayoutsPage();
-//        uploadPayoutsDB = new UploadPayoutsDB();
+        uploadPayoutsDB = new UploadPayoutsDB();
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         TestUtil.click(downloadPayoutsCyclePage.ledgerBtn, "Payout Ledger Button Clicked");
@@ -36,8 +37,8 @@ public class UploadPayoutsTest extends TestBase {
     public void verifyManualUploads() throws InterruptedException {
         uploadPayoutsPage.manualUpload("ManualUpload.csv", "Dec 2025 C2");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualUploadBulkSearch.csv");
-//        mu.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
-//        mu.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
+        uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
+        uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
     @Test(priority = 1, enabled = true)
     public void verifyManualCorrection() throws InterruptedException {
