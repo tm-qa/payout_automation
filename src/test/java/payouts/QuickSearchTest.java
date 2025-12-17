@@ -35,6 +35,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.quickSearchClick();
         cu = driver.getCurrentUrl();
         LogUtils.info(cu);
+        driver.get(cu);
     }
 
 //    @BeforeMethod()
