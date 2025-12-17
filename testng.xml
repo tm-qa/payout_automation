@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true"
-          name="/Users/hemant/Downloads/MintproSanityAutomation/src/test/java/com/qa/turtlemint/testcases">
+          name="/Users/hemant/Downloads/payouts/src/test/java/com/qa/turtlemint/testcases">
         <method-selectors>
             <method-selector>
                 <script language="beanshell">
@@ -14,16 +14,19 @@
             </method-selector>
         </method-selectors>
 
-<!--        <groups>-->
-<!--            <run>-->
-<!--                <include name="${groupName}"></include>-->
-<!--            </run>-->
-<!--        </groups>-->
+        <!--        <groups>-->
+        <!--            <run>-->
+        <!--                <include name="${groupName}"></include>-->
+        <!--            </run>-->
+        <!--        </groups>-->
         <classes>
-            <class name="payouts.DownloadPayoutsCycleTest"/>
-            <class name="payouts.CycleMoveTest"/>
-            <class name="payouts.QuickSearchTest"/>
+            <class name="payouts.CycleMoveTest"></class>
+            <class name="payouts.DownloadPayoutsCycleTest"></class>
+            <class name="payouts.QuickSearchTest"></class>
 
         </classes>
+
+
+
     </test>
 </suite>
