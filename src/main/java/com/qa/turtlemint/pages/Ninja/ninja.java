@@ -76,6 +76,11 @@ public class ninja extends TestBase {
 
     @FindBy(xpath = "//input[@id='createMISEntry_productCategory']//parent::span")
     WebElement VerticlDropdown;
+
+    @FindBy(xpath = "//div[@title='TW']")
+    WebElement selectTW;
+
+
     @FindBy(xpath = "//input[@id='createMISEntry_insurer']//parent::span")
     WebElement InsurerDropdown;
     @FindBy(xpath = "//input[@id='createMISEntry_insurer']")
@@ -592,17 +597,16 @@ public class ninja extends TestBase {
         driver.get(prop.getProperty("sanityninjaurl"));
         driver.findElement(By.xpath("(//a[@data-auto='mis-module'])[2]")).click();
         TestUtil.click(NewSaleButton, "New Sale Button");
+        Thread.sleep(1000);
+        TestUtil.click(VerticlDropdown, "");
+        Thread.sleep(1000);
+        TestUtil.click(selectTW,"TW Selected");
+//        driver.findElement(By.xpath("//div[@title='TW']")).click();
+
 //        driver.navigate().refresh();
 //        TestUtil.click(NewSaleButton, "New Sale Button");
-        Thread.sleep(1000);
-        TestUtil.click(VerticlDropdown, "");
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("//div[@title='TW']")).click();
-
-        driver.navigate().refresh();
-        TestUtil.click(NewSaleButton, "New Sale Button");
-        TestUtil.click(VerticlDropdown, "");
-        driver.findElement(By.xpath("//div[@title='TW']")).click();
+//        TestUtil.click(VerticlDropdown, "");
+//        driver.findElement(By.xpath("//div[@title='TW']")).click();
 
         Thread.sleep(500);
         LogUtils.info("Vertical selected");
@@ -690,16 +694,10 @@ public class ninja extends TestBase {
         TestUtil.click(channelType, "channel Type dropdown");
         TestUtil.click(partnerSelect, "Partner select");
         WebCommands.staticSleep(2000);
-        /////
-
         TestUtil.sendKeys(SaleCloseDatePicker, TestUtil.PresentDate(),"sale close date dropdown");
 //        WebCommands.staticSleep(500);
-
-
         TestUtil.click(salesCloseDate, "Selected sales close date");
         WebCommands.staticSleep(2000);
-
-
         enterDpNumber.sendKeys("1585924");
         TestUtil.click(selectDpNumber,"");
         WebCommands.staticSleep(5000);

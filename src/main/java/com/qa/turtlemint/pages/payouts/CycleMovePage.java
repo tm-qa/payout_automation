@@ -373,6 +373,16 @@ public class CycleMovePage extends TestBase {
 //            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//BulkSearchFiles//" + fileName + "");
             LogUtils.info(fileName + " :File Uploaded");
         }
+        else if (fileName.equalsIgnoreCase("Adjustments.csv")) {
+//            uploadFiles("src/main/resources/data/",fileName);
+            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//Adjustments//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
+        else if (fileName.equalsIgnoreCase("AdjustmentsInvalid.csv")) {
+//            uploadFiles("src/main/resources/data/",fileName);
+            driver.findElement(By.xpath("//input[@type='file']")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//Adjustments//" + fileName + "");
+            LogUtils.info(fileName + " :File Uploaded");
+        }
     }
 
     public void commentEnter() {
