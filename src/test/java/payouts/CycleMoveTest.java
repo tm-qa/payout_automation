@@ -92,6 +92,7 @@ public class CycleMoveTest extends TestBase {
         cycleMovePage = new CycleMovePage();
         ninj = new ninja();
         driver.get(System.getProperty("ninjaurl"));
+//        driver.get(prop.getProperty("sanityurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         cu = driver.getCurrentUrl();
@@ -102,7 +103,7 @@ public class CycleMoveTest extends TestBase {
        driver.get(cu);
     }
 
-    @Test(priority = 0)
+    @Test()
     public void verifyEarlyCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("EarlyCycleMove_C2_C1.csv", "202511C2", "202511C1");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("EarlyCycleMove_C2_C1.csv","MoveCycleAssert.csv");
