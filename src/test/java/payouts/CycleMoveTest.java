@@ -56,7 +56,7 @@ public class CycleMoveTest extends TestBase {
     }
 
     @Test(retryAnalyzer = RetryAnalyser.class)
-    public void verifyTestMoveBackInEarlyCycle() throws InterruptedException {
+    public void verifyTest_MoveBackInEarlyCycle() throws InterruptedException {
         cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251126", "202511C2");
     }
 

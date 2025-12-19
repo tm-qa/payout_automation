@@ -42,7 +42,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
 
 
     @Test
-    public void verify_Regular_CyclePayoutsDumpDownload() {
+    public void a_verify_Regular_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202510C1");
@@ -56,7 +56,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @Test
-    public void verify_QuickPay_CyclePayoutsDumpDownload() {
+    public void b_verify_QuickPay_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_QuickPay_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("27th Oct 2025", "20251027");
@@ -70,7 +70,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @Test
-    public void verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
+    public void c_verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_QuickPay_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
         downloadPayoutsCyclePage.selectPaymentCycle("Oct 2025 C1", "202510C1");

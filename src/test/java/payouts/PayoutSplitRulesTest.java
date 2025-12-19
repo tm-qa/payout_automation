@@ -33,30 +33,30 @@ public class PayoutSplitRulesTest extends TestBase {
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
 
-    @Test(priority = 1)//, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUpload_SplitRuleFile() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void a_verifyUpload_SplitRuleFile() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("SplitRuleFileMain.csv");
         db.ValidatePayoutSplitRules();
     }
 
-    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUpload_SplitRuleWithDeleteRule() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void b_verifyUpload_SplitRuleWithDeleteRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("DeleteSplitRules.csv");
     }
 
-    @Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUpload_SplitRuleWithNewRule() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void c_verifyUpload_SplitRuleWithNewRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("AddNewSplitRules.csv");
     }
 
-    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUpload_SplitRuleWithChangeInRule() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void d_verifyUpload_SplitRuleWithChangeInRule() {
         payoutSplitRulesPage.toUploadLatestSPlitRuleFile("ChangeInSplitRules.csv");
         payoutSplitRulesPage.downloadReportFrmHistory();
     }
 
-    @Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUpload_SplitRuleWithDuplicateID() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void e_verifyUpload_SplitRuleWithDuplicateID() {
         payoutSplitRulesPage.uploadDuplicateIdRuleFile("DuplicateIdSplitRules.csv");
     }
 

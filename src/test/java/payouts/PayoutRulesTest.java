@@ -35,40 +35,40 @@ public class PayoutRulesTest extends TestBase {
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
     }
 
-    @Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUploadRuleFile() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void a_verifyUploadRuleFile() {
         payoutRulesPage.toUploadLatestRuleFile("UniqueIdRuleFile.csv");
         db.ValidatePayoutRules();
     }
 
-    @Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUploadRuleWithMasterDataFile() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void b_verifyUploadRuleWithMasterDataFile() {
         payoutRulesPage.toUploadRuleFileWithMasterDataFile("UniqueIdRuleFile.csv","materTestDataFile.csv");
         payoutRulesPage.downloadReportFrmHistory();
     }
 //
-   @Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyser.class)
-        public void verifyUploadRuleWithDeleteRule() {
+   @Test(retryAnalyzer = RetryAnalyser.class)
+        public void c_verifyUploadRuleWithDeleteRule() {
        payoutRulesPage.toUploadLatestRuleFile("DeleteRulesFile.csv");
     }
 
-    @Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUploadRuleWithNewRule() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void d_verifyUploadRuleWithNewRule() {
         payoutRulesPage.toUploadLatestRuleFile("AddNewRules.csv");
     }
 
-    @Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUploadRuleWithChangeInRule() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void e_verifyUploadRuleWithChangeInRule() {
         payoutRulesPage.toUploadLatestRuleFile("ChangeInRules.csv");
     }
 
-    @Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void verifyUploadRuleWithDuplicateID() {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void f_verifyUploadRuleWithDuplicateID() {
         payoutRulesPage.uploadDuplicateIdRuleFile("DuplicateRuleIds.csv");
     }
 
-    @Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void UploadeLatestRuleFile() throws InterruptedException {
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void g_UploadeLatestRuleFile() throws InterruptedException {
         payoutRulesPage.toUploadLatestRuleFile("SanityRuleFileMain.csv");
     }
 
