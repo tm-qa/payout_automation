@@ -48,4 +48,25 @@ import java.util.*;
             throw new AssertionError("Column " + colIndex + " does not contain expected value: " + expected);
         }
 
+        //****** To Get Latest Downloaded CSV File
+
+        private static final String DOWNLOAD_DIR = "/var/lib/jenkins/workspace/payout"; // Jenkins
+//        private static final String DOWNLOAD_DIR = "//Users//rahulpatil//Downloads"; // Local
+
+        public static File getLatestCsvFile() {
+            File downloadDir = new File(DOWNLOAD_DIR);
+
+            File[] csvFiles = downloadDir.listFiles((dir, name) -> name.endsWith(".csv"));
+
+            if (csvFiles == null || csvFiles.length == 0) {
+                throw new AssertionError("No CSV files found in directory: " + DOWNLOAD_DIR);
+            }
+
+            return List.of(csvFiles)
+                    .stream()
+                    .max(Comparator.comparingLong(File::lastModified))
+                    .orElseThrow(() ->
+                            new AssertionError("Unable to determine latest CSV file"));
+        }
+
 }

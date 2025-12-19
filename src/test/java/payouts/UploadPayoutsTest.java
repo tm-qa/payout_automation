@@ -27,8 +27,8 @@ public class UploadPayoutsTest extends TestBase {
         ninj = new ninja();
         uploadPayoutsPage = new UploadPayoutsPage();
         uploadPayoutsDB = new UploadPayoutsDB();
-        driver.get(System.getProperty("ninjaurl"));
-//        driver.get(prop.getProperty("sanityninjaurl"));
+//        driver.get(System.getProperty("ninjaurl"));
+        driver.get(prop.getProperty("sanityninjaurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         cu = driver.getCurrentUrl();
@@ -41,14 +41,14 @@ public class UploadPayoutsTest extends TestBase {
     }
 
     @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
-    public void a_verifyManualUploads() throws InterruptedException {
+    public void a_verifyManualUploads() throws Exception {
         uploadPayoutsPage.manualUpload("ManualUpload.csv", "Dec 2025 C2");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualUploadBulkSearch.csv");
         uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
         uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
     @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
-    public void b_verifyManualCorrection() throws InterruptedException {
+    public void b_verifyManualCorrection() throws Exception {
         uploadPayoutsPage.manualCorrection("ManualCorrection.csv");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualCorrectionBulkSearch.csv");
 //        uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
@@ -94,12 +94,13 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
     }
 
-    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    @Test(enabled = true, retryAnalyzer = RetryAnalyser.class)
     public void f_verifyPayoutQCUpload() throws Exception {
-        uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
-        uploadPayoutsPage.uploadAdjustment("Adjustments.csv","Dec 2025 C2");
+//        uploadPayoutsPage.validate_MIS_EntryAtPayouts();
         uploadPayoutsPage.downloadAdjustmentsQuickSearchResult();
-        uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
+        uploadPayoutsPage.storeCSVdata();
+        uploadPayoutsPage.uploadPayoutQC("PayoutQC.csv");
+//        uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
     }
 
 
