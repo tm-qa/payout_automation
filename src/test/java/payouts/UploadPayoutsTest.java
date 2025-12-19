@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import util.RetryAnalyser;
+
 @Test(groups = {"Upload Payouts"})
 public class UploadPayoutsTest extends TestBase {
     ninja ninj;
@@ -38,21 +40,21 @@ public class UploadPayoutsTest extends TestBase {
         driver.get(cu);
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void a_verifyManualUploads() throws InterruptedException {
         uploadPayoutsPage.manualUpload("ManualUpload.csv", "Dec 2025 C2");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualUploadBulkSearch.csv");
         uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
         uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void b_verifyManualCorrection() throws InterruptedException {
         uploadPayoutsPage.manualCorrection("ManualCorrection.csv");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualCorrectionBulkSearch.csv");
 //        uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
 //        uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void c_verifyDeviationsUpload() throws Exception {
         ninj.punch_TW_Policy();
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
@@ -74,7 +76,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.uploadSplitDeviations("NonSplitPartner_SPLIT_DEVIATIONS");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void d_verifySplitDeviationsUpload() throws Exception {
         ninj.punch_TW_Policy();
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
@@ -83,7 +85,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateDeviationQuickSearchResult("SPLIT_DEVIATIONS");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void e_verifyAdjustmentsUpload() throws Exception {
         uploadPayoutsPage.selectAdjustments("Adjustments.csv");
         uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");

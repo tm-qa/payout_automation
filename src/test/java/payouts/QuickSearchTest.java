@@ -35,7 +35,6 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.quickSearchClick();
         cu = driver.getCurrentUrl();
         LogUtils.info(cu);
-//        driver.get(cu);
     }
 
     @BeforeMethod()
@@ -44,7 +43,7 @@ public class QuickSearchTest extends TestBase {
     }
 
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void a_verifyValid_QuickSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyValid_QuickSearch -***");
         quickSearchPage.searchByValid_Partner_ID("6290f07ed35ae3058a14b495");
@@ -55,7 +54,7 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verifyValid_QuickSearch -***");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void b_verifyInvalid_QuickSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyInvalid_QuickSearch -***");
         quickSearchPage.searchByInvalid_Partner_ID("6290f07ed35ae3058a14b");
@@ -67,7 +66,7 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verifyInvalid_QuickSearch -***");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void c_verifyValidMIS_BulkSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyValidMIS_BulkSearch -***");
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");

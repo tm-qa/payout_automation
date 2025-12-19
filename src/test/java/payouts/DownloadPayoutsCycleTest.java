@@ -41,7 +41,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void a_verify_Regular_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
@@ -55,7 +55,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verify_Regular_CyclePayoutsDumpDownload -***");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void b_verify_QuickPay_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_QuickPay_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
@@ -69,7 +69,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verify_QuickPay_CyclePayoutsDumpDownload -***");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void c_verify_QuickPay_Regular_CyclePayoutsDumpDownload() {
         LogUtils.info("***- Test Case Started : verify_QuickPay_Regular_CyclePayoutsDumpDownload -***");
         downloadPayoutsCyclePage.downloadPayouts();
