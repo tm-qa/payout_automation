@@ -348,7 +348,8 @@ public class UploadPayoutsPage extends TestBase {
 
     public void validateDeviationQuickSearchResult(String deviationType){
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+//            String downloadDirectory = "//Users//rahulpatil//Downloads";  // Local
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout"; // Jenkins
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -566,7 +567,8 @@ public class UploadPayoutsPage extends TestBase {
 
     public void validateDownloadTemplateFile(String fileName) {
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+//            String downloadDirectory = "//Users//rahulpatil//Downloads";  // Local
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout"; // Jenkins
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -790,7 +792,8 @@ public class UploadPayoutsPage extends TestBase {
 
     public void validateOutputFile(String fileName, String deviationType, String pcid) {
         try {
-            String downloadDirectory = "//Users//rahulpatil//Downloads";
+//            String downloadDirectory = "//Users//rahulpatil//Downloads";  // Local
+            String downloadDirectory = "/var/lib/jenkins/workspace/payout"; // Jenkins
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
