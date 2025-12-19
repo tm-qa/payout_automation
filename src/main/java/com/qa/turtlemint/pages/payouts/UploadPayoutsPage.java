@@ -251,12 +251,14 @@ public class UploadPayoutsPage extends TestBase {
         }
     }
 
-    public void selectAdjustments(String fileName){
+    public void selectAdjustments(){
         TestUtil.click(dpc.ledgerBtn,"");
         TestUtil.click(uploadPayoutBtn, "Upload Payouts Button Clicked");
     }
 
     public void uploadAdjustment(String fileName, String paymentCycle) throws Exception {
+        TestUtil.click(dpc.ledgerBtn,"");
+        TestUtil.click(uploadPayoutBtn, "Upload Payouts Button Clicked");
         TestUtil.click(uploadPayoutDrpdwn, "Upload Payouts dropdown Clicked");
         WebCommands.staticSleep(1000);
         TestUtil.getScreenShot();
@@ -335,7 +337,7 @@ public class UploadPayoutsPage extends TestBase {
     }
 
     public void downloadAdjustmentsQuickSearchResult(){
-        TestUtil.click(dpc.ledgerBtn,"");
+//        TestUtil.click(dpc.ledgerBtn,"");
         TestUtil.click(cmp.quickSearchSectnBtn,"Quick Search Selected");
         TestUtil.sendKeys(qsp.misIdTxtbox, "MIS_AHSK7OHON57", "MIS ID Entered");
         TestUtil.click(qsp.searchButton, "Search Button Clicked");

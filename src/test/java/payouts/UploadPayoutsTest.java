@@ -87,7 +87,15 @@ public class UploadPayoutsTest extends TestBase {
 
     @Test(retryAnalyzer = RetryAnalyser.class)
     public void e_verifyAdjustmentsUpload() throws Exception {
-        uploadPayoutsPage.selectAdjustments("Adjustments.csv");
+//        uploadPayoutsPage.selectAdjustments();
+        uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
+        uploadPayoutsPage.uploadAdjustment("Adjustments.csv","Dec 2025 C2");
+        uploadPayoutsPage.downloadAdjustmentsQuickSearchResult();
+        uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
+    }
+
+    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    public void f_verifyPayoutQCUpload() throws Exception {
         uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
         uploadPayoutsPage.uploadAdjustment("Adjustments.csv","Dec 2025 C2");
         uploadPayoutsPage.downloadAdjustmentsQuickSearchResult();
