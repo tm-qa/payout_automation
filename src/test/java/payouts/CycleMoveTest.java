@@ -37,25 +37,25 @@ public class CycleMoveTest extends TestBase {
        driver.get(cu);
     }
 
-    @Test(priority = 1)
+    @Test(priority = 0)
     public void verifyEarlyCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("EarlyCycleMove_C2_C1.csv", "202511C2", "202511C1");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("EarlyCycleMove_C2_C1.csv","MoveCycleAssert.csv");
     }
 
-    @Test(priority = 2)
+    @Test(priority = 1)
     public void verifyLaterCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("LaterCycleMove_C1_C2.csv", "202511C1", "202511C2");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("LaterCycleMove_C1_C2.csv","MoveCycleAssert.csv");
     }
 
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void verifyQuickPayCycleMove() throws Exception {
         cycleMovePage.move_CyclePayments("QuickPayCycleMove_C2_QP.csv", "202511C2", "20251126");
         cycleMovePage.verifyMoveEntryCycle_ViaBulkSearch("QuickPayCycleMove_C2_QP.csv","MoveCycleAssert.csv");
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyser.class)
+    @Test(priority = 3, retryAnalyzer = RetryAnalyser.class)
     public void moveBackInEarlyCycle() throws InterruptedException {
         cycleMovePage.moveBackInCycle_ToContinueFlow("MoveBackCycle_QP_C2.csv", "20251126", "202511C2");
     }
