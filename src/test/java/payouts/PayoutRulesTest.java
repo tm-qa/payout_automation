@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import util.RetryAnalyser;
 
-@Test(groups = {"payout rule upload"})
+@Test(groups = {"Payout_Rules_Test"})
 public class PayoutRulesTest extends TestBase {
 
     ninja ninj;
