@@ -44,7 +44,7 @@ public class QuickSearchTest extends TestBase {
     }
 
 
-    @Test(priority = 1)
+    @Test
     public void verifyValid_QuickSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyValid_QuickSearch -***");
         quickSearchPage.searchByValid_Partner_ID("6290f07ed35ae3058a14b495");
@@ -55,7 +55,7 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verifyValid_QuickSearch -***");
     }
 
-    @Test(priority = 2)
+    @Test
     public void verifyInvalid_QuickSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyInvalid_QuickSearch -***");
         quickSearchPage.searchByInvalid_Partner_ID("6290f07ed35ae3058a14b");
@@ -67,7 +67,7 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info("***- Test Case Completed : verifyInvalid_QuickSearch -***");
     }
 
-    @Test(priority = 3)
+    @Test
     public void verifyValidMIS_BulkSearch() throws InterruptedException {
         LogUtils.info("***- Test Case Started : verifyValidMIS_BulkSearch -***");
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
