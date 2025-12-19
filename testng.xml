@@ -21,6 +21,7 @@
         <!--        </groups>-->
         <classes>
 
+            <class name="payouts.CycleMoveTest"></class>
             <class name="payouts.DownloadPayoutsCycleTest"></class>
             <class name="payouts.QuickSearchTest"></class>
 
