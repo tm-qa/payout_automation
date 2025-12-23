@@ -68,7 +68,7 @@ public class CsvUtils {
     }
 
 
-    public class TestDataStore {
+    public static class TestDataStore {
         private static final Map<String, String> STORE = new ConcurrentHashMap<>();
 
         private TestDataStore() {
