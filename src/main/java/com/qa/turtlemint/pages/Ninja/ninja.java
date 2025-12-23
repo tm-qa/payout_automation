@@ -602,9 +602,8 @@ public class ninja extends TestBase {
     }
 
     public void punch_TW_Policy(String misQCStatus) throws Exception {
-//        driver.get(System.getProperty("ninjaurl")); // Jenkins
+        driver.get(System.getProperty("ninjaurl")); // Jenkins
 //        driver.get(prop.getProperty("sanityninjaurl")); // Local
-        driver.navigate().to("https://ninja.sanity.turtle-feature.com/");
         String ninjaUrl = driver.getCurrentUrl();
         LogUtils.info(ninjaUrl);
         TestUtil.click(misModule,"MIS Module Clicked");

@@ -12,8 +12,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CsvUtils {
-    private static final String DOWNLOAD_DIR = "/var/lib/jenkins/workspace/payout"; // Jenkins
-//        private static final String DOWNLOAD_DIR = "//Users//rahulpatil//Downloads"; // Local
+    private static final String DOWNLOAD_DIR = "/var/lib/jenkins/workspace/payout"; //Jenkins
+//        private static final String DOWNLOAD_DIR = "//Users//rahulpatil//Downloads";// Local
 
 
     // Read CSV into List<String[]>
