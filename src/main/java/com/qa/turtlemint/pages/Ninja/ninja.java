@@ -415,6 +415,9 @@ public class ninja extends TestBase {
     @FindBy(xpath = "//div[text()='Present']")
     WebElement insurerRecordStatus_Present;
 
+    @FindBy(xpath = "(//a[@data-auto='mis-module'])[2]")
+    WebElement misModule;
+
 
     public ninja() {
         PageFactory.initElements(driver, this);
@@ -599,11 +602,12 @@ public class ninja extends TestBase {
     }
 
     public void punch_TW_Policy(String misQCStatus) throws Exception {
-        driver.get(System.getProperty("ninjaurl")); // Jenkins
+//        driver.get(System.getProperty("ninjaurl")); // Jenkins
 //        driver.get(prop.getProperty("sanityninjaurl")); // Local
+        driver.navigate().to("https://ninja.sanity.turtle-feature.com/");
         String ninjaUrl = driver.getCurrentUrl();
         LogUtils.info(ninjaUrl);
-        driver.findElement(By.xpath("(//a[@data-auto='mis-module'])[2]")).click();
+        TestUtil.click(misModule,"MIS Module Clicked");
         TestUtil.click(NewSaleButton, "New Sale Button");
         Thread.sleep(1000);
         TestUtil.click(VerticlDropdown, "");
