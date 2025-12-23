@@ -53,7 +53,7 @@ public class TestBase {
                 options.addArguments("--incognito");
                 options.addArguments(("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
                         + "AppleWebKit/537.36 (KHTML, like Gecko)"
-                        + "Chrome/103.0.0.0 Safari/537.36"));
+                        + "Chrome/103.0.5060.134 Safari/537.36"));
                 System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
                 options.addArguments("disable-infobars"); // disabling infobars
                 options.addArguments("--disable-extensions"); // disabling extensions
