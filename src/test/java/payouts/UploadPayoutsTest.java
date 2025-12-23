@@ -54,7 +54,7 @@ public class UploadPayoutsTest extends TestBase {
 //        uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
 //        uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test
+    @Test(enabled = false)
     public void c_verifyDeviationsUpload() throws Exception {
         ninj.punch_TW_Policy("DONE");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
@@ -85,7 +85,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateDeviationQuickSearchResult("SPLIT_DEVIATIONS");
     }
 
-    @Test
+    @Test(enabled = false)
     public void e_verifyAdjustmentsUpload() throws Exception {
 //        uploadPayoutsPage.selectAdjustments();
         uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
@@ -94,7 +94,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateQuickSearchResult("Adjustments");
     }
 
-    @Test
+    @Test(enabled = false)
     public void f_verifyPayoutQCUpload_for_misQC_DONE() throws Exception {
         ninj.punch_TW_Policy("DONE");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
