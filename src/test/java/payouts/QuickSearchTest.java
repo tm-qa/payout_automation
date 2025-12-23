@@ -10,14 +10,14 @@ import util.RetryAnalyser;
 import util.iTestListener;
 
 @Listeners(iTestListener.class)
-@Test(groups = {"Quick_Search_Test","Whole_Payouts"})
+@Test(groups = {"Quick_Search_Test", "Whole_Payouts"})
 public class QuickSearchTest extends TestBase {
 
     QuickSearchPage quickSearchPage;
 
     ninja ninj;
 
-  public   String cu;
+    public String cu;
 
     public QuickSearchTest() {
         super();
@@ -48,9 +48,9 @@ public class QuickSearchTest extends TestBase {
         LogUtils.info("***- Test Case Started : verifyValid_QuickSearch -***");
         quickSearchPage.searchByValid_Partner_ID("6290f07ed35ae3058a14b495");
         quickSearchPage.searchByValid_MIS_ID("MIS_MHQS4PFOT1K");
-        quickSearchPage.searchByValid_Partner_MIS_ID("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K");
-        quickSearchPage.searchByValid_From_To_Cycles("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Oct 2025 C1","Nov 2025 C2");
-        quickSearchPage.searchByValid_From_To_Cycles_But_DataNotPresent("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Aug 2025 C1","Sep 2025 C2");
+        quickSearchPage.searchByValid_Partner_MIS_ID("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K");
+        quickSearchPage.searchByValid_From_To_Cycles("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K", "Oct 2025 C1", "Nov 2025 C2");
+        quickSearchPage.searchByValid_From_To_Cycles_But_DataNotPresent("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K", "Aug 2025 C1", "Sep 2025 C2");
         LogUtils.info("***- Test Case Completed : verifyValid_QuickSearch -***");
     }
 
@@ -62,7 +62,7 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.searchByInvalid_PartnerID_MIS_ID("6290f07ed35ae3058a14b", "MIS_AHSBF7U1234");
         quickSearchPage.searchByValid_PartnerID_Invalid_MIS_ID("63b54bb9ee10470001250bb6", "MIS_AHSBF7U1234");
         quickSearchPage.searchByInvalid_PartnerID_Valid_MIS_ID("6290f07ed35ae3058a14b", "MIS_MHQS4PFOT1K");
-        quickSearchPage.searchByValid_From_To_InvalidCycleRange("6290f07ed35ae3058a14b495","MIS_MHQS4PFOT1K","Oct 2025 C1","Oct 2025 C1");
+        quickSearchPage.searchByValid_From_To_InvalidCycleRange("6290f07ed35ae3058a14b495", "MIS_MHQS4PFOT1K", "Oct 2025 C1", "Oct 2025 C1");
         LogUtils.info("***- Test Case Completed : verifyInvalid_QuickSearch -***");
     }
 
@@ -72,13 +72,13 @@ public class QuickSearchTest extends TestBase {
         quickSearchPage.bulkSearchByMIS_ID("Valid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchByMIS_ID("Valid_Invalid_MIS_BulkSearch.csv");
         quickSearchPage.bulkSearchBy_Invalid_MIS_ID("Invalid_MIS_BulkSearch.csv");
-        quickSearchPage.bulkSearchByMIS_ID_Cycle("Valid_MIS_BulkSearch.csv","Oct 2025 C2","Nov 2025 C2");
-        quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv","Aug 2025 C1","Aug 2025 C1");
+        quickSearchPage.bulkSearchByMIS_ID_Cycle("Valid_MIS_BulkSearch.csv", "Oct 2025 C2", "Nov 2025 C2");
+        quickSearchPage.bulkSearchInvalidCycleRange("Valid_MIS_BulkSearch.csv", "Aug 2025 C1", "Aug 2025 C1");
         LogUtils.info("***- Test Case Completed : verifyValidMIS_BulkSearch -***");
     }
 
     @AfterClass()
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.quit();
     }
 }

@@ -16,7 +16,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
 
     DownloadPayoutsCyclePage downloadPayoutsCyclePage;
     ninja ninj;
-   public String cu;
+    public String cu;
 
     public DownloadPayoutsCycleTest() {
         super();
@@ -36,7 +36,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @BeforeMethod()
-    public void loginLess(){
+    public void loginLess() {
         driver.get(cu);
     }
 
@@ -84,7 +84,7 @@ public class DownloadPayoutsCycleTest extends TestBase {
     }
 
     @AfterClass()
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.quit();
     }
 }

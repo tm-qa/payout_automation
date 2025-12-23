@@ -65,10 +65,10 @@ public class DownloadPayoutsCyclePage extends TestBase {
         PageFactory.initElements(driver, this);
     }
 
-    public void downloadPayouts (){
+    public void downloadPayouts() {
         String strUrl = driver.getCurrentUrl();
         LogUtils.info("Opened Website: " + strUrl);
-        TestUtil.click(ledgerBtn, "Payout Ledger Button Clicked");;
+        TestUtil.click(ledgerBtn, "Payout Ledger Button Clicked");
         TestUtil.click(dwnloadPayoutBtn, "Download Payout Button Clicked");
         Assert.assertEquals("Download Payouts", downloadPayoutTitle.getText());
         Assert.assertEquals("Payment Cycles:", dropdownText1.getText());
@@ -76,35 +76,35 @@ public class DownloadPayoutsCyclePage extends TestBase {
         Assert.assertEquals("Download Payouts History", downloadPayoutHistryTitle.getText());
     }
 
-    public void selectPaymentCycle(String paymentCycle, String code){
+    public void selectPaymentCycle(String paymentCycle, String code) {
         TestUtil.click(paymentCycleDrpdwn, "Clicked on Dropdown");
         paymentCycleDrpdwn.sendKeys(code);
-        driver.findElement(By.xpath("//*[text()='"+ paymentCycle + "']")).click();
+        driver.findElement(By.xpath("//*[text()='" + paymentCycle + "']")).click();
     }
 
-    public void downloadClick(){
+    public void downloadClick() {
         TestUtil.click(downloadBtn, "Download Button Clicked");
         commentEnter();
         WebCommands.staticSleep(2000);
         TestUtil.click(downloadBtn2, "Download Button Clicked after entered comment");
         WebCommands.staticSleep(2000);
-        Assert.assertEquals(dowloadedBy.getText(),"automationtesting");
-        Assert.assertEquals(commentText.getText(),"Automation Test");
+        Assert.assertEquals(dowloadedBy.getText(), "automationtesting");
+        Assert.assertEquals(commentText.getText(), "Automation Test");
         TestUtil.getScreenShot();
         WebCommands.staticSleep(5000);
     }
 
-    public void commentEnter(){
-        TestUtil.sendKeys(commentTxtBox,"Automation Test","Comment Entered");
+    public void commentEnter() {
+        TestUtil.sendKeys(commentTxtBox, "Automation Test", "Comment Entered");
     }
 
-    public void clearDropdown(){
-        Actions act=new Actions(driver);
+    public void clearDropdown() {
+        Actions act = new Actions(driver);
         act.moveToElement(clearDrpdwn).build().perform();
         act.click(clearDrpdwn).build().perform();
     }
 
-    public void validateDownloadedCycle(String cycleType){
+    public void validateDownloadedCycle(String cycleType) {
         try {
             String downloadDirectory = "/var/lib/jenkins/workspace/payout";
             File[] files = new File(downloadDirectory).listFiles(new FilenameFilter() {
@@ -139,8 +139,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         csvAssert.assertCell(data, 294, 132, "202510C2");
                         LogUtils.info("202510C2 Regular Cycle Present in Dump");
                         LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Regular Cycle ~~~");
-                    }
-                    else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
+                    } else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
                         LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
                         csvAssert.assertCell(data, 1, 132, "20251027");
                         LogUtils.info("20251027 QuickPay Cycle Present in Dump");
@@ -151,8 +150,7 @@ public class DownloadPayoutsCyclePage extends TestBase {
                         csvAssert.assertCell(data, 32, 132, "20251030");
                         LogUtils.info("20251030 QuickPay Cycle Present in Dump");
                         LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
-                    }
-                    else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
+                    } else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
                         LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Regular/Quickpay Cycle ~~~");
                         csvAssert.assertCell(data, 1, 132, "20251027");
                         LogUtils.info("20251027 QuickPay Cycle Present in Dump");

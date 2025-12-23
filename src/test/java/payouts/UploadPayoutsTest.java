@@ -27,8 +27,8 @@ public class UploadPayoutsTest extends TestBase {
         ninj = new ninja();
         uploadPayoutsPage = new UploadPayoutsPage();
         uploadPayoutsDB = new UploadPayoutsDB();
-//        driver.get(System.getProperty("ninjaurl"));
-        driver.get(prop.getProperty("sanityninjaurl"));
+        driver.get(System.getProperty("ninjaurl"));
+//        driver.get(prop.getProperty("sanityninjaurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
         driver.findElement(By.xpath("//a[@data-auto='payouts-module']")).click();
         cu = driver.getCurrentUrl();
@@ -40,23 +40,23 @@ public class UploadPayoutsTest extends TestBase {
         driver.get(cu);
     }
 
-    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    @Test
     public void a_verifyManualUploads() throws Exception {
         uploadPayoutsPage.manualUpload("ManualUpload.csv", "Dec 2025 C2");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualUploadBulkSearch.csv");
         uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
         uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    @Test
     public void b_verifyManualCorrection() throws Exception {
         uploadPayoutsPage.manualCorrection("ManualCorrection.csv");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualCorrectionBulkSearch.csv");
 //        uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
 //        uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    @Test
     public void c_verifyDeviationsUpload() throws Exception {
-        ninj.punch_TW_Policy();
+        ninj.punch_TW_Policy("DONE");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
                     //    Upload INCORRECT_RULES Deviation Type
         uploadPayoutsPage.uploadDeviation("INCORRECT_RULES");
@@ -76,32 +76,44 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.uploadSplitDeviations("NonSplitPartner_SPLIT_DEVIATIONS");
     }
 
-    @Test(enabled = false, retryAnalyzer = RetryAnalyser.class)
+    @Test
     public void d_verifySplitDeviationsUpload() throws Exception {
-        ninj.punch_TW_Policy();
+        ninj.punch_TW_Policy("DONE");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
         uploadPayoutsPage.uploadSplitDeviations("SPLIT_DEVIATIONS");
         uploadPayoutsPage.downloadDeviationQuickSearchResult();
         uploadPayoutsPage.validateDeviationQuickSearchResult("SPLIT_DEVIATIONS");
     }
 
-    @Test(retryAnalyzer = RetryAnalyser.class)
+    @Test
     public void e_verifyAdjustmentsUpload() throws Exception {
 //        uploadPayoutsPage.selectAdjustments();
         uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
         uploadPayoutsPage.uploadAdjustment("Adjustments.csv","Dec 2025 C2");
         uploadPayoutsPage.downloadAdjustmentsQuickSearchResult();
-        uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
+        uploadPayoutsPage.validateQuickSearchResult("Adjustments");
     }
 
-    @Test(enabled = true, retryAnalyzer = RetryAnalyser.class)
-    public void f_verifyPayoutQCUpload() throws Exception {
-//        uploadPayoutsPage.validate_MIS_EntryAtPayouts();
-        uploadPayoutsPage.downloadAdjustmentsQuickSearchResult();
-        uploadPayoutsPage.storeCSVdata();
-        uploadPayoutsPage.uploadPayoutQC("PayoutQC.csv");
-//        uploadPayoutsPage.validateDeviationQuickSearchResult("Adjustments");
+    @Test
+    public void f_verifyPayoutQCUpload_for_misQC_DONE() throws Exception {
+        ninj.punch_TW_Policy("DONE");
+        uploadPayoutsPage.validate_MIS_EntryAtPayouts();
+        uploadPayoutsPage.uploadPayoutQC("PayoutQC_DONE_misQC");
+        uploadPayoutsPage.uploadPostQC_Review("PostQC_Review_DONE_PayoutQC");
+        uploadPayoutsPage.downloadDeviationQuickSearchResult();
+        uploadPayoutsPage.validateQuickSearchResult("PayoutQC_DONE_misQC");
+        uploadPayoutsPage.validateQuickSearchResult("PostQC_Review_DONE_PayoutQC");
     }
 
+    @Test
+    public void g_verifyPayoutQCUpload_for_misQC_PENDING() throws Exception {
+        ninj.punch_TW_Policy("PENDING");
+        uploadPayoutsPage.validate_MIS_EntryAtPayouts();
+        uploadPayoutsPage.uploadPayoutQC("PayoutQC_PENDING_misQC");
+        uploadPayoutsPage.uploadPostQC_Review("PostQC_Review_PENDING_PayoutQC");
+        uploadPayoutsPage.downloadDeviationQuickSearchResult();
+        uploadPayoutsPage.validateQuickSearchResult("PayoutQC_PENDING_misQC");
+        uploadPayoutsPage.validateQuickSearchResult("PostQC_Review_PENDING_PayoutQC");
+    }
 
 }

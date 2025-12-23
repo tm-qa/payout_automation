@@ -43,13 +43,14 @@ public class PayoutRulesTest extends TestBase {
 
     @Test(retryAnalyzer = RetryAnalyser.class)
     public void b_verifyUploadRuleWithMasterDataFile() {
-        payoutRulesPage.toUploadRuleFileWithMasterDataFile("UniqueIdRuleFile.csv","materTestDataFile.csv");
+        payoutRulesPage.toUploadRuleFileWithMasterDataFile("UniqueIdRuleFile.csv", "materTestDataFile.csv");
         payoutRulesPage.downloadReportFrmHistory();
     }
-//
-   @Test(retryAnalyzer = RetryAnalyser.class)
-        public void c_verifyUploadRuleWithDeleteRule() {
-       payoutRulesPage.toUploadLatestRuleFile("DeleteRulesFile.csv");
+
+    //
+    @Test(retryAnalyzer = RetryAnalyser.class)
+    public void c_verifyUploadRuleWithDeleteRule() {
+        payoutRulesPage.toUploadLatestRuleFile("DeleteRulesFile.csv");
     }
 
     @Test(retryAnalyzer = RetryAnalyser.class)

@@ -93,12 +93,11 @@ public class PayoutSplitRulesPage extends TestBase {
     WebElement splitRulesFileDownloadCTA;
 
 
-
     public PayoutSplitRulesPage() {
         PageFactory.initElements(driver, this);
     }
 
-    public void toUploadLatestSPlitRuleFile(String fileName){
+    public void toUploadLatestSPlitRuleFile(String fileName) {
         String strUrl = driver.getCurrentUrl();
         LogUtils.info("Opened Website: " + strUrl);
         TestUtil.click(configureRulesModule, "Clicked On Configure Rules Module");
@@ -108,39 +107,39 @@ public class PayoutSplitRulesPage extends TestBase {
         driver.findElement(By.xpath("(//span[text()='Upload'])[1]//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//SplitRuleFile//" + fileName + "");
         WebCommands.staticSleep(1000);
         TestUtil.click(commentTxtBox, "Clicked on comment Text Box");
-        TestUtil.sendKeys(commentTxtBox,"Automation Test", "Comment Entered");
+        TestUtil.sendKeys(commentTxtBox, "Automation Test", "Comment Entered");
         TestUtil.click(mainUploadBtn, "Clicked on upload button");
         WebCommands.staticSleep(1000);
         TestUtil.click(startSimulationBtn, "Clicked on Start Test Button");
         WebCommands.staticSleep(1000);
-        if(fileName.equalsIgnoreCase("DeleteSplitRules.csv")){
+        if (fileName.equalsIgnoreCase("DeleteSplitRules.csv")) {
             Assert.assertTrue(splitRuleSimulationPageTitle.isDisplayed());
             Assert.assertTrue(uploadedByUserName.isDisplayed());
             Assert.assertTrue(splitRulesCompareTitle.isDisplayed());
             TestUtil.click(splitRulesFileDownloadCTA, "Clicked on Download CTA");
-            Assert.assertEquals(currentRuleNumbers.getText(),"7");
-            Assert.assertEquals(addRuleNumbers.getText(),"0");
-            Assert.assertEquals(changeRuleNumbers.getText(),"0");
-            Assert.assertEquals(deletedRuleNumbers.getText(),"2");
-            Assert.assertEquals(newRuleNumbers.getText(),"5");
+            Assert.assertEquals(currentRuleNumbers.getText(), "7");
+            Assert.assertEquals(addRuleNumbers.getText(), "0");
+            Assert.assertEquals(changeRuleNumbers.getText(), "0");
+            Assert.assertEquals(deletedRuleNumbers.getText(), "2");
+            Assert.assertEquals(newRuleNumbers.getText(), "5");
         } else if (fileName.equalsIgnoreCase("AddNewSplitRules.csv")) {
-            Assert.assertEquals(currentRuleNumbers.getText(),"5");
-            Assert.assertEquals(addRuleNumbers.getText(),"2");
-            Assert.assertEquals(changeRuleNumbers.getText(),"0");
-            Assert.assertEquals(deletedRuleNumbers.getText(),"0");
-            Assert.assertEquals(newRuleNumbers.getText(),"7");
+            Assert.assertEquals(currentRuleNumbers.getText(), "5");
+            Assert.assertEquals(addRuleNumbers.getText(), "2");
+            Assert.assertEquals(changeRuleNumbers.getText(), "0");
+            Assert.assertEquals(deletedRuleNumbers.getText(), "0");
+            Assert.assertEquals(newRuleNumbers.getText(), "7");
         } else if (fileName.equalsIgnoreCase("ChangeInSplitRules.csv")) {
-            Assert.assertEquals(currentRuleNumbers.getText(),"7");
-            Assert.assertEquals(addRuleNumbers.getText(),"0");
-            Assert.assertEquals(changeRuleNumbers.getText(),"2");
-            Assert.assertEquals(deletedRuleNumbers.getText(),"0");
-            Assert.assertEquals(newRuleNumbers.getText(),"7");
+            Assert.assertEquals(currentRuleNumbers.getText(), "7");
+            Assert.assertEquals(addRuleNumbers.getText(), "0");
+            Assert.assertEquals(changeRuleNumbers.getText(), "2");
+            Assert.assertEquals(deletedRuleNumbers.getText(), "0");
+            Assert.assertEquals(newRuleNumbers.getText(), "7");
         }
         driver.findElement(By.xpath("//html")).sendKeys(Keys.PAGE_DOWN);
         TestUtil.click(reviewReportCheckBox, "Review Report Checkbox clicked");
         TestUtil.click(pushToProdButton, "Push To Production button clicked");
         TestUtil.click(pushToProductionComment, "Clicked on comment Text Box");
-        TestUtil.sendKeys(pushToProductionComment,"Automation Test", "Comment Entered");
+        TestUtil.sendKeys(pushToProductionComment, "Automation Test", "Comment Entered");
         WebCommands.staticSleep(2000);
         TestUtil.click(pushToProductionUploadBtn, "Clicked on Final Upload button");
     }
@@ -156,7 +155,7 @@ public class PayoutSplitRulesPage extends TestBase {
         driver.findElement(By.xpath("(//span[text()='Upload'])[1]//preceding-sibling::input")).sendKeys("//Users//rahulpatil//Documents//Payouts Files//SplitRuleFile//" + fileName + "");
         WebCommands.staticSleep(2000);
         TestUtil.click(commentTxtBox, "Clicked on comment Text Box");
-        TestUtil.sendKeys(commentTxtBox,"Automation Test", "Comment Entered");
+        TestUtil.sendKeys(commentTxtBox, "Automation Test", "Comment Entered");
         TestUtil.click(mainUploadBtn, "Clicked on upload button");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement errorMsg = wait.until(
@@ -168,7 +167,7 @@ public class PayoutSplitRulesPage extends TestBase {
     public void downloadReportFrmHistory() {
         TestUtil.click(payoutSplitRule, "Clicked On Payout Rule Tab");
         TestUtil.click(ruleHistoryBtn, "Rule button Clicked");
-        Assert.assertEquals(ruleFileHistryTitle.getText(),"Split Rules Production History");
+        Assert.assertEquals(ruleFileHistryTitle.getText(), "Split Rules Production History");
         TestUtil.click(openbtn, "Open File button Clicked");
         TestUtil.click(ruleFileButton, "Rule File downloaded from report");
         TestUtil.click(closeButtn, "Clicked on Close Button");

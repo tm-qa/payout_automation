@@ -2,6 +2,7 @@ package com.qa.turtlemint.pages.Ninja;
 
 import com.qa.turtlemint.base.TestBase;
 import com.qa.turtlemint.commands.WebCommands;
+import com.qa.turtlemint.pages.payouts.CycleMovePage;
 import com.qa.turtlemint.util.LogUtils;
 import com.qa.turtlemint.util.TestUtil;
 import org.openqa.selenium.*;
@@ -310,6 +311,9 @@ public class ninja extends TestBase {
     @FindBy(xpath = "//div[text()='Done']")
     WebElement doneButton;
 
+    @FindBy(xpath = "//div[text()='Pending']")
+    WebElement pendingButton;
+
 //    @FindBy(xpath = "//button[text()='Yes']")
 //    WebElement yesButton;
 
@@ -417,6 +421,7 @@ public class ninja extends TestBase {
     }
 
 //    DBAssertion dbAssertion = new DBAssertion();
+    CycleMovePage cmp = new CycleMovePage();
 
     public static void setPlatformCookie(String value) {
         try {
@@ -593,7 +598,7 @@ public class ninja extends TestBase {
         }
     }
 
-    public void punch_TW_Policy() throws Exception {
+    public void punch_TW_Policy(String misQCStatus) throws Exception {
         driver.get(prop.getProperty("sanityninjaurl"));
         driver.findElement(By.xpath("(//a[@data-auto='mis-module'])[2]")).click();
         TestUtil.click(NewSaleButton, "New Sale Button");
@@ -681,15 +686,16 @@ public class ninja extends TestBase {
         TestUtil.sendKeys(grossPremium, "6100", "grossPremium enter");
         TestUtil.click(dataqc, "Data QC dropdown");
         WebCommands.staticSleep(2000);
-        TestUtil.click(doneButton, "Done select");
-//        TestUtil.click(insurerRecordStatusDropdown,"Insurer Record Status Dropdown Clicked");
-//        TestUtil.click(insurerRecordStatus_Present,"Insurer Record Status Present Selected");
-        WebCommands.staticSleep(1000);
-//        TestUtil.click(yesButton, "Yes select");
-        driver.findElement(By.xpath("//button[text()='Yes']")).click();
+
+        if(misQCStatus.equalsIgnoreCase("DONE")){
+            TestUtil.click(doneButton, "Done select");
+            WebCommands.staticSleep(1000);
+            driver.findElement(By.xpath("//button[text()='Yes']")).click();
+        } else if(misQCStatus.equalsIgnoreCase("PENDING")) {
+            TestUtil.click(pendingButton, "Pending selected");
+        }
         TestUtil.click(insurerRecordStatusDropdown, "Insurer Record Status dropdown");
         TestUtil.click(insurerRecordStatus_Present, "Present Insurer Record Status Selected");
-
 
         TestUtil.click(channelType, "channel Type dropdown");
         TestUtil.click(partnerSelect, "Partner select");
@@ -701,7 +707,8 @@ public class ninja extends TestBase {
         enterDpNumber.sendKeys("1585924");
         TestUtil.click(selectDpNumber,"");
         WebCommands.staticSleep(5000);
-        FileUpload.sendKeys("/Users/rahulpatil/Documents/Payouts Files/DocForPolicyPunch/BAJAJ_NEW_tp_MIS_PG2OXPWXZZL.pdf");
+        cmp.uploadFile("PolicyDocumentPDF");
+//        FileUpload.sendKeys("/Users/rahulpatil/Documents/Payouts Files/DocForPolicyPunch/BAJAJ_NEW_tp_MIS_PG2OXPWXZZL.pdf");
         TestUtil.click(PolicyTag, "Policy Tag select");
         TestUtil.click(FileTagDone, "File Tag Done");
         driver.findElement(By.xpath("//button[text()='Save Sale']")).click();
