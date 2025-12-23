@@ -85,7 +85,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateDeviationQuickSearchResult("SPLIT_DEVIATIONS");
     }
 
-    @Test(enabled = false)
+    @Test
     public void e_verifyAdjustmentsUpload() throws Exception {
 //        uploadPayoutsPage.selectAdjustments();
         uploadPayoutsPage.uploadAdjustment("AdjustmentsInvalid.csv","Dec 2025 C2");
@@ -105,7 +105,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.validateQuickSearchResult("PostQC_Review_DONE_PayoutQC");
     }
 
-    @Test
+    @Test(enabled = false)
     public void g_verifyPayoutQCUpload_for_misQC_PENDING() throws Exception {
         ninj.punch_TW_Policy("PENDING");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();
