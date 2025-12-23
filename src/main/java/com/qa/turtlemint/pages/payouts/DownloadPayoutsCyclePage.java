@@ -20,6 +20,8 @@ import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.qa.turtlemint.pages.CSV_Validatator.CsvUtils.assertValuePresentInColumn;
+
 public class DownloadPayoutsCyclePage extends TestBase {
 
     @FindBy(xpath = "//span[text()='Payouts Ledger']")
@@ -64,6 +66,8 @@ public class DownloadPayoutsCyclePage extends TestBase {
     public DownloadPayoutsCyclePage() {
         PageFactory.initElements(driver, this);
     }
+
+    CsvUtils csvUtils = new CsvUtils();
 
     public void downloadPayouts() {
         String strUrl = driver.getCurrentUrl();
@@ -125,41 +129,59 @@ public class DownloadPayoutsCyclePage extends TestBase {
                 if (mostRecentFile != null) {
                     System.out.println("Downloaded file path: " + mostRecentFile.getAbsolutePath());
                     WebCommands.staticSleep(2000);
-                    CsvUtils csvAssert = new CsvUtils();
-                    List<String[]> data = csvAssert.readCsv(mostRecentFile);
+//                    CsvUtils csvAssert = new CsvUtils();
+                    List<String[]> data = csvUtils.readCsv(mostRecentFile);
                     LogUtils.info(String.valueOf(mostRecentFile));
                     if (cycleType.equalsIgnoreCase("regularCycle")) {
                         LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Regular Cycle ~~~");
-                        csvAssert.assertCell(data, 1, 132, "202509C1");
-                        LogUtils.info("202509C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 12, 132, "202509C2");
-                        LogUtils.info("202509C2 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 195, 132, "202510C1");
-                        LogUtils.info("202510C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 294, 132, "202510C2");
-                        LogUtils.info("202510C2 Regular Cycle Present in Dump");
+
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202509C1");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202509C2");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202510C1");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202510C2");
+
+//                        csvAssert.assertCell(data, 1, 132, "202509C1");
+//                        LogUtils.info("202509C1 Regular Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 12, 132, "202509C2");
+//                        LogUtils.info("202509C2 Regular Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 195, 132, "202510C1");
+//                        LogUtils.info("202510C1 Regular Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 294, 132, "202510C2");
+//                        LogUtils.info("202510C2 Regular Cycle Present in Dump");
                         LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Regular Cycle ~~~");
                     } else if (cycleType.equalsIgnoreCase("quickpayCycle")) {
                         LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
-                        csvAssert.assertCell(data, 1, 132, "20251027");
-                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 11, 132, "20251028");
-                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 26, 132, "20251029");
-                        LogUtils.info("20251029 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 32, 132, "20251030");
-                        LogUtils.info("20251030 QuickPay Cycle Present in Dump");
+
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251027");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251028");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251029");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251030");
+
+//                        csvAssert.assertCell(data, 1, 132, "20251027");
+//                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 11, 132, "20251028");
+//                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 26, 132, "20251029");
+//                        LogUtils.info("20251029 QuickPay Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 32, 132, "20251030");
+//                        LogUtils.info("20251030 QuickPay Cycle Present in Dump");
                         LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Quickpay Cycle ~~~");
                     } else if (cycleType.equalsIgnoreCase("regular_quickpayCycle")) {
                         LogUtils.info("~~~ Verifying CSV Cycle Present in the Downloaded Dump for Regular/Quickpay Cycle ~~~");
-                        csvAssert.assertCell(data, 1, 132, "20251027");
-                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 10, 132, "20251028");
-                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
-                        csvAssert.assertCell(data, 28, 132, "202510C1");
-                        LogUtils.info("202510C1 Regular Cycle Present in Dump");
-                        csvAssert.assertCell(data, 132, 132, "202510C2");
-                        LogUtils.info("202510C2 Regular Cycle Present in Dump");
+
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251027");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "20251028");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202510C1");
+                        csvUtils.assertValuePresentInColumn(data, "Payment Cycle", "202510C2");
+
+//                        csvAssert.assertCell(data, 1, 132, "20251027");
+//                        LogUtils.info("20251027 QuickPay Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 10, 132, "20251028");
+//                        LogUtils.info("20251028 QuickPay Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 28, 132, "202510C1");
+//                        LogUtils.info("202510C1 Regular Cycle Present in Dump");
+//                        csvAssert.assertCell(data, 132, 132, "202510C2");
+//                        LogUtils.info("202510C2 Regular Cycle Present in Dump");
                         LogUtils.info("~~~ Validated CSV Cycle Present in the Downloaded Dump for Regular/Quickpay Cycle ~~~");
                     }
                 }

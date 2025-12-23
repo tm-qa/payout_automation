@@ -1,7 +1,9 @@
 package payouts;
 import com.qa.turtlemint.base.TestBase;
+import com.qa.turtlemint.pages.CSV_Validatator.CsvUtils;
 import com.qa.turtlemint.pages.DB_Assertions.UploadPayoutsDB;
 import com.qa.turtlemint.pages.Ninja.ninja;
+import com.qa.turtlemint.pages.payouts.QuickSearchPage;
 import com.qa.turtlemint.pages.payouts.UploadPayoutsPage;
 import com.qa.turtlemint.util.LogUtils;
 import org.openqa.selenium.By;
@@ -15,7 +17,10 @@ public class UploadPayoutsTest extends TestBase {
     ninja ninj;
     UploadPayoutsPage uploadPayoutsPage;
     UploadPayoutsDB uploadPayoutsDB;
+    QuickSearchPage quickSearchPage;
     public   String cu;
+    CsvUtils csvUtils = new CsvUtils();
+    String cycle = csvUtils.getCurrentCycle();
 
     public UploadPayoutsTest() {
         super();
@@ -27,6 +32,7 @@ public class UploadPayoutsTest extends TestBase {
         ninj = new ninja();
         uploadPayoutsPage = new UploadPayoutsPage();
         uploadPayoutsDB = new UploadPayoutsDB();
+        quickSearchPage = new QuickSearchPage();
         driver.get(System.getProperty("ninjaurl"));
 //        driver.get(prop.getProperty("sanityninjaurl"));
         ninj.NinjaLogin(prop.getProperty("NinjaEmail"), prop.getProperty("NinjaPassword"));
@@ -114,6 +120,16 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.downloadDeviationQuickSearchResult();
         uploadPayoutsPage.validateQuickSearchResult("PayoutQC_PENDING_misQC");
         uploadPayoutsPage.validateQuickSearchResult("PostQC_Review_PENDING_PayoutQC");
+    }
+
+    @Test(enabled = false)
+    public void h_verifyPartnerLevelActivityUpload() throws Exception {
+        ninj.punch_TW_Policy("DONE");
+        uploadPayoutsPage.validate_MIS_EntryAtPayouts();
+        uploadPayoutsPage.uploadPartnerLevelActivity("MUTUAl_FUND");
+//        uploadPayoutsPage.downloadDeviationQuickSearchResult();
+        quickSearchPage.searchByValid_From_To_Cycles("6290f07ed35ae3058a14b495","",cycle,"");
+        uploadPayoutsPage.validateQuickSearchResult("PayoutQC_DONE_misQC");
     }
 
 }

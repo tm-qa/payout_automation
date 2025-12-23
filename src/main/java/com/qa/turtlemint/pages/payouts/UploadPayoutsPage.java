@@ -119,6 +119,10 @@ public class UploadPayoutsPage extends TestBase {
     @FindBy(xpath = "//div[@title='Post QC Review']")
     WebElement postQC_ReviewBtn;
 
+    // Partner Level Activity
+    @FindBy(xpath = "//div[@title='Partner-level Activity']")
+    WebElement partnerLevelActivityBtn;
+
 
     String policyCommissionId;
     String policyDetailsId;
@@ -260,7 +264,9 @@ public class UploadPayoutsPage extends TestBase {
     DownloadPayoutsCyclePage dpc = new DownloadPayoutsCyclePage();
     CycleMovePage cmp = new CycleMovePage();
     QuickSearchPage qsp = new QuickSearchPage();
-    CsvUtils csvAssert = new CsvUtils();
+    CsvUtils csvUtils = new CsvUtils();
+    String currentDate = csvUtils.getCurrentDate();
+    String cycle = csvUtils.getCurrentCycle();
 
     public UploadPayoutsPage() {
         PageFactory.initElements(driver, this);
@@ -414,7 +420,7 @@ public class UploadPayoutsPage extends TestBase {
     }
 
     public void uploadPayoutQC(String fileName) throws Exception {
-        storeDataForPayoutQCFile();
+        storeCSV_QuickSearchData();
         TestUtil.click(uploadPayoutBtn, "Upload Payouts Button Clicked");
         TestUtil.click(uploadPayoutDrpdwn, "Upload Payouts dropdown Clicked");
         WebCommands.staticSleep(1000);
@@ -455,6 +461,27 @@ public class UploadPayoutsPage extends TestBase {
         WebCommands.staticSleep(3000);
         validateOutputFile(fileName, "", "");
         action.sendKeys(Keys.PAGE_UP).perform();
+    }
+
+    public void uploadPartnerLevelActivity(String plaType) throws Exception {
+        storeCSV_QuickSearchData();
+        TestUtil.click(uploadPayoutBtn, "Upload Payouts Button Clicked");
+        TestUtil.click(uploadPayoutDrpdwn, "Upload Payouts dropdown Clicked");
+        WebCommands.staticSleep(1000);
+        TestUtil.getScreenShot();
+        TestUtil.click(partnerLevelActivityBtn, "Partner Level Activity Clicked");
+        TestUtil.click(templateDownloadBtn, "Payout QC Template download");
+        WebCommands.staticSleep(1000);
+        validateDownloadTemplateFile(plaType);
+        writeDeviationUploadCSV("",plaType);
+        WebCommands.staticSleep(1000);
+        cmp.commentEnter();
+        TestUtil.click(finalUploadBtn, "Clicked on upload button");
+        WebCommands.staticSleep(1000);
+        UploadPayoutsHistoryAssertion(plaType);
+        TestUtil.click(outputFileBtn, "Download output file");
+        WebCommands.staticSleep(3000);
+        validateOutputFile(plaType, "", "");
     }
 
     public void validate_MIS_EntryAtPayouts() throws Exception {
@@ -523,8 +550,8 @@ public class UploadPayoutsPage extends TestBase {
         TestUtil.getScreenShot();
     }
 
-    public void storeDataForPayoutQCFile() throws Exception {
-        csvAssert.storeCSVdata();
+    public void storeCSV_QuickSearchData() throws Exception {
+        csvUtils.storeCSVdata();
         ledger_Id = CsvUtils.TestDataStore.get("Ledger_Id");
         policyCommissionId = CsvUtils.TestDataStore.get("policyCommissionId");
         policyDetailsId = CsvUtils.TestDataStore.get("policyDetailsId");
@@ -658,13 +685,13 @@ public class UploadPayoutsPage extends TestBase {
     }
 
     public String getPolicyCommisionID() throws Exception {
-        csvAssert.storeCSVdata();
+        csvUtils.storeCSVdata();
         policyCommissionId = CsvUtils.TestDataStore.get("policyCommissionId");
         return policyCommissionId;
     }
 
     public String getmisID() throws Exception {
-        csvAssert.storeCSVdata();
+        csvUtils.storeCSVdata();
         policyDetailsId = CsvUtils.TestDataStore.get("policyDetailsId");
         return policyDetailsId;
     }
@@ -672,66 +699,66 @@ public class UploadPayoutsPage extends TestBase {
     public void validateDeviationQuickSearchResult(String deviationType) throws Exception {
         File latestCsv = CsvUtils.getLatestCsvFile();
         WebCommands.staticSleep(1000);
-        List<String[]> data = csvAssert.readCsv(latestCsv);
+        List<String[]> data = csvUtils.readCsv(latestCsv);
         if (deviationType.equalsIgnoreCase("INCORRECT_RULES")) {
             LogUtils.info("Verifying CSV Result For Uploaded INCORRECT_RULES Deviation");
-            csvAssert.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
-            csvAssert.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
-            csvAssert.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
-            csvAssert.assertCell(data, 1, 4, "INCORRECT_RULES"); //deviationType
-            csvAssert.assertCell(data, 1, 100, "DONE"); //Payout QC
-            csvAssert.assertCell(data, 1, 107, "0.8xN"); //Payouts %
-            csvAssert.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
-            csvAssert.assertCell(data, 1, 111, "1860.0");//Final Payout Total
-            csvAssert.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
-            csvAssert.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
-            csvAssert.assertCell(data, 1, 149, "1860.0"); //Points
-            csvAssert.assertCell(data, 1, 151, "1860.0"); //NetPoints
+            csvUtils.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
+            csvUtils.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
+            csvUtils.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
+            csvUtils.assertCell(data, 1, 4, "INCORRECT_RULES"); //deviationType
+            csvUtils.assertCell(data, 1, 100, "DONE"); //Payout QC
+            csvUtils.assertCell(data, 1, 107, "0.8xN"); //Payouts %
+            csvUtils.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
+            csvUtils.assertCell(data, 1, 111, "1860.0");//Final Payout Total
+            csvUtils.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
+            csvUtils.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
+            csvUtils.assertCell(data, 1, 149, "1860.0"); //Points
+            csvUtils.assertCell(data, 1, 151, "1860.0"); //NetPoints
             LogUtils.info("Validated CSV Result For Uploaded INCORRECT_RULES Deviation");
         } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
             LogUtils.info("Verifying CSV Result For Uploaded SPECIAL_REQUEST Deviation");
-            csvAssert.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
-            csvAssert.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
-            csvAssert.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
-            csvAssert.assertCell(data, 1, 4, "SPECIAL_REQUEST"); //deviationType
-            csvAssert.assertCell(data, 1, 100, "DONE"); //Payout QC
-            csvAssert.assertCell(data, 1, 107, "0.8xN"); //Payouts %
-            csvAssert.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
-            csvAssert.assertCell(data, 1, 111, "1860.0");//Final Payout Total
-            csvAssert.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
-            csvAssert.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
-            csvAssert.assertCell(data, 1, 149, "1860.0"); //Points
-            csvAssert.assertCell(data, 1, 151, "1860.0"); //NetPoints
+            csvUtils.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
+            csvUtils.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
+            csvUtils.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
+            csvUtils.assertCell(data, 1, 4, "SPECIAL_REQUEST"); //deviationType
+            csvUtils.assertCell(data, 1, 100, "DONE"); //Payout QC
+            csvUtils.assertCell(data, 1, 107, "0.8xN"); //Payouts %
+            csvUtils.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
+            csvUtils.assertCell(data, 1, 111, "1860.0");//Final Payout Total
+            csvUtils.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
+            csvUtils.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
+            csvUtils.assertCell(data, 1, 149, "1860.0"); //Points
+            csvUtils.assertCell(data, 1, 151, "1860.0"); //NetPoints
             LogUtils.info("Validated CSV Result For Uploaded SPECIAL_REQUEST Deviation");
         } else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
             LogUtils.info("Verifying CSV Result For Uploaded NOMINAL_DEVIATION Deviation");
-            csvAssert.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
-            csvAssert.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
-            csvAssert.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
-            csvAssert.assertCell(data, 1, 4, "NOMINAL_DEVIATION"); //deviationType
-            csvAssert.assertCell(data, 1, 100, "DONE"); //Payout QC
-            csvAssert.assertCell(data, 1, 107, "0.8xN"); //Payouts %
-            csvAssert.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
-            csvAssert.assertCell(data, 1, 111, "1860.0");//Final Payout Total
-            csvAssert.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
-            csvAssert.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
-            csvAssert.assertCell(data, 1, 149, "1860.0"); //Points
-            csvAssert.assertCell(data, 1, 151, "1860.0"); //NetPoints
+            csvUtils.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
+            csvUtils.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
+            csvUtils.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
+            csvUtils.assertCell(data, 1, 4, "NOMINAL_DEVIATION"); //deviationType
+            csvUtils.assertCell(data, 1, 100, "DONE"); //Payout QC
+            csvUtils.assertCell(data, 1, 107, "0.8xN"); //Payouts %
+            csvUtils.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
+            csvUtils.assertCell(data, 1, 111, "1860.0");//Final Payout Total
+            csvUtils.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
+            csvUtils.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
+            csvUtils.assertCell(data, 1, 149, "1860.0"); //Points
+            csvUtils.assertCell(data, 1, 151, "1860.0"); //NetPoints
             LogUtils.info("Validated CSV Result For Uploaded NOMINAL_DEVIATION Deviation");
         } else if (deviationType.equalsIgnoreCase("SPLIT_DEVIATIONS")) {
             LogUtils.info("Verifying CSV Result For Uploaded SPLIT_DEVIATIONS");
-            csvAssert.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
-            csvAssert.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
-            csvAssert.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
-            csvAssert.assertCell(data, 1, 4, "NOMINAL_DEVIATION"); //deviationType
-            csvAssert.assertCell(data, 1, 100, "DONE"); //Payout QC
-            csvAssert.assertCell(data, 1, 107, "0.8xN"); //Payouts %
-            csvAssert.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
-            csvAssert.assertCell(data, 1, 111, "1860.0");//Final Payout Total
-            csvAssert.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
-            csvAssert.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
-            csvAssert.assertCell(data, 1, 149, "1860.0"); //Points
-            csvAssert.assertCell(data, 1, 151, "1860.0"); //NetPoints
+            csvUtils.assertCell(data, 1, 0, this.getPcid()); //policyCommissionId
+            csvUtils.assertCell(data, 1, 1, this.getmID()); //policyDetailsId
+            csvUtils.assertCell(data, 1, 3, "MANUAL_DEVIATION"); //commissionSource
+            csvUtils.assertCell(data, 1, 4, "NOMINAL_DEVIATION"); //deviationType
+            csvUtils.assertCell(data, 1, 100, "DONE"); //Payout QC
+            csvUtils.assertCell(data, 1, 107, "0.8xN"); //Payouts %
+            csvUtils.assertCell(data, 1, 109, "3.1xN"); //Payouts Deviation %
+            csvUtils.assertCell(data, 1, 111, "1860.0");//Final Payout Total
+            csvUtils.assertCell(data, 1, 123, "3.1xN"); //Initial Effective Percentages
+            csvUtils.assertCell(data, 1, 125, "3.1xN"); //Effective Percentages
+            csvUtils.assertCell(data, 1, 149, "1860.0"); //Points
+            csvUtils.assertCell(data, 1, 151, "1860.0"); //NetPoints
             LogUtils.info("Validated CSV Result For Uploaded SPLIT_DEVIATIONS Deviation");
         }
         TestUtil.click(qsp.resetButton, "");
@@ -740,56 +767,65 @@ public class UploadPayoutsPage extends TestBase {
     public void validateQuickSearchResult(String uploadedFileName) throws Exception {
         File latestCsv = CsvUtils.getLatestCsvFile();
         WebCommands.staticSleep(5000);
-        List<String[]> data = csvAssert.readCsv(latestCsv);
+        List<String[]> data = csvUtils.readCsv(latestCsv);
         if (uploadedFileName.equalsIgnoreCase("Adjustments")) {
             LogUtils.info("Verifying CSV Result For Uploaded Adjustments");
-            csvAssert.assertCell(data, 1, 0, "692fce37e55fd35ac2d06b22"); //policyCommissionId
+            csvUtils.assertCell(data, 1, 0, "692fce37e55fd35ac2d06b22"); //policyCommissionId
             LogUtils.info("policyCommissionId : " + data.get(1)[0]);
-            csvAssert.assertCell(data, 1, 1, "MIS_AHSK7OHON57"); //policyDetailsId
+            csvUtils.assertCell(data, 1, 1, "MIS_AHSK7OHON57"); //policyDetailsId
             LogUtils.info("policyDetailsId : " + data.get(1)[1]);
-            csvAssert.assertCell(data, 1, 3, "SYSTEM_GENERATED"); //commissionSource
+            csvUtils.assertCell(data, 1, 3, "SYSTEM_GENERATED"); //commissionSource
             LogUtils.info("commissionSource : " + data.get(1)[3]);
-            csvAssert.assertCell(data, 1, 132, "202512C2"); //Payment Cycle
+            csvUtils.assertCell(data, 1, 132, "202512C2"); //Payment Cycle
             LogUtils.info("Payment Cycle : " + data.get(1)[132]);
-            csvAssert.assertCell(data, 1, 135, "ADJUSTMENT"); //Ledger_Entity_Type
+            csvUtils.assertCell(data, 1, 135, "ADJUSTMENT"); //Ledger_Entity_Type
             LogUtils.info("Ledger_Entity_Type : " + data.get(1)[135]);
-            csvAssert.assertCell(data, 1, 137, "Discrepancy"); //Payout Disbursal Type
+            csvUtils.assertCell(data, 1, 137, "Discrepancy"); //Payout Disbursal Type
             LogUtils.info("Payout Disbursal Type : " + data.get(1)[137]);
-            csvAssert.assertCell(data, 1, 148, "AdjustmentsTest"); //Ledger_Remarks
+            csvUtils.assertCell(data, 1, 148, "AdjustmentsTest"); //Ledger_Remarks
             LogUtils.info("Ledger_Remarks : " + data.get(1)[148]);
-            csvAssert.assertCell(data, 1, 149, "18.0");//Points
+            csvUtils.assertCell(data, 1, 149, "18.0");//Points
             LogUtils.info("Points : " + data.get(1)[149]);
-            csvAssert.assertCell(data, 1, 151, "0.0"); //NetPoints
+            csvUtils.assertCell(data, 1, 151, "0.0"); //NetPoints
             LogUtils.info("NetPoints : " + data.get(1)[151]);
-            csvAssert.assertCell(data, 1, 152, "PENDING"); //Ledger_Status
+            csvUtils.assertCell(data, 1, 152, "PENDING"); //Ledger_Status
             LogUtils.info("Ledger_Status : " + data.get(1)[152]);
             LogUtils.info("Validated CSV Result For Uploaded Adjustments");
         } else if (uploadedFileName.equalsIgnoreCase("PayoutQC_DONE_misQC")) {
             LogUtils.info("Verifying CSV Result For Uploaded PayoutQC if misQC is DONE");
-            csvAssert.assertCell(data, 1, 100, "DONE"); //Payout QC
+            csvUtils.assertCell(data, 1, 100, "DONE"); //Payout QC
             LogUtils.info("Payout QC : " + data.get(1)[100]);
             LogUtils.info("Validated CSV Result For Uploaded PayoutQC if misQC is DONE");
         } else if (uploadedFileName.equalsIgnoreCase("PayoutQC_PENDING_misQC")) {
             LogUtils.info("Verifying CSV Result For Uploaded PayoutQC if misQC is PENDING");
-            csvAssert.assertCell(data, 1, 100, "PENDING"); //Payout QC
+            csvUtils.assertCell(data, 1, 100, "PENDING"); //Payout QC
             LogUtils.info("Payout QC : " + data.get(1)[100]);
             LogUtils.info("Validated CSV Result For Uploaded PayoutQC if misQC is PENDING");
         } else if (uploadedFileName.equalsIgnoreCase("PostQC_Review_DONE_PayoutQC")) {
             LogUtils.info("Verifying CSV Result For Uploaded PostQC_Review if PayoutQC is DONE");
-            csvAssert.assertCell(data, 1, 103, "PASS"); //PostQC_Review Status
+            csvUtils.assertCell(data, 1, 103, "PASS"); //PostQC_Review Status
             LogUtils.info("Post QC Review Status : " + data.get(1)[103]);
-            csvAssert.assertCell(data, 1, 103, Post_QC_Review_Status);
-            csvAssert.assertCell(data, 1, 104, Post_QC_Review_Done_By);
-            csvAssert.assertCell(data, 1, 105, Post_QC_Review_Date);
+            csvUtils.assertCell(data, 1, 103, Post_QC_Review_Status);
+            csvUtils.assertCell(data, 1, 104, Post_QC_Review_Done_By);
+            csvUtils.assertCell(data, 1, 105, Post_QC_Review_Date);
             LogUtils.info("Validated CSV Result For Uploaded PostQC_Review if PayoutQC is PENDING");
         } else if (uploadedFileName.equalsIgnoreCase("PostQC_Review_PENDING_PayoutQC")) {
             LogUtils.info("Verifying CSV Result For Uploaded PostQC_Review if PayoutQC is PENDING");
-            csvAssert.assertCell(data, 1, 103, ""); //PostQC_Review Status
+            csvUtils.assertCell(data, 1, 103, ""); //PostQC_Review Status
             LogUtils.info("Post QC Review Status : " + data.get(1)[103]);
-            csvAssert.assertCell(data, 1, 103, Post_QC_Review_Status);
-            csvAssert.assertCell(data, 1, 104, Post_QC_Review_Done_By);
-            csvAssert.assertCell(data, 1, 105, Post_QC_Review_Date);
+            csvUtils.assertCell(data, 1, 103, Post_QC_Review_Status);
+            csvUtils.assertCell(data, 1, 104, Post_QC_Review_Done_By);
+            csvUtils.assertCell(data, 1, 105, Post_QC_Review_Date);
             LogUtils.info("Validated CSV Result For Uploaded PostQC_Review if PayoutQC is PENDING");
+        }
+        else if (uploadedFileName.equalsIgnoreCase("PLA")) {
+            LogUtils.info("Verifying CSV Result For Uploaded Partner Level Activity");
+            csvUtils.assertCell(data, 1, 103, ""); //PostQC_Review Status
+            LogUtils.info("Post QC Review Status : " + data.get(1)[103]);
+            csvUtils.assertCell(data, 1, 103, Post_QC_Review_Status);
+            csvUtils.assertCell(data, 1, 104, Post_QC_Review_Done_By);
+            csvUtils.assertCell(data, 1, 105, Post_QC_Review_Date);
+            LogUtils.info("Validated CSV Result For Uploaded Partner Level Activity");
         }
         action.moveToElement(qsp.resetButton).click().perform();
     }
@@ -805,7 +841,8 @@ public class UploadPayoutsPage extends TestBase {
             writer.writeNext(data);
             writer.close();
             System.out.println("Data written to CSV successfully! for INCORRECT_RULES");
-        } else if (deviationType.equals("SPECIAL_REQUEST")) {
+        }
+        else if (deviationType.equals("SPECIAL_REQUEST")) {
             System.out.println("SPECIAL_REQUEST BLOCK 3");
             String[] data = {pcid, "SPECIAL_REQUEST", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
 
@@ -813,27 +850,86 @@ public class UploadPayoutsPage extends TestBase {
             writer.writeNext(data);
             writer.close();
             System.out.println("Data written to CSV successfully! for SPECIAL_REQUEST");
-        } else if (deviationType.equals("NOMINAL_DEVIATION")) {
+        }
+        else if (deviationType.equals("NOMINAL_DEVIATION")) {
             String[] data = {pcid, "NOMINAL_DEVIATION", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
 
             System.out.println("Entered PolicyCommistionID : " + pcid);
             writer.writeNext(data);
             writer.close();
             System.out.println("Data written to CSV successfully! for NOMINAL_DEVIATION");
-        } else if (deviationType.equals("INCORRECT_RULESS")) {
+        }
+        else if (deviationType.equals("INCORRECT_RULESS")) {
             String[] data = {pcid, "INCORRECT_RULESS", "FALSE", "0", "0", "0", "0", "0", "0", "0", "31", "0", "Testing"};
 
             System.out.println("Entered PolicyCommistionID : " + pcid);
             writer.writeNext(data);
             writer.close();
             System.out.println("Data written to CSV successfully! for INCORRECT_RULESS -Invalid Type");
-        } else if (deviationType.equals("SPLIT_DEVIATIONS") || (deviationType.equalsIgnoreCase("NonSplitPartner_SPLIT_DEVIATIONS"))) {
+        }
+        else if (deviationType.equals("SPLIT_DEVIATIONS") || (deviationType.equalsIgnoreCase("NonSplitPartner_SPLIT_DEVIATIONS"))) {
             String[] data = {pcid, "35", "Testing"};
 
             System.out.println("Entered PolicyCommistionID : " + pcid);
             writer.writeNext(data);
             writer.close();
             System.out.println("Data written to CSV successfully! for SPLIT_DEVIATIONS");
+        }
+        else if (deviationType.equals(deviationType)) {
+            if (deviationType.equals("CAMPAIGN")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("MUTUAL_FUND")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("MUTUAL_FUND_FBS")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("DIGITAL_LEADER")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("REFERRAL")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("BUSINESS_LOAN")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("PERSONAL_LOAN")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("MORTGAGE_LOAN")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("LOAN_AGAINST_MUTUAL_FUNDS")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("CREDIT_CARD")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("WELLNESS")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("RSA")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            } else if (deviationType.equals("FIXED_DEPOSIT")) {
+                String[] data = {currentDate, "6290f07ed35ae3058a14b495", "18", cycle, deviationType};
+                writer.writeNext(data);
+                writer.close();
+            }
+            System.out.println("Data written to CSV successfully! for Partner Level Activity");
         }
         driver.findElement(By.xpath("//input[@type='file']")).sendKeys(latestCsv.getAbsolutePath());
         WebCommands.staticSleep(2000);
@@ -892,11 +988,11 @@ public class UploadPayoutsPage extends TestBase {
     public void validateDownloadTemplateFile(String fileName) throws Exception {
         File latestCsv = CsvUtils.getLatestCsvFile();
         WebCommands.staticSleep(3000);
-        List<String[]> data = csvAssert.readCsv(latestCsv);
+        List<String[]> data = csvUtils.readCsv(latestCsv);
         LogUtils.info("Verifying Template File *****");
         if (fileName.equalsIgnoreCase("ManualUpload.csv")) {
             LogUtils.info("Verifying Column Present in Manual Upload Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyDetailsId", "policyPaymentScheduleId",
+            csvUtils.assertRow(data, 0, Arrays.asList("policyDetailsId", "policyPaymentScheduleId",
                     "DP Login Id", "Customer First Name", "Customer Last Name", "Booking/Issued Date",
                     "Payment Cycle", "Case Status", "Payout Policy Type", "Channel Type", "Product category",
                     "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name",
@@ -908,7 +1004,7 @@ public class UploadPayoutsPage extends TestBase {
             LogUtils.info("Validated Column Present in Manual Upload Template as Expected");
         } else if (fileName.equalsIgnoreCase("ManualCorrection.csv")) {
             LogUtils.info("Verifying Column Present in Manual Correction Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId",
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId",
                     "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name",
                     "Booking/Issued Date", "Case Status", "Payout Policy Type", "Channel Type", "Product category",
                     "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name",
@@ -920,17 +1016,17 @@ public class UploadPayoutsPage extends TestBase {
             LogUtils.info("Validated Column Present in Manual Correction Template as Expected");
         } else if (fileName.equalsIgnoreCase("INCORRECT_RULES") || fileName.equalsIgnoreCase("SPECIAL_REQUEST") || fileName.equalsIgnoreCase("NOMINAL_DEVIATION") || fileName.equalsIgnoreCase("INCORRECT_RULESS")) {
             LogUtils.info("Verifying Column Present in Manual Deviations Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions",
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions",
                     "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS",
                     "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark"));
             LogUtils.info("Validated Column Present in Manual Deviations Template as Expected");
         } else if (fileName.equalsIgnoreCase("SPLIT_DEVIATIONS") || (fileName.equalsIgnoreCase("NonSplitPartner_SPLIT_DEVIATIONS"))) {
             LogUtils.info("Verifying Column Present in SplitDeviations Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark"));
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark"));
             LogUtils.info("Validated Column Present in SplitDeviations Template as Expected");
         } else if (fileName.equalsIgnoreCase("Adjustments.csv") || fileName.equalsIgnoreCase("AdjustmentsInvalid.csv")) {
             LogUtils.info("Verifying Column Present in Adjustments Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId",
+            csvUtils.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId",
                     "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name",
                     "Booking/Issued Date", "Payment Cycle", "Case Status", "Channel Type", "Product category",
                     "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer",
@@ -938,7 +1034,7 @@ public class UploadPayoutsPage extends TestBase {
             LogUtils.info("Validated Column Present in Adjustments Template as Expected");
         } else if (fileName.equalsIgnoreCase("PayoutQC_DONE_misQC") || fileName.equalsIgnoreCase("PayoutQC_PENDING_misQC")) {
             LogUtils.info("* Verifying Column Present in PayoutQC Template *");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId",
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId",
                     "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.",
                     "Application No.", "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month",
                     "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name",
@@ -959,17 +1055,20 @@ public class UploadPayoutsPage extends TestBase {
                     "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages",
                     "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "Remark"));
             LogUtils.info("Validated Column Present in PayoutQC Template as Expected");
-        } else if (fileName.equalsIgnoreCase("InsurerRewards.csv")) {
+        }
+        else if (fileName.equalsIgnoreCase("InsurerRewards.csv")) {
             LogUtils.info("Verifying Column Present in InsurerRewards Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Insurer Volume Rewards %", "Insurer Rewards Total", "Insurer Rewards Volume", "Remark"));
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Insurer Volume Rewards %", "Insurer Rewards Total", "Insurer Rewards Volume", "Remark"));
             LogUtils.info("Validated Column Present in InsurerRewards Template as Expected");
-        } else if (fileName.equalsIgnoreCase("PartnerLevelActivity.csv")) {
+        }
+        else if (fileName.equalsIgnoreCase("MUTUAL_FUND")) {
             LogUtils.info("Verifying Column Present in PartnerLevelActivity Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "Partner Id", "Points", "Payment Cycle", "Type", "Remark"));
+            csvUtils.assertRow(data, 0, Arrays.asList("Recorded_At", "Partner Id", "Points", "Payment Cycle", "Type", "Remark"));
             LogUtils.info("Validated Column Present in PartnerLevelActivity Template as Expected");
-        } else if (fileName.equalsIgnoreCase("PostQC_Review_DONE_PayoutQC") || fileName.equalsIgnoreCase("PostQC_Review_PENDING_PayoutQC")) {
+        }
+        else if (fileName.equalsIgnoreCase("PostQC_Review_DONE_PayoutQC") || fileName.equalsIgnoreCase("PostQC_Review_PENDING_PayoutQC")) {
             LogUtils.info("Verifying Column Present in PostQC_Review Template");
-            csvAssert.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review"));
+            csvUtils.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review"));
             LogUtils.info("Validated Column Present in PostQC_Review Template as Expected");
         }
 
@@ -1106,6 +1205,14 @@ public class UploadPayoutsPage extends TestBase {
             Assert.assertEquals(successCount.getText(), "0");
             LogUtils.info("Failure count is : " + failureCount.getText());
             Assert.assertEquals(failureCount.getText(), "1");
+        } else if (fileName.equalsIgnoreCase(fileName)) {
+            LogUtils.info("Payment Cycle : " + paymentCycle.getText());
+            Assert.assertEquals(paymentCycle.getText(), cycle);
+            Assert.assertEquals("Partner-level Activity", uploadedType.getText());
+            LogUtils.info("Success count is : " + successCount.getText());
+            Assert.assertEquals(successCount.getText(), "1");
+            LogUtils.info("Failure count is : " + failureCount.getText());
+            Assert.assertEquals(failureCount.getText(), "0");
         }
         Assert.assertTrue(outputFileBtn.isDisplayed());
     }
@@ -1113,99 +1220,99 @@ public class UploadPayoutsPage extends TestBase {
     public void validateOutputFile(String fileName, String deviationType, String pcid) throws Exception {
         File latestCsv = CsvUtils.getLatestCsvFile();
         WebCommands.staticSleep(5000);
-        List<String[]> data = csvAssert.readCsv(latestCsv);
+        List<String[]> data = csvUtils.readCsv(latestCsv);
         if (fileName.equalsIgnoreCase("ManualUpload.csv")) {
             LogUtils.info("Validating Manual Upload Output File");
-            csvAssert.assertCell(data, 1, 0, "MIS_MHA13RIGX7A4V1"); // Validate MIS ID in Output File
-            csvAssert.assertCell(data, 2, 0, "MIS_MHA13RIGX7A4V2");
-            csvAssert.assertCell(data, 3, 0, "MIS_MHA13RIGX7A4V3");
-            csvAssert.assertCell(data, 4, 0, "MIS_MHA13RIGX7A4V4");
-            csvAssert.assertCell(data, 5, 0, "MIS_MHA13RIGX7A4V5");
-            csvAssert.assertCell(data, 6, 0, "MIS_MHA13RIGX7A4V6");
-            csvAssert.assertCell(data, 7, 0, "MIS_MHA13RIGX7A4V7");
-            csvAssert.assertCell(data, 1, 6, "202512C2");           // Validate Payment Cycle in Output File
-            csvAssert.assertCell(data, 2, 6, "202512C2");
-            csvAssert.assertCell(data, 3, 6, "202512C2");
-            csvAssert.assertCell(data, 4, 6, "202512C2");
-            csvAssert.assertCell(data, 5, 6, "202512C2");
-            csvAssert.assertCell(data, 6, 6, "202512C1");
-            csvAssert.assertCell(data, 7, 6, "202512C1");
-            csvAssert.assertCell(data, 1, 37, "SUCCESS");          // Validate Output Status in Output File
-            csvAssert.assertCell(data, 2, 37, "SUCCESS");
-            csvAssert.assertCell(data, 3, 37, "SUCCESS");
-            csvAssert.assertCell(data, 4, 37, "SUCCESS");
-            csvAssert.assertCell(data, 5, 37, "SUCCESS");
-            csvAssert.assertCell(data, 6, 37, "FAILURE");
-            csvAssert.assertCell(data, 7, 37, "FAILURE");
-            csvAssert.assertCell(data, 6, 38, "Payment Cycle is not 202512C2"); // Validate Output Remark in Output File
-            csvAssert.assertCell(data, 7, 38, "Payment Cycle is not 202512C2");
+            csvUtils.assertCell(data, 1, 0, "MIS_MHA13RIGX7A4V1"); // Validate MIS ID in Output File
+            csvUtils.assertCell(data, 2, 0, "MIS_MHA13RIGX7A4V2");
+            csvUtils.assertCell(data, 3, 0, "MIS_MHA13RIGX7A4V3");
+            csvUtils.assertCell(data, 4, 0, "MIS_MHA13RIGX7A4V4");
+            csvUtils.assertCell(data, 5, 0, "MIS_MHA13RIGX7A4V5");
+            csvUtils.assertCell(data, 6, 0, "MIS_MHA13RIGX7A4V6");
+            csvUtils.assertCell(data, 7, 0, "MIS_MHA13RIGX7A4V7");
+            csvUtils.assertCell(data, 1, 6, "202512C2");           // Validate Payment Cycle in Output File
+            csvUtils.assertCell(data, 2, 6, "202512C2");
+            csvUtils.assertCell(data, 3, 6, "202512C2");
+            csvUtils.assertCell(data, 4, 6, "202512C2");
+            csvUtils.assertCell(data, 5, 6, "202512C2");
+            csvUtils.assertCell(data, 6, 6, "202512C1");
+            csvUtils.assertCell(data, 7, 6, "202512C1");
+            csvUtils.assertCell(data, 1, 37, "SUCCESS");          // Validate Output Status in Output File
+            csvUtils.assertCell(data, 2, 37, "SUCCESS");
+            csvUtils.assertCell(data, 3, 37, "SUCCESS");
+            csvUtils.assertCell(data, 4, 37, "SUCCESS");
+            csvUtils.assertCell(data, 5, 37, "SUCCESS");
+            csvUtils.assertCell(data, 6, 37, "FAILURE");
+            csvUtils.assertCell(data, 7, 37, "FAILURE");
+            csvUtils.assertCell(data, 6, 38, "Payment Cycle is not 202512C2"); // Validate Output Remark in Output File
+            csvUtils.assertCell(data, 7, 38, "Payment Cycle is not 202512C2");
             LogUtils.info("Validated Manual Upload Output File");
         } else if (fileName.equalsIgnoreCase("ManualCorrection.csv")) {
             LogUtils.info("Validating Column Present in Manual Correction Output File");
-            csvAssert.assertCell(data, 1, 1, "MIS_MHA13RIGX7A4V1"); // Validate MIS ID in Output File
-            csvAssert.assertCell(data, 2, 1, "MIS_MHA13RIGX7A4V2");
-            csvAssert.assertCell(data, 3, 1, "MIS_MHA13RIGX7A4V3");
-            csvAssert.assertCell(data, 4, 1, "MIS_MHA13RIGX7A4V4");
-            csvAssert.assertCell(data, 5, 1, "MIS_MHA13RIGX7A4V5");
-            csvAssert.assertCell(data, 6, 1, "MIS_AHSJCV6AHAI");
-            csvAssert.assertCell(data, 1, 36, "SUCCESS");          // Validate Output Status in Output File
-            csvAssert.assertCell(data, 2, 36, "SUCCESS");
-            csvAssert.assertCell(data, 3, 36, "SUCCESS");
-            csvAssert.assertCell(data, 4, 36, "SUCCESS");
-            csvAssert.assertCell(data, 5, 36, "SUCCESS");
-            csvAssert.assertCell(data, 6, 36, "FAILURE");
-            csvAssert.assertCell(data, 6, 37, "Transition from SYSTEM_GENERATED to MANUAL_CORRECTION is not possible;"); // Validate Output Remark in Output File
+            csvUtils.assertCell(data, 1, 1, "MIS_MHA13RIGX7A4V1"); // Validate MIS ID in Output File
+            csvUtils.assertCell(data, 2, 1, "MIS_MHA13RIGX7A4V2");
+            csvUtils.assertCell(data, 3, 1, "MIS_MHA13RIGX7A4V3");
+            csvUtils.assertCell(data, 4, 1, "MIS_MHA13RIGX7A4V4");
+            csvUtils.assertCell(data, 5, 1, "MIS_MHA13RIGX7A4V5");
+            csvUtils.assertCell(data, 6, 1, "MIS_AHSJCV6AHAI");
+            csvUtils.assertCell(data, 1, 36, "SUCCESS");          // Validate Output Status in Output File
+            csvUtils.assertCell(data, 2, 36, "SUCCESS");
+            csvUtils.assertCell(data, 3, 36, "SUCCESS");
+            csvUtils.assertCell(data, 4, 36, "SUCCESS");
+            csvUtils.assertCell(data, 5, 36, "SUCCESS");
+            csvUtils.assertCell(data, 6, 36, "FAILURE");
+            csvUtils.assertCell(data, 6, 37, "Transition from SYSTEM_GENERATED to MANUAL_CORRECTION is not possible;"); // Validate Output Remark in Output File
             LogUtils.info("Validated Column Present in Manual Correction Output File as Expected");
         } else if (fileName.equalsIgnoreCase("Deviations")) {
             LogUtils.info("Validating Data Present in Manual Deviations Output File");
             if (deviationType.equalsIgnoreCase("INCORRECT_RULES")) {
-                csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
-                csvAssert.assertRow(data, 1, Arrays.asList(pcid, "INCORRECT_RULES", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
+                csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                csvUtils.assertRow(data, 1, Arrays.asList(pcid, "INCORRECT_RULES", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
             } else if (deviationType.equalsIgnoreCase("SPECIAL_REQUEST")) {
-                csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
-                csvAssert.assertRow(data, 1, Arrays.asList(pcid, "SPECIAL_REQUEST", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
+                csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                csvUtils.assertRow(data, 1, Arrays.asList(pcid, "SPECIAL_REQUEST", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
             } else if (deviationType.equalsIgnoreCase("NOMINAL_DEVIATION")) {
-                csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
-                csvAssert.assertRow(data, 1, Arrays.asList(pcid, "NOMINAL_DEVIATION", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
+                csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                csvUtils.assertRow(data, 1, Arrays.asList(pcid, "NOMINAL_DEVIATION", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "SUCCESS", ""));
             } else if (deviationType.equalsIgnoreCase("INCORRECT_RULESS")) {
-                csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
-                csvAssert.assertRow(data, 1, Arrays.asList(pcid, "INCORRECT_RULESS", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "FAILURE", "Invalid Deviation Type"));
+                csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Type", "SkipDifferentialDeductions", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Remark", "Output Status", "Output Remark"));
+                csvUtils.assertRow(data, 1, Arrays.asList(pcid, "INCORRECT_RULESS", "false", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "31.0", "0.0", "Testing", "FAILURE", "Invalid Deviation Type"));
             }
             LogUtils.info("Validated Data Present in Manual Deviations Output File as Expected");
         } else if (fileName.equalsIgnoreCase("SPLIT_DEVIATIONS")) {
             LogUtils.info("Validating Column Present in SplitDeviations Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark", "Output Status", "Output Remark"));
-            csvAssert.assertRow(data, 1, Arrays.asList(pcid, "35.0", "Testing", "SUCCESS", ""));
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark", "Output Status", "Output Remark"));
+            csvUtils.assertRow(data, 1, Arrays.asList(pcid, "35.0", "Testing", "SUCCESS", ""));
             LogUtils.info("Validated Column Present in SplitDeviations Template Output File as Expected");
         } else if (fileName.equalsIgnoreCase("NonSplitPartner_SPLIT_DEVIATIONS")) {
             LogUtils.info("Validating Column Present in NonSplitPartner_SplitDeviations Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark", "Output Status", "Output Remark"));
-            csvAssert.assertRow(data, 1, Arrays.asList(pcid, "35.0", "Testing", "FAILURE", "dealer payout deviations is only allowed for dealerPayoutSplit parentSubType"));
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "Dealer Commission Retention %", "Remark", "Output Status", "Output Remark"));
+            csvUtils.assertRow(data, 1, Arrays.asList(pcid, "35.0", "Testing", "FAILURE", "dealer payout deviations is only allowed for dealerPayoutSplit parentSubType"));
             LogUtils.info("Validated Column Present in NonSplitPartner_SplitDeviations Output File as Expected");
         } else if (fileName.equalsIgnoreCase("Adjustments.csv")) {
             LogUtils.info("Validating Column Present in Adjustments Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name", "Booking/Issued Date", "Payment Cycle", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Points", "Remark", "Output Status", "Output Remark"));
-            csvAssert.assertRow(data, 1, Arrays.asList("18-Dec-2025", "692fce37e55fd35ac2d06b22", "MIS_AHSK7OHON57", "", "63b54bb9ee10470001250bb6", "Sanity", "Test", "03-Dec-2025", "202512C2", "Issued", "Partner", "Two Wheeler", "", "TW", "Bike", "New", "", "Bajaj Allianz", "Comprehensive", "MH-01-WW-2177", "'DNNDNDndjjsjss", "", "18.0", "AdjustmentsTest", "SUCCESS", ""));
+            csvUtils.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name", "Booking/Issued Date", "Payment Cycle", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Points", "Remark", "Output Status", "Output Remark"));
+            csvUtils.assertRow(data, 1, Arrays.asList("18-Dec-2025", "692fce37e55fd35ac2d06b22", "MIS_AHSK7OHON57", "", "63b54bb9ee10470001250bb6", "Sanity", "Test", "03-Dec-2025", "202512C2", "Issued", "Partner", "Two Wheeler", "", "TW", "Bike", "New", "", "Bajaj Allianz", "Comprehensive", "MH-01-WW-2177", "'DNNDNDndjjsjss", "", "18.0", "AdjustmentsTest", "SUCCESS", ""));
             LogUtils.info("Validated Column Present in Adjustments Output File as Expected");
         } else if (fileName.equalsIgnoreCase("AdjustmentsInvalid.csv")) {
             LogUtils.info("Validating Column Present in AdjustmentsInvalid Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name", "Booking/Issued Date", "Payment Cycle", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Points", "Remark", "Output Status", "Output Remark"));
-            csvAssert.assertRow(data, 1, Arrays.asList("18-Dec-2025", "6901f22709147c665f37c18c", "MIS_MHRGXWDYUJ2", "", "6290f07ed35ae3058a14b495", "UTKARSH VIKAS", "CHANDEL", "29-Oct-2025", "202512C2", "Issued", "Partner", "Motor", "", "Car", "Car", "New", "", "Reliance", "Comprehensive", "NEW", "'920222523740005378", "", "18.0", "InvalidAdjustmentsTest", "FAILURE", "`commissionId` does not exist / Payment not yet finalised."));
+            csvUtils.assertRow(data, 0, Arrays.asList("Recorded_At", "policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "DP Login Id", "Customer First Name", "Customer Last Name", "Booking/Issued Date", "Payment Cycle", "Case Status", "Channel Type", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "Business Type", "Plan name", "Insurer", "product name", "Registration no.", "Policy No.", "Master Policy No.", "Points", "Remark", "Output Status", "Output Remark"));
+            csvUtils.assertRow(data, 1, Arrays.asList("18-Dec-2025", "6901f22709147c665f37c18c", "MIS_MHRGXWDYUJ2", "", "6290f07ed35ae3058a14b495", "UTKARSH VIKAS", "CHANDEL", "29-Oct-2025", "202512C2", "Issued", "Partner", "Motor", "", "Car", "Car", "New", "", "Reliance", "Comprehensive", "NEW", "'920222523740005378", "", "18.0", "InvalidAdjustmentsTest", "FAILURE", "`commissionId` does not exist / Payment not yet finalised."));
             LogUtils.info("Validated Column Present in AdjustmentsInvalid Output File as Expected");
-        } else if (fileName.equalsIgnoreCase("PayoutQC_DONE_misQC.csv")) {
+        } else if (fileName.equalsIgnoreCase("PayoutQC_DONE_misQC")) {
             LogUtils.info("Validating Column Present in PayoutQC Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.", "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name", "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype", "Parent DP Name", "Parent DP Id", "Parent DP No", "Parent DP Level", "DP Branch Location", "Business Type", "Customer Title", "Customer First Name", "Customer Last Name", "Registration no.", "RTO code", "Make", "Model", "Variant", "Cubic Capacity", "Fuel Type", "Mfg. Year", "GVW/Tonnage", "Seating capacity", "ZeroDepreciation", "Discount Percentage", "Case Status", "Case Sub Status", "Insurer", "Plan type", "Plan name", "Plan Variant", "product name", "Payment Frequency", "Upcoming Payment Due Date", "Recent Payment Paid Date", "Installment UniqueId", "Policy term", "Policy premium term", "Risk Start Date", "Risk End Date", "odRiskStartDate", "odRiskEndDate", "tpRiskStartDate", "tpRiskEndDate", "multiyear", "IDV/SA", "TM Plan ID", "Cover Type", "Option Name", "Age", "Registration City", "Registration State", "Renewal Year", "creation source", "Creation Date", "Comments", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium", "Net Premium", "Annualised Net Premium", "CPA Premium", "NCB", "Record Status", "Insurer Record Status", "Channel Type", "manualQCStatus", "irdaRuleId", "irdaEarningsBaseODB", "irdaEarningsBaseODR", "irdaEarningsBaseTP", "irdaEarningsBaseNP", "irdaEarningsBaseABS", "irdaEarningsTotalOD", "irdaEarningsTotalTP", "irdaEarningsTotalNP", "irdaEarningsTotalABS", "irdaPayoutsBaseODB", "irdaPayoutsBaseODR", "irdaPayoutsBaseTP", "irdaPayoutsBaseNP", "irdaPayoutsBaseABS", "irdaPayoutsTotalOD", "irdaPayoutsTotalTP", "irdaPayoutsTotalNP", "irdaPayoutsTotalABS", "insurerRuleId", "insurerEarningsBaseODB", "insurerEarningsBaseODR", "insurerEarningsBaseTP", "insurerEarningsBaseNP", "insurerEarningsBaseABS", "insurerEarningsTotalOD", "insurerEarningsTotalTP", "insurerEarningsTotalNP", "insurerEarningsTotalABS", "insurerPayoutsBaseODB", "insurerPayoutsBaseODR", "insurerPayoutsBaseTP", "insurerPayoutsBaseNP", "insurerPayoutsBaseABS", "insurerPayoutsTotalOD", "insurerPayoutsTotalTP", "insurerPayoutsTotalNP", "insurerPayoutsTotalABS", "earningsBaseODB", "earningsBaseODR", "earningsBaseTP", "earningsBaseNP", "earningsBaseABS", "earningsTotalOD", "earningsTotalTP", "earningsTotalNP", "earningsTotalABS", "earningsMasterTotal", "payoutsBaseODB", "payoutsBaseODR", "payoutsBaseTP", "payoutsBaseNP", "payoutsBaseABS", "payoutsTotalOD", "payoutsTotalTP", "payoutsTotalNP", "payoutsTotalABS", "payoutsMasterTotal", "conflicts", "Payout AutoQC", "Payout QC Done By", "Payout QC", "First Payout QC Date", "Final Payout QC Date", "Post QC Review Status", "Post QC Review Done By", "Post QC Review Date", "Payout Type", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "IRDA Volume Rewards %", "IRDA Payout Total", "IRDA Rewards Total", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Insurer Applicable Payout %", "Insurer Volume Rewards %", "Insurer Payout Total", "Insurer Rewards Total", "Final Payout Total", "Partner cohort", "Partner club", "Partner slab", "QuickPay Eligible", "Skip Differential deductions", "Deduction% for differential", "Deduction% for QP", "Deduction% for campaign", "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages", "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "PC_CreatedAt", "Payable_Partner_Id", "Remark", "Payouts %", "Payouts absolute", "Payouts Deviation %", "Payouts Deviation absolute", "Output Status", "Output Remark"));
-            csvAssert.assertCell(data, 1, 0, policyCommissionId);
-            csvAssert.assertCell(data, 1, 1, policyDetailsId);
-            csvAssert.assertCell(data, 1, 202, "SUCCESS");
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.", "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name", "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype", "Parent DP Name", "Parent DP Id", "Parent DP No", "Parent DP Level", "DP Branch Location", "Business Type", "Customer Title", "Customer First Name", "Customer Last Name", "Registration no.", "RTO code", "Make", "Model", "Variant", "Cubic Capacity", "Fuel Type", "Mfg. Year", "GVW/Tonnage", "Seating capacity", "ZeroDepreciation", "Discount Percentage", "Case Status", "Case Sub Status", "Insurer", "Plan type", "Plan name", "Plan Variant", "product name", "Payment Frequency", "Upcoming Payment Due Date", "Recent Payment Paid Date", "Installment UniqueId", "Policy term", "Policy premium term", "Risk Start Date", "Risk End Date", "odRiskStartDate", "odRiskEndDate", "tpRiskStartDate", "tpRiskEndDate", "multiyear", "IDV/SA", "TM Plan ID", "Cover Type", "Option Name", "Age", "Registration City", "Registration State", "Renewal Year", "creation source", "Creation Date", "Comments", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium", "Net Premium", "Annualised Net Premium", "CPA Premium", "NCB", "Record Status", "Insurer Record Status", "Channel Type", "manualQCStatus", "irdaRuleId", "irdaEarningsBaseODB", "irdaEarningsBaseODR", "irdaEarningsBaseTP", "irdaEarningsBaseNP", "irdaEarningsBaseABS", "irdaEarningsTotalOD", "irdaEarningsTotalTP", "irdaEarningsTotalNP", "irdaEarningsTotalABS", "irdaPayoutsBaseODB", "irdaPayoutsBaseODR", "irdaPayoutsBaseTP", "irdaPayoutsBaseNP", "irdaPayoutsBaseABS", "irdaPayoutsTotalOD", "irdaPayoutsTotalTP", "irdaPayoutsTotalNP", "irdaPayoutsTotalABS", "insurerRuleId", "insurerEarningsBaseODB", "insurerEarningsBaseODR", "insurerEarningsBaseTP", "insurerEarningsBaseNP", "insurerEarningsBaseABS", "insurerEarningsTotalOD", "insurerEarningsTotalTP", "insurerEarningsTotalNP", "insurerEarningsTotalABS", "insurerPayoutsBaseODB", "insurerPayoutsBaseODR", "insurerPayoutsBaseTP", "insurerPayoutsBaseNP", "insurerPayoutsBaseABS", "insurerPayoutsTotalOD", "insurerPayoutsTotalTP", "insurerPayoutsTotalNP", "insurerPayoutsTotalABS", "earningsBaseODB", "earningsBaseODR", "earningsBaseTP", "earningsBaseNP", "earningsBaseABS", "earningsTotalOD", "earningsTotalTP", "earningsTotalNP", "earningsTotalABS", "earningsMasterTotal", "payoutsBaseODB", "payoutsBaseODR", "payoutsBaseTP", "payoutsBaseNP", "payoutsBaseABS", "payoutsTotalOD", "payoutsTotalTP", "payoutsTotalNP", "payoutsTotalABS", "payoutsMasterTotal", "conflicts", "Payout AutoQC", "Payout QC Done By", "Payout QC", "First Payout QC Date", "Final Payout QC Date", "Post QC Review Status", "Post QC Review Done By", "Post QC Review Date", "Payout Type", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "IRDA Volume Rewards %", "IRDA Payout Total", "IRDA Rewards Total", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Insurer Applicable Payout %", "Insurer Volume Rewards %", "Insurer Payout Total", "Insurer Rewards Total", "Final Payout Total", "Partner cohort", "Partner club", "Partner slab", "QuickPay Eligible", "Skip Differential deductions", "Deduction% for differential", "Deduction% for QP", "Deduction% for campaign", "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages", "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "PC_CreatedAt", "Payable_Partner_Id", "Remark", "Payouts %", "Payouts absolute", "Payouts Deviation %", "Payouts Deviation absolute", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, policyCommissionId);
+            csvUtils.assertCell(data, 1, 1, policyDetailsId);
+            csvUtils.assertCell(data, 1, 202, "SUCCESS");
             LogUtils.info("Validated Column Present in PayoutQC Output File as Expected");
-        } else if (fileName.equalsIgnoreCase("PayoutQC_PENDING_misQC.csv")) {
+        } else if (fileName.equalsIgnoreCase("PayoutQC_PENDING_misQC")) {
             LogUtils.info("Validating Column Present in PayoutQC Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.", "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name", "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype", "Parent DP Name", "Parent DP Id", "Parent DP No", "Parent DP Level", "DP Branch Location", "Business Type", "Customer Title", "Customer First Name", "Customer Last Name", "Registration no.", "RTO code", "Make", "Model", "Variant", "Cubic Capacity", "Fuel Type", "Mfg. Year", "GVW/Tonnage", "Seating capacity", "ZeroDepreciation", "Discount Percentage", "Case Status", "Case Sub Status", "Insurer", "Plan type", "Plan name", "Plan Variant", "product name", "Payment Frequency", "Upcoming Payment Due Date", "Recent Payment Paid Date", "Installment UniqueId", "Policy term", "Policy premium term", "Risk Start Date", "Risk End Date", "odRiskStartDate", "odRiskEndDate", "tpRiskStartDate", "tpRiskEndDate", "multiyear", "IDV/SA", "TM Plan ID", "Cover Type", "Option Name", "Age", "Registration City", "Registration State", "Renewal Year", "creation source", "Creation Date", "Comments", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium", "Net Premium", "Annualised Net Premium", "CPA Premium", "NCB", "Record Status", "Insurer Record Status", "Channel Type", "manualQCStatus", "irdaRuleId", "irdaEarningsBaseODB", "irdaEarningsBaseODR", "irdaEarningsBaseTP", "irdaEarningsBaseNP", "irdaEarningsBaseABS", "irdaEarningsTotalOD", "irdaEarningsTotalTP", "irdaEarningsTotalNP", "irdaEarningsTotalABS", "irdaPayoutsBaseODB", "irdaPayoutsBaseODR", "irdaPayoutsBaseTP", "irdaPayoutsBaseNP", "irdaPayoutsBaseABS", "irdaPayoutsTotalOD", "irdaPayoutsTotalTP", "irdaPayoutsTotalNP", "irdaPayoutsTotalABS", "insurerRuleId", "insurerEarningsBaseODB", "insurerEarningsBaseODR", "insurerEarningsBaseTP", "insurerEarningsBaseNP", "insurerEarningsBaseABS", "insurerEarningsTotalOD", "insurerEarningsTotalTP", "insurerEarningsTotalNP", "insurerEarningsTotalABS", "insurerPayoutsBaseODB", "insurerPayoutsBaseODR", "insurerPayoutsBaseTP", "insurerPayoutsBaseNP", "insurerPayoutsBaseABS", "insurerPayoutsTotalOD", "insurerPayoutsTotalTP", "insurerPayoutsTotalNP", "insurerPayoutsTotalABS", "earningsBaseODB", "earningsBaseODR", "earningsBaseTP", "earningsBaseNP", "earningsBaseABS", "earningsTotalOD", "earningsTotalTP", "earningsTotalNP", "earningsTotalABS", "earningsMasterTotal", "payoutsBaseODB", "payoutsBaseODR", "payoutsBaseTP", "payoutsBaseNP", "payoutsBaseABS", "payoutsTotalOD", "payoutsTotalTP", "payoutsTotalNP", "payoutsTotalABS", "payoutsMasterTotal", "conflicts", "Payout AutoQC", "Payout QC Done By", "Payout QC", "First Payout QC Date", "Final Payout QC Date", "Post QC Review Status", "Post QC Review Done By", "Post QC Review Date", "Payout Type", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "IRDA Volume Rewards %", "IRDA Payout Total", "IRDA Rewards Total", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Insurer Applicable Payout %", "Insurer Volume Rewards %", "Insurer Payout Total", "Insurer Rewards Total", "Final Payout Total", "Partner cohort", "Partner club", "Partner slab", "QuickPay Eligible", "Skip Differential deductions", "Deduction% for differential", "Deduction% for QP", "Deduction% for campaign", "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages", "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "PC_CreatedAt", "Payable_Partner_Id", "Remark", "Payouts %", "Payouts absolute", "Payouts Deviation %", "Payouts Deviation absolute", "Output Status", "Output Remark"));
-            csvAssert.assertCell(data, 1, 0, policyCommissionId);
-            csvAssert.assertCell(data, 1, 1, policyDetailsId);
-            csvAssert.assertCell(data, 1, 202, "FAILURE");
-            csvAssert.assertCell(data, 1, 203, "MIS QC is not done");
+            csvUtils.assertRow(data, 0, Arrays.asList("policyCommissionId", "policyDetailsId", "policyPaymentScheduleId", "commissionSource", "deviationType", "Payout Policy Type", "version", "Policy No.", "Master Policy No.", "Application No.", "MIS / Data entry owner", "PI CreatedBy", "Booking/Issued Date", "Booking/Issued Month", "Product category", "Product subcategory", "Vehicle type", "Vehicle subtype", "CarrierType", "Intermediary Name", "DP No", "DP Login Id", "Relationship Manager", "City Head", "Circle Head", "Business Head", "Super Franchisees", "Super Franchisees ID", "Super Franchisees DP No", "DP Level", "Partner Parent Subtype", "Parent DP Name", "Parent DP Id", "Parent DP No", "Parent DP Level", "DP Branch Location", "Business Type", "Customer Title", "Customer First Name", "Customer Last Name", "Registration no.", "RTO code", "Make", "Model", "Variant", "Cubic Capacity", "Fuel Type", "Mfg. Year", "GVW/Tonnage", "Seating capacity", "ZeroDepreciation", "Discount Percentage", "Case Status", "Case Sub Status", "Insurer", "Plan type", "Plan name", "Plan Variant", "product name", "Payment Frequency", "Upcoming Payment Due Date", "Recent Payment Paid Date", "Installment UniqueId", "Policy term", "Policy premium term", "Risk Start Date", "Risk End Date", "odRiskStartDate", "odRiskEndDate", "tpRiskStartDate", "tpRiskEndDate", "multiyear", "IDV/SA", "TM Plan ID", "Cover Type", "Option Name", "Age", "Registration City", "Registration State", "Renewal Year", "creation source", "Creation Date", "Comments", "Basic OD Premium", "Net OD Premium", "Basic TP Premium", "TP Premium", "Net Premium", "Annualised Net Premium", "CPA Premium", "NCB", "Record Status", "Insurer Record Status", "Channel Type", "manualQCStatus", "irdaRuleId", "irdaEarningsBaseODB", "irdaEarningsBaseODR", "irdaEarningsBaseTP", "irdaEarningsBaseNP", "irdaEarningsBaseABS", "irdaEarningsTotalOD", "irdaEarningsTotalTP", "irdaEarningsTotalNP", "irdaEarningsTotalABS", "irdaPayoutsBaseODB", "irdaPayoutsBaseODR", "irdaPayoutsBaseTP", "irdaPayoutsBaseNP", "irdaPayoutsBaseABS", "irdaPayoutsTotalOD", "irdaPayoutsTotalTP", "irdaPayoutsTotalNP", "irdaPayoutsTotalABS", "insurerRuleId", "insurerEarningsBaseODB", "insurerEarningsBaseODR", "insurerEarningsBaseTP", "insurerEarningsBaseNP", "insurerEarningsBaseABS", "insurerEarningsTotalOD", "insurerEarningsTotalTP", "insurerEarningsTotalNP", "insurerEarningsTotalABS", "insurerPayoutsBaseODB", "insurerPayoutsBaseODR", "insurerPayoutsBaseTP", "insurerPayoutsBaseNP", "insurerPayoutsBaseABS", "insurerPayoutsTotalOD", "insurerPayoutsTotalTP", "insurerPayoutsTotalNP", "insurerPayoutsTotalABS", "earningsBaseODB", "earningsBaseODR", "earningsBaseTP", "earningsBaseNP", "earningsBaseABS", "earningsTotalOD", "earningsTotalTP", "earningsTotalNP", "earningsTotalABS", "earningsMasterTotal", "payoutsBaseODB", "payoutsBaseODR", "payoutsBaseTP", "payoutsBaseNP", "payoutsBaseABS", "payoutsTotalOD", "payoutsTotalTP", "payoutsTotalNP", "payoutsTotalABS", "payoutsMasterTotal", "conflicts", "Payout AutoQC", "Payout QC Done By", "Payout QC", "First Payout QC Date", "Final Payout QC Date", "Post QC Review Status", "Post QC Review Done By", "Post QC Review Date", "Payout Type", "Payout IRDA ODB %", "Payout IRDA ODR %", "Payout IRDA TP %", "Payout IRDA NP %", "Payout IRDA ABS", "IRDA Volume Rewards %", "IRDA Payout Total", "IRDA Rewards Total", "Insurer Payout OD %", "Insurer Payout TP %", "Insurer Payout NP %", "Insurer Payout ABS", "Insurer Applicable Payout %", "Insurer Volume Rewards %", "Insurer Payout Total", "Insurer Rewards Total", "Final Payout Total", "Partner cohort", "Partner club", "Partner slab", "QuickPay Eligible", "Skip Differential deductions", "Deduction% for differential", "Deduction% for QP", "Deduction% for campaign", "Deduction absolute for differential", "Deduction absolute for QP", "Deduction absolute for campaign", "Initial Effective Percentages", "Initial Effective Payout absolute", "Effective Percentages", "Effective Payout absolute", "PC_CreatedAt", "Payable_Partner_Id", "Remark", "Payouts %", "Payouts absolute", "Payouts Deviation %", "Payouts Deviation absolute", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, policyCommissionId);
+            csvUtils.assertCell(data, 1, 1, policyDetailsId);
+            csvUtils.assertCell(data, 1, 202, "FAILURE");
+            csvUtils.assertCell(data, 1, 203, "MIS QC is not done");
             LogUtils.info("Validated Column Present in PayoutQC Output File as Expected");
         } else if (fileName.equalsIgnoreCase("InsurerRewards.csv")) {
             LogUtils.info("Validating Column Present in InsurerRewards Output File as Expected");
@@ -1217,27 +1324,39 @@ public class UploadPayoutsPage extends TestBase {
             LogUtils.info("Validated Column Present in PartnerLevelActivity Output File as Expected");
         } else if (fileName.equalsIgnoreCase("PostQC_Review_DONE_PayoutQC")) {
             LogUtils.info("Validating Column Present in PostQC_Review Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
-            csvAssert.assertCell(data, 1, 0, ledger_Id);
-            csvAssert.assertCell(data, 1, 1, "Pass");
-            csvAssert.assertCell(data, 1, 2, "SUCCESS");
+            csvUtils.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, ledger_Id);
+            csvUtils.assertCell(data, 1, 1, "Pass");
+            csvUtils.assertCell(data, 1, 2, "SUCCESS");
             LogUtils.info("Validated Column Present in PostQC_Review Output File as Expected");
         } else if (fileName.equalsIgnoreCase("Reupload_PostQC_Review_DONE_PayoutQC")) {
             LogUtils.info("Validating Column Present in PostQC_Review Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
-            csvAssert.assertCell(data, 1, 0, ledger_Id);
-            csvAssert.assertCell(data, 1, 1, "Pass");
-            csvAssert.assertCell(data, 1, 2, "FAILURE");
-            csvAssert.assertCell(data, 1, 3, "invalid Ledger_Id or QC not done or review already done");
+            csvUtils.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, ledger_Id);
+            csvUtils.assertCell(data, 1, 1, "Pass");
+            csvUtils.assertCell(data, 1, 2, "FAILURE");
+            csvUtils.assertCell(data, 1, 3, "invalid Ledger_Id or QC not done or review already done");
             LogUtils.info("Validated Column Present in PostQC_Review Output File as Expected");
         } else if (fileName.equalsIgnoreCase("PostQC_Review_PENDING_PayoutQC")) {
             LogUtils.info("Validating Column Present in PostQC_Review Output File as Expected");
-            csvAssert.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
-            csvAssert.assertCell(data, 1, 0, ledger_Id);
-            csvAssert.assertCell(data, 1, 1, "Pass");
-            csvAssert.assertCell(data, 1, 2, "FAILURE");
-            csvAssert.assertCell(data, 1, 3, "invalid Ledger_Id or QC not done or review already done");
+            csvUtils.assertRow(data, 0, Arrays.asList("Ledger_Id", "Post-QC Review", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, ledger_Id);
+            csvUtils.assertCell(data, 1, 1, "Pass");
+            csvUtils.assertCell(data, 1, 2, "FAILURE");
+            csvUtils.assertCell(data, 1, 3, "invalid Ledger_Id or QC not done or review already done");
             LogUtils.info("Validated Column Present in PostQC_Review Output File as Expected");
+        }
+        else if (fileName.equalsIgnoreCase("MUTUAL_FUND")) {
+            LogUtils.info("Validating Column Present in Partner Level Activity Output File as Expected");
+            csvUtils.assertRow(data, 0, Arrays.asList("Recorded_At", "Partner Id", "Points", "Payment Cycle", "Type", "Remark", "Output Status", "Output Remark"));
+            csvUtils.assertCell(data, 1, 0, currentDate);
+            csvUtils.assertCell(data, 1, 1, "6290f07ed35ae3058a14b495");
+            csvUtils.assertCell(data, 1, 2, "18");
+            csvUtils.assertCell(data, 1, 3, cycle);
+            csvUtils.assertCell(data, 1, 4, fileName);
+            csvUtils.assertCell(data, 1, 5, "Testing- "+fileName);
+            csvUtils.assertCell(data, 1, 6, "SUCCESS");
+            LogUtils.info("Validated Column Present in Partner Level Activity Output File as Expected");
         }
     }
 

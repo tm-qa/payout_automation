@@ -114,4 +114,57 @@ public class CsvUtils {
                 "Invalid date format from CSV: " + inputDate
         );
     }
+
+    private static final DateTimeFormatter CSV_DATE_FORMAT =
+            DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
+
+    public static String getCurrentDate() {
+        return LocalDate.now().format(CSV_DATE_FORMAT);
+    }
+
+    public static String getCycleForDate(LocalDate date) {
+
+        int year = date.getYear();
+        int month = date.getMonthValue(); // 1–12
+        int day = date.getDayOfMonth();
+
+        String cycle = (day <= 15) ? "C1" : "C2";
+
+        return String.format("%d%02d%s", year, month, cycle);
+    }
+
+    // Convenience method for "today"
+    public static String getCurrentCycle() {
+        return getCycleForDate(LocalDate.now());
+    }
+
+    public static void assertValuePresentInColumn(
+            List<String[]> data,
+            String columnName,
+            String expectedValue
+    ) {
+        String[] header = data.get(0);
+        int colIndex = -1;
+
+        for (int i = 0; i < header.length; i++) {
+            if (header[i].trim().equalsIgnoreCase(columnName.trim())) {
+                colIndex = i;
+                break;
+            }
+        }
+
+        if (colIndex == -1) {
+            throw new AssertionError("Column not found: " + columnName);
+        }
+
+        for (int r = 1; r < data.size(); r++) {
+            if (expectedValue.equals(data.get(r)[colIndex])) {
+                return; // PASS
+            }
+        }
+
+        throw new AssertionError(
+                "Value '" + expectedValue + "' not found in column '" + columnName + "'"
+        );
+    }
 }
