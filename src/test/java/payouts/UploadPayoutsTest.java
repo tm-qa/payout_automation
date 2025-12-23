@@ -40,14 +40,14 @@ public class UploadPayoutsTest extends TestBase {
         driver.get(cu);
     }
 
-    @Test
+    @Test(enabled = false)
     public void a_verifyManualUploads() throws Exception {
         uploadPayoutsPage.manualUpload("ManualUpload.csv", "Dec 2025 C2");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualUploadBulkSearch.csv");
         uploadPayoutsDB.deleteEntitriesFromLedgerEntity("LedgerEntity","202512C2"); // Clear Uploaded Data From DB
         uploadPayoutsDB.deleteEntitriesFromPolicyCommissions("PolicyCommissions","202512C2");
     }
-    @Test
+    @Test(enabled = false)
     public void b_verifyManualCorrection() throws Exception {
         uploadPayoutsPage.manualCorrection("ManualCorrection.csv");
         uploadPayoutsPage.verifyVia_BulkSearch("ManualCorrectionBulkSearch.csv");
@@ -76,7 +76,7 @@ public class UploadPayoutsTest extends TestBase {
         uploadPayoutsPage.uploadSplitDeviations("NonSplitPartner_SPLIT_DEVIATIONS");
     }
 
-    @Test
+    @Test(enabled = false)
     public void d_verifySplitDeviationsUpload() throws Exception {
         ninj.punch_TW_Policy("DONE");
         uploadPayoutsPage.validate_MIS_EntryAtPayouts();

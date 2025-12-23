@@ -514,7 +514,7 @@ public class UploadPayoutsPage extends TestBase {
     public void downloadAdjustmentsQuickSearchResult() throws Exception {
         TestUtil.click(dpc.ledgerBtn, "");
         TestUtil.click(cmp.quickSearchSectnBtn, "Quick Search Selected");
-        TestUtil.sendKeys(qsp.misIdTxtbox, "MIS_AHT5N5SOPOG", "MIS ID Entered");
+        TestUtil.sendKeys(qsp.misIdTxtbox, "MIS_AHSK7OHON57", "MIS ID Entered");
         TestUtil.click(qsp.searchButton, "Search Button Clicked");
         TestUtil.click(cmp.downloadBtn, "Download button clicked");
         cmp.commentEnter();

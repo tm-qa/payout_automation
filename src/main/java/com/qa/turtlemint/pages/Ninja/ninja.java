@@ -599,7 +599,8 @@ public class ninja extends TestBase {
     }
 
     public void punch_TW_Policy(String misQCStatus) throws Exception {
-        driver.get(prop.getProperty("sanityninjaurl"));
+        driver.get(System.getProperty("ninjaurl")); // Jenkins
+//        driver.get(prop.getProperty("sanityninjaurl")); // Local
         driver.findElement(By.xpath("(//a[@data-auto='mis-module'])[2]")).click();
         TestUtil.click(NewSaleButton, "New Sale Button");
         Thread.sleep(1000);
